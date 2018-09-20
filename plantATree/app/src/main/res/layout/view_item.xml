@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.ViewItemActivity"
+    android:background="@drawable/background3">
+
+
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="280dp"
+        android:layout_height="244dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="1dp"
+        android:src="@mipmap/ic_launcher"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="52dp"
+        tools:layout_editor_absoluteY="90dp" />
+
+    <TextView
+        android:id="@+id/itemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/itemDescription"
+        android:layout_marginBottom="205dp"
+        android:text="Name: "
+        android:textColor="@android:color/background_dark"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="425dp" />
+
+    <TextView
+        android:id="@+id/itemDescription"
+        android:layout_width="302dp"
+        android:layout_height="38dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="236dp"
+        android:text="Description:"
+        android:textColor="@android:color/background_dark"
+        android:textStyle="italic"
+        tools:layout_editor_absoluteX="41dp"
+        tools:layout_editor_absoluteY="323dp" />
+
+    <TextView
+        android:id="@+id/itemPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/itemDescription"
+        android:layout_alignTop="@+id/itemName"
+        android:text="Price:"
+        android:textColor="@android:color/holo_green_dark"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="398dp" />
+
+    <ImageView
+        android:id="@+id/addToCart"
+        android:layout_width="39dp"
+        android:layout_height="32dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/photo"
+        android:layout_marginEnd="86dp"
+        android:src="@drawable/ic_shoppingcart"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="238dp"
+        tools:layout_editor_absoluteY="237dp" />
+
+    <TextView
+        android:id="@+id/maxHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/itemName"
+        android:layout_marginBottom="165dp"
+        android:text="TextView"
+        android:textColor="@android:color/background_dark" />
+
+    <TextView
+        android:id="@+id/exposure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/itemName"
+        android:layout_below="@+id/maxHeight"
+        android:layout_marginTop="-151dp"
+        android:text="TextView"
+        android:textColor="@android:color/background_dark" />
+
+    <TextView
+        android:id="@+id/soilDrainage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/itemName"
+        android:layout_marginBottom="92dp"
+        android:text="TextView"
+        android:textColor="@android:color/background_dark" />
+
+    <TextView
+        android:id="@+id/maintenance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/itemName"
+        android:layout_marginBottom="42dp"
+        android:text="TextView"
+        android:textColor="@android:color/background_dark" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="39dp"
+        android:layout_height="32dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/photo"
+        android:layout_marginStart="73dp"
+        app:srcCompat="@drawable/ic_camera" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="39dp"
+        android:layout_height="32dp"
+        android:layout_below="@+id/photo"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/ic_wishlist" />
+
+</RelativeLayout>
