@@ -43,8 +43,4 @@ public class ViewAllCartContentsActivity extends AppCompatActivity {
     }
 
 
-//
-//    public void getCartList(){
-//
-//    }
 }
