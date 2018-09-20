@@ -48,10 +48,10 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
         shoppingCart.setOnClickListener(this);
 
         treeDB = new DatabaseHelper(this);
-        treeDB.populateDatabase();
+//        treeDB.populateDatabase();
 
 
-        Object obj = treeDB.findHandle(2, "Tree");
+        Object obj = treeDB.findHandle(4, "Tree");
         tree = new Tree();
         tree = (Tree) obj;
         if (tree == null){
@@ -76,9 +76,6 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        String name = itemName.getText().toString();
-        double price = tree.getPrice();
-        double shipCost = Double.valueOf(tree.getShippingCost());
         double cost =  tree.getPrice() + tree.getShippingCost();
 
         this.product = new Product(tree.getTreeID(), tree.getTreeName(), tree.getPrice(), tree.getShippingCost(), cost);
@@ -93,29 +90,5 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
     public static Product getProduct(){
         return product;
     }
-//
-//    public void showCustomDialog(String message){
-//        final android.support.v7.app.AlertDialog.Builder dialog = new android.support.v7.app.AlertDialog.Builder(this);
-//        dialog.setTitle("Add To Cart");
-//        dialog.setMessage(message);
-//        dialog.setNegativeButton("Continue Shopping",
-//                new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        finish();
-//                    }
-//                });
-//        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                Intent intent = new Intent(ViewItemActivity.this, AddItemToCartActivity.class);
-////                intent.putExtra("CartID", pro);
-//                startActivity(intent);
-//
-//            }
-//        });
-//
-//        dialog.show();
-//    }
 
 }

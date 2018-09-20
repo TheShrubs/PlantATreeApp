@@ -44,6 +44,7 @@ public class CartTable {
         values.put(TOTAL_COST, cartObject.getTotalCost());
 
         System.out.println("Cart table!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("ITEM QUANTITY IS " + cartObject.getProductQuantity());
 
         return values;
     }

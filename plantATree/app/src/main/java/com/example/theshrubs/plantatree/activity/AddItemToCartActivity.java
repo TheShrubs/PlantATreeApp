@@ -65,6 +65,7 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
                 double newTotal = (productItem.getProductPrice() + productItem.getShipping()) * quant;
                 totalCost.setText("Total Cost: $" + newTotal);
                 productItem.setProductTotal(newTotal);
+                productItem.setQuantity(Integer.parseInt(quantity.getText().toString()));
                 addItem.setEnabled(true);
 
             }
@@ -109,22 +110,38 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
                     User newUser = new User("user", "user@gmail.com", "Upass");
                     dbHandler.addHandle(newUser);
                     currentUser = newUser;
+                    System.out.println("NO USER WAS FOUND!!!!!!!!!!!!!");
                 }else{
                     currentUser = (User) foundUser;
+                    System.out.println("USER WAS FOUND WITH NAME "+currentUser.getUserName() + " and password " + currentUser.getUserPassword());
                 }
 
                 Object foundCart = dbHandler.findHandle(currentUser.getUserID(), "Cart");
                 if(foundCart == null){
+                    System.out.println("CART WAS NULL!!!!!!!");
                     currentCart.setCartID(currentUser.getUserID());
+                    currentCart.setProductID(productItem.getProductID());
+                    currentCart.setProductName(productItem.getProductName());
+                    currentCart.setDeliveryCost(productItem.getShipping());
+                    currentCart.setProductQuantity(productItem.getQuantity());
+                    currentCart.setTotalCost(productItem.getProductTotal());
+                    System.out.println("Added " + currentCart.getProductName() + " was added to CART #" + currentCart.getCartID() + " with quant of " + currentCart.getProductQuantity());
+                    dbHandler.addHandle(currentCart);
+
 
                 }else{
                     currentCart = (ShoppingCart) foundCart;
+                    System.out.println("CART WAS FOUND !!!!!!!!!!!!!!!!!!!!!!");
                     if(currentCart.getProductID() != productItem.getProductID()){
                         currentCart.setCartID(currentUser.getUserID());
                         currentCart.setProductID(productItem.getProductID());
                         currentCart.setProductName(productItem.getProductName());
                         currentCart.setDeliveryCost(productItem.getShipping());
+                        currentCart.setProductQuantity(productItem.getQuantity());
                         currentCart.setTotalCost(productItem.getProductTotal());
+                        dbHandler.addHandle(currentCart);
+                        System.out.println("FOUND CART and Added " + currentCart.getProductName() + " was added to CART #" + currentCart.getCartID() + " with total quantity of " + currentCart.getProductQuantity());
+
                     }
                     else{
                         showDialog_existingProduct(productItem.getProductName() + " already exists in your cart");

@@ -81,7 +81,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             System.out.println("could not populate");
         } else {
             createSuccessful = true;
-            System.out.println("table populated");
+            System.out.println("ITEM was added to " + tableName);
         }
         System.out.println(createSuccessful);
         db.close();
@@ -147,8 +147,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cartObject.setProductName(cursor.getString(2));
             cartObject.setProductCost(cursor.getDouble(3));
             cartObject.setDeliveryCost(cursor.getDouble(4));
-            cartObject.setProductQuantity(cursor.getInt(6));
-            cartObject.setTotalCost(cursor.getDouble(5));
+            cartObject.setProductQuantity(cursor.getInt(5));
+            cartObject.setTotalCost(cursor.getDouble(6));
             cartList.add(cartObject);
 
             System.out.println("reading from getallcontents!!!!!!!!!!!");
