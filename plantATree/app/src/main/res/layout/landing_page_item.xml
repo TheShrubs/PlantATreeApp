@@ -5,6 +5,7 @@
     android:orientation="horizontal"
     android:gravity="center"
     android:padding="10dp">
+    <!--tools.context=".activity.View">-->
 
     <ImageView
         android:id="@+id/mainImage"
