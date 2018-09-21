@@ -28,6 +28,8 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
     private Tree tree;
     private DatabaseHelper treeDB;
 
+    private int currentViewedTree;
+
 
 
     @Override
@@ -44,14 +46,31 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
         itemPhoto = (ImageView) findViewById(R.id.photo);
         shoppingCart = (ImageView) findViewById(R.id.addToCart);
 
+        if(savedInstanceState == null){
+            Bundle extras = getIntent().getExtras();
+            if(extras == null){
+                currentViewedTree = 1;
+                System.out.println("Bundle extra was NULL user");
+            }else{
+                currentViewedTree = extras.getInt("TREE_ID");
+            }
+        }else{
+            currentViewedTree = (Integer) savedInstanceState.getSerializable("TREE_ID");
+            System.out.println("savedInstance was NULL");
+        }
+
+
+
+
+
 
         shoppingCart.setOnClickListener(this);
 
         treeDB = new DatabaseHelper(this);
-        treeDB.populateDatabase();
+//        treeDB.populateDatabase();
 
 
-        Object obj = treeDB.findHandle(2, "Tree");
+        Object obj = treeDB.findHandle(currentViewedTree, "Tree");
         tree = new Tree();
         tree = (Tree) obj;
         if (tree == null){

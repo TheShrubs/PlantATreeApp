@@ -21,6 +21,14 @@ public class Tree {
 
     }
 
+    public Tree(int treeID, String name, double price, int photoID){
+        this.setTreeID(treeID);
+        this.setTreeName(name);
+        this.setPrice(price);
+        this.setPhotoID(photoID);
+
+    }
+
     public Tree(int id, String name, String description, String category, double price, int photo, double shippingCost, String maxHeight, String soilDrainage, String sunExposure, String growthRate, String maintenanceReq) {
         this.setTreeID(id);
         this.setTreeName(name);
