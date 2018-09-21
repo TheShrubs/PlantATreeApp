@@ -9,6 +9,9 @@ public class ShoppingCart {
     private int productQuantity;
     private double totalCost;
 
+    public double cost;
+    public double delivery;
+
     //default constructor allowing Cart to be instantiated with no values
     public ShoppingCart(){
 
@@ -84,5 +87,18 @@ public class ShoppingCart {
 
     public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
+    }
+
+    public void setCartTotals(double costing, double ship){
+        cost = costing;
+        delivery = ship;
+    }
+
+    public double getTotalCartCost(){
+        return cost;
+    }
+
+    public double getTotalCartDelivery(){
+        return delivery;
     }
 }

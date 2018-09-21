@@ -5,6 +5,9 @@ import android.database.Cursor;
 
 import com.example.theshrubs.plantatree.models.ShoppingCart;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CartTable {
 
     //Details for Cart table
@@ -15,6 +18,9 @@ public class CartTable {
     private static final String DELIVERY_COST = "DeliveryCost";
     private static final String QUANTITY = "Quantity";
     private static final String TOTAL_COST = "TotalCost";
+
+    private double totalDelivery;
+    private double totalCosting;
 
 
 
@@ -68,4 +74,32 @@ public class CartTable {
 
         return cartObject;
     }
+
+    public List<ShoppingCart> loadCart(Cursor cursor){
+        List<ShoppingCart> cartList = new ArrayList<>();
+        ShoppingCart cartObject = new ShoppingCart();
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            cartObject.setCartID(cursor.getInt(0));
+            cartObject.setProductID(cursor.getInt(1));
+            cartObject.setProductName(cursor.getString(2));
+            cartObject.setProductCost(cursor.getDouble(3));
+            cartObject.setDeliveryCost(cursor.getDouble(4));
+            cartObject.setProductQuantity(cursor.getInt(5));
+            cartObject.setTotalCost(cursor.getDouble(6));
+            cartList.add(cartObject);
+            totalCosting = totalCosting + cartObject.getTotalCost();
+            totalDelivery = totalDelivery + cartObject.getDeliveryCost();
+
+//            ShoppingCart
+
+            cursor.moveToNext();
+        }
+
+        cartObject.setCartTotals(totalCosting, totalDelivery);
+
+        return  cartList;
+    }
+
 }

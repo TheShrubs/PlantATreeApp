@@ -22,7 +22,7 @@ public class ViewAllCartContentsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shopping_cart);
         this.database = new DatabaseHelper(this);
-//
+
         if(savedInstanceState == null){
             Bundle extras = getIntent().getExtras();
             if(extras == null){

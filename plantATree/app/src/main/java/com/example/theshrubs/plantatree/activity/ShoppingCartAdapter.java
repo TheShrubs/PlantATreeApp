@@ -47,10 +47,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
         return position;
     }
 
-//    @Override
-//    public View getView(int position, View convertView, ViewGroup parent) {
-//        return null;
-//    }
+
 
     public View getView(int position, View view, ViewGroup parent) {
         ViewHolder viewHolder;
@@ -68,9 +65,11 @@ public class ShoppingCartAdapter extends BaseAdapter {
 
         ShoppingCart cartItem = this.productList.get(position);
 
-        viewHolder.itemName.setText(cartItem.getProductName());//.getProductName());
+        viewHolder.itemName.setText(cartItem.getProductName());
         viewHolder.itemTotal.setText("$" + String.valueOf(cartItem.getTotalCost()));
         viewHolder.itemQuantity.setText(String.valueOf(cartItem.getProductQuantity()));
+
+
 
         System.out.println("Name is " + cartItem.getProductName() + " with total cost of " + cartItem.getTotalCost());
         return view;

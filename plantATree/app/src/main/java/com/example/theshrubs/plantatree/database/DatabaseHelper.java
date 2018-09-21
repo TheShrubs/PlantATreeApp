@@ -132,49 +132,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public List<ShoppingCart> getAllContents(int id){
-        List<ShoppingCart> cartList = new ArrayList<>();
-
-//        DatabaseHelper db = new DatabaseHelper(this);
-        String query = "Select * FROM " + CART_TABLE + " WHERE UserID" + " = " + "'" + id + "'";
+                   String query = "Select * FROM " + CART_TABLE + " WHERE UserID" + " = " + "'" + id + "'";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = getReadableDatabase().rawQuery(query, null);
 
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            ShoppingCart cartObject = new ShoppingCart();
-            cartObject.setCartID(cursor.getInt(0));
-            cartObject.setProductID(cursor.getInt(1));
-            cartObject.setProductName(cursor.getString(2));
-            cartObject.setProductCost(cursor.getDouble(3));
-            cartObject.setDeliveryCost(cursor.getDouble(4));
-            cartObject.setProductQuantity(cursor.getInt(5));
-            cartObject.setTotalCost(cursor.getDouble(6));
-            cartList.add(cartObject);
-
-            System.out.println("reading from getallcontents!!!!!!!!!!!");
-            cursor.moveToNext();
-        }
+        List<ShoppingCart> cartList = new ArrayList<>();
+        cartList = cartTable.loadCart(cursor);
 
 
         return cartList;
     }
-
-
-        public void populateDatabase() {
-        Tree tree1 = new Tree(0, "Austrian Pine", "The austrian pine is medium to large sized everdgreen, needle-leaved conifer.", "Non-flowering Flowers", 54.5, 45, 3, "High", "Medium", "High", "Low", "High");
-        Tree tree2 = new Tree(1, "Bristlecone Pine", "Pinus longaeva is a long-living species of bristlecone pine tree", "Non-Flowering Flowers", 54.5, 45, 2, "High", "High", "High", "High", "High");
-        Tree tree3 = new Tree(2, "White Ash", "A species of the ass tree native to eastern and central North America", "Flowering Flowers", 54.5, 45, 5, "High", "High", "High", "High", "High");
-        Tree tree4 = new Tree(3, "Blue Spruce", "It is native to the Rocky Mountains o the United States", "Non-Flowering Flowers", 54.5, 45, 6, "High", "High", "High", "High", "High");
-        Tree tree5 = new Tree(4, "Bonsai Cherry", "A cerry bonsai tree comes from a simle cerry seed", "Flowering Flowers", 54.5, 45, 2, "High", "High", "High", "High", "High");
 //
+//
+//        public void populateDatabase() {
+//        Tree tree1 = new Tree(0, "Austrian Pine", "The austrian pine is medium to large sized everdgreen, needle-leaved conifer.", "Non-flowering Flowers", 54.5, 45, 3, "High", "Medium", "High", "Low", "High");
+//        Tree tree2 = new Tree(1, "Bristlecone Pine", "Pinus longaeva is a long-living species of bristlecone pine tree", "Non-Flowering Flowers", 54.5, 45, 2, "High", "High", "High", "High", "High");
+//        Tree tree3 = new Tree(2, "White Ash", "A species of the ass tree native to eastern and central North America", "Flowering Flowers", 54.5, 45, 5, "High", "High", "High", "High", "High");
+//        Tree tree4 = new Tree(3, "Blue Spruce", "It is native to the Rocky Mountains o the United States", "Non-Flowering Flowers", 54.5, 45, 6, "High", "High", "High", "High", "High");
+//        Tree tree5 = new Tree(4, "Bonsai Cherry", "A cerry bonsai tree comes from a simle cerry seed", "Flowering Flowers", 54.5, 45, 2, "High", "High", "High", "High", "High");
 ////
-        addHandle(tree1);
-        addHandle(tree2);
-        addHandle(tree3);
-        addHandle(tree4);
-        addHandle(tree5);
-//
-        System.out.println("PASSED THROUGH POPULATE DATABASE");
-//
-    }
+//////
+//        addHandle(tree1);
+//        addHandle(tree2);
+//        addHandle(tree3);
+//        addHandle(tree4);
+//        addHandle(tree5);
+////
+//        System.out.println("PASSED THROUGH POPULATE DATABASE");
+////
+//    }
 }

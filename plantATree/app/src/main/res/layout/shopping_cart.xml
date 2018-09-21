@@ -29,18 +29,18 @@
         android:textColor="@android:color/background_light" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/cartTOTAL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/textView4"
+        android:layout_alignStart="@+id/cartShippingTotal"
         android:layout_marginBottom="64dp"
         android:text="Total Cost:"
         android:textColor="@android:color/background_dark"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/cartShippingTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

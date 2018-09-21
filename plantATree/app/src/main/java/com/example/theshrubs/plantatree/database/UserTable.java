@@ -27,9 +27,6 @@ public class UserTable {
         values.put(USER_NAME, userObject.getUserName());
         values.put(USER_EMAIL, userObject.getUserEmail());
         values.put(USER_PASSWORD, userObject.getUserPassword());
-
-        System.out.println("User add new !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
         return values;
     }
 
@@ -39,8 +36,6 @@ public class UserTable {
         values.put(USER_NAME, userObject.getUserName());
         values.put(USER_EMAIL, userObject.getUserEmail());
         values.put(USER_PASSWORD, userObject.getUserPassword());
-
-        System.out.println("User add new !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
         return values;
     }
@@ -65,5 +60,6 @@ public class UserTable {
 
         return userObject;
     }
+
 
 }

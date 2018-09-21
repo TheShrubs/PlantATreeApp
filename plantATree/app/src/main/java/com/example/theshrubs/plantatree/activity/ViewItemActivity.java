@@ -48,10 +48,10 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
         shoppingCart.setOnClickListener(this);
 
         treeDB = new DatabaseHelper(this);
-        treeDB.populateDatabase();
+//        treeDB.populateDatabase();
 
 
-        Object obj = treeDB.findHandle(4, "Tree");
+        Object obj = treeDB.findHandle(3, "Tree");
         tree = new Tree();
         tree = (Tree) obj;
         if (tree == null){
