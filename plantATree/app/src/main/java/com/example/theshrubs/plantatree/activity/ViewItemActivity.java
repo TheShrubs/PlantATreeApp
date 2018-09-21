@@ -28,8 +28,6 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
     private Tree tree;
     private DatabaseHelper treeDB;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
