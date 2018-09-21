@@ -27,6 +27,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String BILLING = "Billing";
     private static final String CART_TABLE = "ShoppingCart";
 
+    private static final String USER_ID = "UserID";
+    private static final String USER_NAME = "UserName";
+    private static final String USER_EMAIL = "Email";
+    private static final String USER_PASSWORD = "Password";
+
+
 
     private TreeTable treeTable = new TreeTable();
     private CartTable cartTable = new CartTable();
@@ -176,5 +182,47 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //
         System.out.println("PASSED THROUGH POPULATE DATABASE");
 //
+    }
+
+
+
+
+    //method to CHECK for a USER. Aids validation
+    public boolean checkUser(String email){
+        String [] columns ={
+                USER_ID
+        };
+        //call SQLite DB
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selection = USER_EMAIL + " = ?";
+        String[] selectionArgs = {email};
+
+        Cursor cursor = db.query(USER_TABLE, columns, selection, selectionArgs, null, null, null);
+        int cursorCount = cursor.getCount();
+        cursor.close();
+        db.close();
+        if(cursorCount > 0){
+            return true;
+        }
+        return false;
+    }
+    //check for USER when email and password is passed in. Follows same format as the checkUser method however, it takes in an email and password
+    public boolean checkUser(String email, String password){
+        String [] columns ={
+                USER_ID
+        };
+        //call SQLite DB
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selection = USER_EMAIL + " = ?" + " AND "+ USER_PASSWORD + " = ?";
+        String[] selectionArgs = {email, password};
+
+        Cursor cursor = db.query(USER_TABLE, columns, selection, selectionArgs, null, null, null);
+        int cursorCount = cursor.getCount();
+        cursor.close();
+        db.close();
+        if(cursorCount > 0){
+            return true;
+        }
+        return false;
     }
 }
