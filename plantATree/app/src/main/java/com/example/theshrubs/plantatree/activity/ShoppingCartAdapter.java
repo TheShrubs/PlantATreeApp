@@ -66,30 +66,14 @@ public class ShoppingCartAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-
-//
-
-//        DatabaseHelper db = new DatabaseHelper(view);
         ShoppingCart cartItem = this.productList.get(position);
-//        Object product = databaseHelper.findHandle(cartItem.getCartID(), "Tree");
-//        product = (Tree) product;
-
-        viewHolder.itemName.setText(cartItem.getProductName());//.getProductName());
+        viewHolder.itemName.setText(cartItem.getProductName());
         viewHolder.itemTotal.setText(String.valueOf(cartItem.getTotalCost()));
         viewHolder.itemQuantity.setText(String.valueOf(cartItem.getProductQuantity()));
 
         System.out.println("fdjkalf;djkalf;jdakal;lfjdka;fjdkal;fjdkla;fjdkala;jfdkla;jfkdla;");
         return view;
     }
-//
-//    // Find Image ID corresponding to the name of the image (in the directory mipmap).
-//    public int getMipmapResIdByName(String resName)  {
-//        String pkgName = context.getPackageName();
-//        // Return 0 if not found.
-//        int resID = context.getResources().getIdentifier(resName , "mipmap", pkgName);
-//        Log.i("CustomListView", "Res Name: "+ resName+"==> Res ID = "+ resID);
-//        return resID;
-//    }
 
     static class ViewHolder {
         ImageView itemImage;
