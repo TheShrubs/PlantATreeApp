@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><!--suppress ALL -->
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nestedScrollView"
@@ -26,19 +27,20 @@
         android:id="@+id/textInputLayoutUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="2dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/textInputEditTextUsername"
-            android:layout_width="300dp"
-            android:layout_height="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="Email"
             android:inputType="text"
             android:maxLines="1"
             android:textColor="@color/colorBackground"
-            android:textColorHint="@color/colorBackground" />
+            android:textColorHint="@color/colorBackground"
+            android:textSize="12sp" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -48,7 +50,6 @@
         android:layout_marginTop="2dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-        <!--android:textColorHint="#000000"-->
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/textInputEditTextPassword"
@@ -65,8 +66,7 @@
     <Button
         android:id="@+id/appCompatButtonLogin"
         android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:layout_marginBottom="16dp"
+        android:layout_height="35dp"
         android:background="@android:color/holo_green_dark"
         android:text="@string/login"
         android:textColor="@color/colorBackground"
@@ -80,7 +80,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="52dp"
         android:layout_marginStart="52dp"
-        android:layout_marginTop="532dp"
         android:gravity="center"
         android:text="@string/no_account"
         android:textSize="12sp"

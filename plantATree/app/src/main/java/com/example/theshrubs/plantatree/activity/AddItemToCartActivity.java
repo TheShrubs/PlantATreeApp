@@ -204,5 +204,4 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
 
     }
 
-//    }
 }
