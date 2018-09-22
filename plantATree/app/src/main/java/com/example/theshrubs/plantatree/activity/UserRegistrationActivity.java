@@ -107,7 +107,13 @@ public class UserRegistrationActivity extends AppCompatActivity implements View.
             return;
         }
 
+
+
+
+
         if (!databaseHelper.checkUser(textInputEditTextEmail.getText().toString().trim())) {
+
+
 
             user.setUserName(textInputEditTextName.getText().toString().trim());
             user.setUserEmail(textInputEditTextEmail.getText().toString().trim());

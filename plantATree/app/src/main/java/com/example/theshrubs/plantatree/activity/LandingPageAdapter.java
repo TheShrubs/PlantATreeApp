@@ -18,19 +18,21 @@ import java.util.Locale;
 
 public class LandingPageAdapter extends BaseAdapter {
 
-    //variables
-    Context mContext;
-    LayoutInflater inflater;
-    List<Tree> treeList;
-    ArrayList<Tree> arrayList;
+
+    private Context mContext;
+    private LayoutInflater inflater;
+    private List<Tree> treeList;
+//    private ArrayList<Tree> arrayList;
+    private int currentUserID;
 
     //constructor
-    public LandingPageAdapter(Context context, List<Tree> modelList) {
+    public LandingPageAdapter(Context context, List<Tree> modelList, int id) {
         mContext = context;
         this.treeList = modelList;
+        this.currentUserID = id;
         inflater = LayoutInflater.from(mContext);
-        this.arrayList = new ArrayList<Tree>();
-        this.arrayList.addAll(treeList);
+//        this.arrayList = new ArrayList<Tree>();
+//        this.arrayList.addAll(treeList);
     }
 
     public class ViewHolder{
@@ -67,10 +69,8 @@ public class LandingPageAdapter extends BaseAdapter {
         }else {
             holder = (ViewHolder)convertView.getTag();
         }
-        //set the results into textview
         holder.mTitleTV.setText(treeList.get(position).getTreeName());
         holder.mPriceTV.setText("$" + treeList.get(position).getPrice());
-        //set the result in imageview
         holder.mIconIV.setImageResource(treeList.get(position).getPhotoID());
 
         //listview item clicks
@@ -81,6 +81,7 @@ public class LandingPageAdapter extends BaseAdapter {
                 int newID = treeList.get(position).getTreeID();
                     Intent intent = new Intent(mContext, ViewItemActivity.class);
                     intent.putExtra("TREE_ID", newID);;
+                    intent.putExtra("USER_ID", currentUserID);
 
                     mContext.startActivity(intent);
             }
@@ -88,20 +89,20 @@ public class LandingPageAdapter extends BaseAdapter {
 
         return convertView;
     }
-
-    //filter
-    public void filter(String charText){
-        charText = charText.toLowerCase(Locale.getDefault());
-        treeList.clear();
-        if(charText.length()==0){
-            treeList.addAll(arrayList);
-        } else {
-            for(Tree model: arrayList){
-                if(model.getTreeName().toLowerCase(Locale.getDefault()).contains(charText)){
-                    treeList.add(model);
-                }
-            }
-        }
-        notifyDataSetChanged();
-    }
+//
+//    //filter
+//    public void filter(String charText){
+//        charText = charText.toLowerCase(Locale.getDefault());
+//        treeList.clear();
+//        if(charText.length()==0){
+//            treeList.addAll(arrayList);
+//        } else {
+//            for(Tree model: arrayList){
+//                if(model.getTreeName().toLowerCase(Locale.getDefault()).contains(charText)){
+//                    treeList.add(model);
+//                }
+//            }
+//        }
+//        notifyDataSetChanged();
+//    }
 }

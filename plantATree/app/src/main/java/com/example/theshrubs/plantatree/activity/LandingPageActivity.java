@@ -8,95 +8,82 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.SearchView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.theshrubs.plantatree.R;
+import com.example.theshrubs.plantatree.database.DatabaseHelper;
 import com.example.theshrubs.plantatree.models.Tree;
 
 import java.util.ArrayList;
 
 public class LandingPageActivity extends AppCompatActivity {
 
-    ListView List;
-    LandingPageAdapter adapter;
-    String[] title;
-    double[] price;
-    int[] icon;
-    int[] id;
-    ArrayList<Tree> arrayList = new ArrayList<Tree>();
+    private ListView landingList;
+    private LandingPageAdapter landingAdapter;
+    private List<Tree> treeList;
+    private DatabaseHelper dbHandler;
+    private int currentUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.landing_page);
 
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setTitle("Search");
+        this.dbHandler = new DatabaseHelper(this);
+//        dbHandler.populateDatabase();
 
-        id = new int[]{0,1,2,3};
-        title = new String[]{"Pine tree", "Apple tree", "Maple tree", "Oak tree"};
-        price = new double[]{14.99, 24.99, 34.95, 89.99};//"$14.99", "$24.99", "$34.95", "$89.99"};
-        icon = new int[]{R.drawable.tree_pine, R.drawable.tree_apple, R.drawable.tree_maple, R.drawable.tree_oak};
+        treeList = new ArrayList<>();
+        List<Object> objectList = dbHandler.loadAllContents(1, "Landing");
+        landingList = (ListView) findViewById(R.id.treeList);
 
-        List = (ListView) findViewById(R.id.treeList);
-
-        for(int i = 0; i < title.length; i++){
-            Tree model = new Tree(id[i], title[i], Double.valueOf(price[i]), icon[i]);
-            //bind all strings in an array
-            arrayList.add(model);
+        for (int i = 0; i < objectList.size(); i++) {
+            Tree model = (Tree) objectList.get(i);
+            treeList.add(model);
         }
 
-        //pass results to listViewAdapter class
-        adapter = new LandingPageAdapter(this, arrayList);
-
-        //bind the adapter to the listview
-        List.setAdapter(adapter);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-
-        MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) myActionMenuItem.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if (extras == null) {
+                currentUser = 1;
+                System.out.println("Bundle extra was NULL user");
+            } else {
+                currentUser = extras.getInt("USER_ID");
             }
+        }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if(TextUtils.isEmpty(newText)){
-                    adapter.filter("");
-                    List.clearTextFilter();
-                }else {
-                    adapter.filter(newText);
-                }
-                return false;
-            }
-        });
 
-        return true;
+        landingAdapter = new LandingPageAdapter(this, treeList, currentUser);
+        landingList.setAdapter(landingAdapter);
+
+
     }
 
 //    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//        if(id==R.id.action_settings){
-//            //do your functionality here
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu, menu);
+//
+//        MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
+//        SearchView searchView = (SearchView) myActionMenuItem.getActionView();
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                if (TextUtils.isEmpty(newText)) {
+//                    landingAdapter.filter("");
+//                    landingList.clearTextFilter();
+//                } else {
+//                    landingAdapter.filter(newText);
+//                }
+//                return false;
+//            }
+//        });
+//
+//        return true;
 //    }
 }
-
-//Design landing_page_item of listView
-//Adding menu to searchView in actionbar - Res|new android Resource Dir|Menu|set to menu
-//Add model class
-//Add adapter class
-//Add some images in drawable
-//Run project to test the listView and searchView
-//If working handle the itemClick to new activity with action bar and some data
-//Change actionbar title of both activities
-//Add back button in action bar of new activity|manifest set parent activity
-//Handle item clicks
-

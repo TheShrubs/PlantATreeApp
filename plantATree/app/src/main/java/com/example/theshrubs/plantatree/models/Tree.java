@@ -74,10 +74,10 @@ public class Tree {
 
     public void setCategory(String category) {
         switch (category) {
-            case "Flowering Trees":
+            case "Flowering":
                 this.category = Category.FLORA;
                 break;
-            case "Non-flowering Trees":
+            case "Non-flowering":
                 this.category = Category.FAUNA;
                 break;
             default:

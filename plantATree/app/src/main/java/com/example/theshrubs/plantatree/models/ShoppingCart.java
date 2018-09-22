@@ -27,6 +27,7 @@ public class ShoppingCart {
         setDeliveryCost(deliveryCost);
         setProductQuantity(quantity);
         setTotalCost(totalCost);
+
     }
 
         public int getCartID() {

@@ -2,7 +2,6 @@ package com.example.theshrubs.plantatree.models;
 
 public class Product {
     private int productID;
-    private int objectID;
     private int quantity;
     private double productPrice;
     private double productTotal;
@@ -20,21 +19,8 @@ public class Product {
         this.productTotal = productTotal;
     }
 
-//    public Product(int objectID, int quantity, double productPrice, double productTotal){
-//        this.productID = productID;
-//        this.objectID = objectID;
-//        this.quantity = quantity;
-//        this.productPrice = productPrice;
-//        this.productTotal = productTotal;
-//
-//    }
-
     public void setProductID(int productID){
         this.productID = productID;
-    }
-
-    public void setObjectID(int objectID){
-        this.objectID = objectID;
     }
 
     public void setQuantity(int quantity){
@@ -51,10 +37,6 @@ public class Product {
 
     public int getProductID(){
         return this.productID;
-    }
-
-    public int getObjectID(){
-        return this.objectID;
     }
 
     public int getQuantity(){
@@ -85,8 +67,10 @@ public class Product {
         this.shipping = shipping;
     }
 
+
+
     public String toString(){
-        return  " " + getProductID() + " " + getObjectID() + " " + getQuantity() + " " + getProductPrice() + " " + getProductTotal();
+        return  " " + getProductID() + " " + getQuantity() + " " + getProductPrice() + " " + getProductTotal();
     }
 
     public String getProduct(){

@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.theshrubs.plantatree.R;
@@ -26,10 +27,14 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
     private EditText quantity;
     private Button addItem;
     private Product productItem;
+    private ImageView productImage;
 
     private DatabaseHelper dbHandler = new DatabaseHelper(this);
     private User currentUser = new User();
     private ShoppingCart currentCart = new ShoppingCart();
+
+    private int currentViewedTree;
+    private int currentUSER;
 
 
     @Override
@@ -43,10 +48,23 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
         totalCost = (TextView) findViewById(R.id.treeTotal);
         addItem = (Button) findViewById(R.id.treeBuyButton);
         quantity = (EditText) findViewById(R.id.itemQuantity);
+        productImage = (ImageView) findViewById(R.id.addPhoto);
         addItem.setEnabled(false);
 
         addItem.setOnClickListener(this);
         setInformation(ViewItemActivity.getProduct());
+
+        if(savedInstanceState == null){
+            Bundle extras = getIntent().getExtras();
+            if(extras == null){
+                currentViewedTree = 1;
+                currentUSER = 1;
+                System.out.println("Bundle extra was NULL user");
+            }else{
+                currentViewedTree = extras.getInt("TREE_ID");
+                currentUSER = extras.getInt("USER_ID");
+            }
+        }
 
         quantity.addTextChangedListener(new TextWatcher() {
             @Override
@@ -78,6 +96,7 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
         shipping.setText("Shipping Cost: $" + product.getShipping());
         totalCost.setText("Total Cost: $" + product.getProductTotal());
 
+
     }
     @Override
     public void onClick(View v) {
@@ -104,16 +123,17 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Object foundUser = dbHandler.findHandle(1,"User");
+                Object foundUser = dbHandler.findHandle(String.valueOf(currentUSER),"User");
                 if(foundUser == null){
-                    User newUser = new User("user", "user@gmail.com", "Upass");
-                    dbHandler.addHandle(newUser);
-                    currentUser = newUser;
+//                    User newUser = new User("user", "user@gmail.com", "Upass");
+//                    dbHandler.addHandle(newUser);
+//                    currentUser = newUser;
+                    System.out.println("user was empty");
                 }else{
                     currentUser = (User) foundUser;
                 }
 
-                Object foundCart = dbHandler.findHandle(currentUser.getUserID(), "Cart");
+                Object foundCart = dbHandler.findHandle(String.valueOf(currentUser.getUserID()), "Cart");
                 if(foundCart == null){
                     currentCart.setCartID(currentUser.getUserID());
 
@@ -132,7 +152,7 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
                     }
                 }
 
-                Intent intent = new Intent(AddItemToCartActivity.this, ViewAllCartContentsActivity.class);
+                Intent intent = new Intent(AddItemToCartActivity.this, ShoppingCartActivity.class);
                 intent.putExtra("CART_ID", currentUser.getUserID());
                 startActivity(intent);
 

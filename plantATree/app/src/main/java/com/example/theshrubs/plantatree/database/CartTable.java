@@ -5,6 +5,9 @@ import android.database.Cursor;
 
 import com.example.theshrubs.plantatree.models.ShoppingCart;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CartTable {
 
     //Details for Cart table
@@ -15,6 +18,7 @@ public class CartTable {
     private static final String DELIVERY_COST = "DeliveryCost";
     private static final String QUANTITY = "Quantity";
     private static final String TOTAL_COST = "TotalCost";
+    private static final String PHOTO_ID = "PhotoID";
 
 
 
@@ -26,8 +30,8 @@ public class CartTable {
                 PRODUCT_COST + " REAL," +
                 DELIVERY_COST + " REAL," +
                 QUANTITY + " INTEGER," +
-                TOTAL_COST + " REAL" +");";
-//                "PRIMARY KEY (" + CART_ID + ", " + PRODUCT_ID +
+                TOTAL_COST + " REAL," +
+                PHOTO_ID + "INTEGER" + ");";
 
         return createTable;
     }
@@ -42,8 +46,7 @@ public class CartTable {
         values.put(DELIVERY_COST, cartObject.getDeliveryCost());
         values.put(QUANTITY, cartObject.getProductQuantity());
         values.put(TOTAL_COST, cartObject.getTotalCost());
-
-        System.out.println("Cart table!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//        values.put(PHOTO_ID, cartObject.getPhotoID());
 
         return values;
     }
@@ -60,11 +63,36 @@ public class CartTable {
             cartObject.setDeliveryCost(cursor.getDouble(4));
             cartObject.setProductQuantity(cursor.getInt(5));
             cartObject.setTotalCost(cursor.getDouble(6));
+//            cartObject.setPhotoID(cursor.getInt(7));
             cursor.close();
         }else{
             return null;
         }
 
         return cartObject;
+    }
+
+    public List<ShoppingCart> loadCart(Cursor cursor){
+        List<ShoppingCart> cartList = new ArrayList<>();
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            ShoppingCart cartObject = new ShoppingCart();
+            cartObject.setCartID(cursor.getInt(0));
+            cartObject.setProductID(cursor.getInt(1));
+            cartObject.setProductName(cursor.getString(2));
+            cartObject.setProductCost(cursor.getDouble(3));
+            cartObject.setDeliveryCost(cursor.getDouble(4));
+            cartObject.setProductQuantity(cursor.getInt(5));
+            cartObject.setTotalCost(cursor.getDouble(6));
+//            cartObject.setPhotoID(cursor.getInt(7));
+            cartList.add(cartObject);
+
+            System.out.println("reading from getallcontents!!!!!!!!!!!");
+            cursor.moveToNext();
+        }
+
+        return cartList;
+
     }
 }

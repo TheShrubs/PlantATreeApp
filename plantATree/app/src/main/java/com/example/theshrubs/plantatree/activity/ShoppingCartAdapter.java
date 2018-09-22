@@ -23,13 +23,13 @@ public class ShoppingCartAdapter extends BaseAdapter {
     private List<ShoppingCart> productList;
     private LayoutInflater layoutInflater;
     private Context context;
-    private DatabaseHelper databaseHelper;
+//    private DatabaseHelper databaseHelper;
 
-    public ShoppingCartAdapter(Context context, List<ShoppingCart> products, DatabaseHelper databaseHelper){
+    public ShoppingCartAdapter(Context context, List<ShoppingCart> products){//}, DatabaseHelper databaseHelper){
         this.context = context;
         this.productList = products;
         this.layoutInflater = LayoutInflater.from(context);
-        this.databaseHelper = new DatabaseHelper(context);
+//        this.databaseHelper = new DatabaseHelper(context);
     }
 
     @Override
@@ -57,8 +57,8 @@ public class ShoppingCartAdapter extends BaseAdapter {
         if (view == null) {
             view = layoutInflater.inflate(R.layout.shopping_cart_item, null);
             viewHolder = new ViewHolder();
-            viewHolder.itemImage = (ImageView) view.findViewById(R.id.shopItemImage);
             viewHolder.itemName = (TextView) view.findViewById(R.id.shopItemName);
+            viewHolder.itemShipping = (TextView) view.findViewById(R.id.shopShipping);
             viewHolder.itemTotal = (TextView) view.findViewById(R.id.shopItemTotal);
             viewHolder.itemQuantity = (EditText) view.findViewById(R.id.shopItemQuantity);
             view.setTag(viewHolder);
@@ -67,17 +67,20 @@ public class ShoppingCartAdapter extends BaseAdapter {
         }
 
         ShoppingCart cartItem = this.productList.get(position);
+//        Tree treeItem
         viewHolder.itemName.setText(cartItem.getProductName());
-        viewHolder.itemTotal.setText(String.valueOf(cartItem.getTotalCost()));
+        viewHolder.itemTotal.setText("$" + cartItem.getTotalCost());
         viewHolder.itemQuantity.setText(String.valueOf(cartItem.getProductQuantity()));
+        viewHolder.itemShipping.setText("Shipping: $" +cartItem.getDeliveryCost());
+//        view.item
 
         System.out.println("fdjkalf;djkalf;jdakal;lfjdka;fjdkal;fjdkla;fjdkala;jfdkla;jfkdla;");
         return view;
     }
 
     static class ViewHolder {
-        ImageView itemImage;
         TextView itemName;
+        TextView itemShipping;
         TextView itemTotal;
         EditText itemQuantity;
     }

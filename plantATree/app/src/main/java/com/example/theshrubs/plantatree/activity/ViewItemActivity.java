@@ -1,6 +1,5 @@
 package com.example.theshrubs.plantatree.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -54,9 +53,6 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
             }else{
                 currentViewedTree = extras.getInt("TREE_ID");
             }
-        }else{
-            currentViewedTree = (Integer) savedInstanceState.getSerializable("TREE_ID");
-            System.out.println("savedInstance was NULL");
         }
 
 
@@ -70,7 +66,7 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
 //        treeDB.populateDatabase();
 
 
-        Object obj = treeDB.findHandle(currentViewedTree, "Tree");
+        Object obj = treeDB.findHandle(String.valueOf(currentViewedTree), "Tree");
         tree = new Tree();
         tree = (Tree) obj;
         if (tree == null){
@@ -90,6 +86,7 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
         sunExposure.setText("Sun Exposure: " + tree.getSunExposure());
         soilDrainage.setText("Soil Drainage: " + tree.getSunExposure());
         maintenanceReq.setText("Maintenance Requirements: " + tree.getMaintenanceReq());
+        itemPhoto.setImageResource(tree.getPhotoID());
 
     }
 
@@ -99,12 +96,13 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
         double price = tree.getPrice();
         double shipCost = Double.valueOf(tree.getShippingCost());
         double cost =  tree.getPrice() + tree.getShippingCost();
+        System.out.println("");
 
         this.product = new Product(tree.getTreeID(), tree.getTreeName(), tree.getPrice(), tree.getShippingCost(), cost);
 
         Intent intent = new Intent(ViewItemActivity.this, AddItemToCartActivity.class);
+        intent.putExtra("USER_ID", currentViewedTree);
         startActivity(intent);
-
 
 
     }
@@ -112,29 +110,4 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
     public static Product getProduct(){
         return product;
     }
-//
-//    public void showCustomDialog(String message){
-//        final android.support.v7.app.AlertDialog.Builder dialog = new android.support.v7.app.AlertDialog.Builder(this);
-//        dialog.setTitle("Add To Cart");
-//        dialog.setMessage(message);
-//        dialog.setNegativeButton("Continue Shopping",
-//                new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        finish();
-//                    }
-//                });
-//        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                Intent intent = new Intent(ViewItemActivity.this, AddItemToCartActivity.class);
-////                intent.putExtra("CartID", pro);
-//                startActivity(intent);
-//
-//            }
-//        });
-//
-//        dialog.show();
-//    }
-
 }

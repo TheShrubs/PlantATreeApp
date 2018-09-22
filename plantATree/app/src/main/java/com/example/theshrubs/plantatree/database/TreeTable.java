@@ -7,6 +7,9 @@ import com.example.theshrubs.plantatree.models.Maintenance;
 import com.example.theshrubs.plantatree.models.ShoppingCart;
 import com.example.theshrubs.plantatree.models.Tree;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TreeTable {
 
     //Details for Tree table
@@ -31,7 +34,7 @@ public class TreeTable {
                 TREE_DESCRIPTION + " NVARCHAR," +
                 TREE_CATEGORY + " INTEGER," +
                 TREE_PRICE + " REAL," +
-                TREE_PHOTO + " INTEGER," +
+                TREE_PHOTO + " NVARCHAR," +
                 TREE_SHIPPING_COST + " REAL," +
                 TREE_MAX_HEIGHT + " NVARCHAR," +
                 TREE_SOIL_DRAINAGE + " NVARCHAR," +
@@ -87,6 +90,36 @@ public class TreeTable {
         }
 
         return treeObject;
+    }
+
+
+
+    public List<Tree> loadTrees(Cursor cursor){
+        List<Tree> treeList = new ArrayList<>();
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Tree treeObject = new Tree();
+            treeObject.setTreeID(cursor.getInt(0));
+            treeObject.setTreeName(cursor.getString(1));
+            treeObject.setTreeDescription(cursor.getString(2));
+            treeObject.setCategory(cursor.getString(3));
+            treeObject.setPrice(cursor.getDouble(4));
+            treeObject.setPhotoID(cursor.getInt(5));
+            treeObject.setShippingCost(cursor.getDouble(6));
+            treeObject.setMaxHeight(cursor.getString(7));
+            treeObject.setSoilDrainage(cursor.getString(8));
+            treeObject.setSunExposure(cursor.getString(9));
+            treeObject.setGrowthRate(cursor.getString(10));
+            treeObject.setMaintenanceReq(cursor.getString(11));
+            treeList.add(treeObject);
+
+            System.out.println("loading all trees!!!!!!!!!!!");
+            cursor.moveToNext();
+        }
+
+        return treeList;
+
     }
 
 }

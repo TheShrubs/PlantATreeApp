@@ -1,8 +1,8 @@
 package com.example.theshrubs.plantatree.models;
 
 public enum Category {
-    FLORA("Flowering Trees", 0),
-    FAUNA("Non-flowering Trees", 1);
+    FLORA("Flowering", 0),
+    FAUNA("Non-flowering", 1);
 
     private String stringValue;
     private int intValue;
