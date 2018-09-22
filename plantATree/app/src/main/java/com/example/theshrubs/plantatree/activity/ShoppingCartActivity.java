@@ -38,7 +38,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         }
 
         List<Object> objectList = new ArrayList<>();
-        objectList = database.loadAllContents(1, "ShoppingCart");
+        objectList = database.loadAllContents(USER_ID, "ShoppingCart");
         ShoppingCart cartObject = new ShoppingCart();
         for(int i = 0; i < objectList.size(); i++){
             cartObject = (ShoppingCart) objectList.get(i);
