@@ -18,7 +18,7 @@ import com.example.theshrubs.plantatree.models.Product;
 import com.example.theshrubs.plantatree.models.ShoppingCart;
 import com.example.theshrubs.plantatree.models.User;
 
-public class AddItemToCartActivity extends AppCompatActivity implements View.OnClickListener{
+public class AddItemToCartActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView itemName;
     private TextView itemPrice;
@@ -54,13 +54,13 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
         addItem.setOnClickListener(this);
         setInformation(ViewItemActivity.getProduct());
 
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
-            if(extras == null){
+            if (extras == null) {
                 currentViewedTree = 1;
                 currentUSER_ID = 1;
                 System.out.println("Bundle extra was NULL user");
-            }else{
+            } else {
                 currentViewedTree = extras.getInt("TREE_ID");
                 currentUSER_ID = extras.getInt("USER_ID");
             }
@@ -83,10 +83,11 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
 
             @Override
             public void afterTextChanged(Editable s) {
-                double quant = Double.parseDouble(quantity.getText().toString());
+                int quant = Integer.parseInt(quantity.getText().toString());
                 double newTotal = (productItem.getProductPrice() + productItem.getShipping()) * quant;
                 totalCost.setText("Total Cost: $" + newTotal);
                 productItem.setProductTotal(newTotal);
+                productItem.setQuantity(quant);
                 addItem.setEnabled(true);
 
             }
@@ -103,19 +104,84 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
 
 
     }
+
     @Override
     public void onClick(View v) {
 
-        String message = productItem.getProductName() + " has been to cart. Proceed to shopping cart?";
+        String message;
+        int type;
 
+        Object foundUser = dbHandler.findHandle(currentUSER_ID, "User");
+        if (foundUser == null) {
+            System.out.println("user was empty");
+        } else {
+            currentUser = (User) foundUser;
+        }
 
-        showCustomDialog(message);
+        //check if User has a cart!
+        Object foundCart = dbHandler.findHandle(currentUser.getUserID(), "Cart");
+        //if user is NOT found - then it creates cart for user;
+        if (foundCart == null) {
+            System.out.println("cart was NULL");
+            currentCart.setCartID(currentUser.getUserID());
+            currentCart.setProductID(productItem.getProductID());
+            currentCart.setProductName(productItem.getProductName());
+            currentCart.setDeliveryCost(productItem.getShipping());
+            currentCart.setTotalCost(productItem.getProductTotal());
+            currentCart.setPhotoID(productItem.getPhotoID());
+            currentCart.setProductQuantity(productItem.getQuantity());
+            dbHandler.addHandle(currentCart);
+
+            message = productItem.getProductName() + " has been to cart. Proceed to shopping cart?";
+            type = 1;
+        }
+        //if cart is found - it searches the cart to see if product exists in cart.
+        else {
+            currentCart = (ShoppingCart) foundCart;
+            if (currentCart.getProductID() != productItem.getProductID()) {
+                currentCart.setCartID(currentUser.getUserID());
+                currentCart.setProductID(productItem.getProductID());
+                currentCart.setProductName(productItem.getProductName());
+                currentCart.setDeliveryCost(productItem.getShipping());
+                currentCart.setTotalCost(productItem.getProductTotal());
+                currentCart.setPhotoID(productItem.getPhotoID());
+                currentCart.setProductQuantity(productItem.getQuantity());
+                dbHandler.addHandle(currentCart);
+                message = productItem.getProductName() + " has been to cart. Proceed to shopping cart?";
+                type = 1;
+            } else {
+                message = productItem.getProductName() + " already exists in your cart";
+                type = 2;
+
+            }
+
+            if (type == 2) {
+                showCustomExistingDialog(message);
+            } else {
+                showCustomDialog(message);
+            }
+        }
 
     }
 
-    public void showCustomDialog(String message){
+    public void showCustomExistingDialog(String message) {
         final android.support.v7.app.AlertDialog.Builder dialog = new android.support.v7.app.AlertDialog.Builder(this);
+        dialog.setTitle("Product Exists");
+        dialog.setMessage(message);
+        dialog.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        dialog.show();
+    }
+
+    public void showCustomDialog(String message) {
+        final android.support.v7.app.AlertDialog.Builder dialog = new android.support.v7.app.AlertDialog.Builder(this);
+
         dialog.setTitle("Add To Cart");
+
         dialog.setMessage(message);
         dialog.setNegativeButton("Continue Shopping",
                 new DialogInterface.OnClickListener() {
@@ -127,69 +193,16 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
         dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
-//
-                Object foundUser = dbHandler.findHandle(currentUSER_ID,"User");
-                if(foundUser == null){
-//                    User newUser = new User("user", "user@gmail.com", "Upass");
-//                    dbHandler.addHandle(newUser);
-//                    currentUser = newUser;
-                    System.out.println("user was empty");
-                }else{
-                    currentUser = (User) foundUser;
-                }
-                Object foundCart = dbHandler.findHandle(currentUser.getUserID(), "Cart");
-                if(foundCart == null){
-                    System.out.println("cart was NULL");
-//                }
-//                    currentCart.setCartID(currentUser.getUserID());
-//                    currentCart.getProdproductItem.getProductID())
-                        currentCart.setCartID(currentUser.getUserID());
-                        currentCart.setProductID(productItem.getProductID());
-                        currentCart.setProductName(productItem.getProductName());
-                        currentCart.setDeliveryCost(productItem.getShipping());
-                        currentCart.setTotalCost(productItem.getProductTotal());
-                        dbHandler.addHandle(currentCart);
-
-
-
-                }else{
-                    currentCart = (ShoppingCart) foundCart;
-                    if(currentCart.getProductID() != productItem.getProductID()){
-                        currentCart.setCartID(currentUser.getUserID());
-                        currentCart.setProductID(productItem.getProductID());
-                        currentCart.setProductName(productItem.getProductName());
-                        currentCart.setDeliveryCost(productItem.getShipping());
-                        currentCart.setTotalCost(productItem.getProductTotal());
-                        dbHandler.addHandle(currentCart);
-                    }
-                    else{
-                        showDialog_existingProduct(productItem.getProductName() + " already exists in your cart");
-
-                    }
-                }
-
                 Intent intent = new Intent(AddItemToCartActivity.this, ShoppingCartActivity.class);
                 intent.putExtra("CART_ID", currentUser.getUserID());
                 startActivity(intent);
-
             }
         });
 
-        dialog.show();
-    }
-    public void showDialog_existingProduct(String message){
-        final android.support.v7.app.AlertDialog.Builder dialog = new android.support.v7.app.AlertDialog.Builder(this);
-        dialog.setTitle("Product Exists");
-        dialog.setMessage(message);
-        dialog.setPositiveButton("OK",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                });
 
         dialog.show();
+
     }
+
+//    }
 }

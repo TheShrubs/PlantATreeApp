@@ -8,6 +8,7 @@ public class ShoppingCart {
     private double deliveryCost;
     private int productQuantity;
     private double totalCost;
+    private int photoID;
 
     //default constructor allowing Cart to be instantiated with no values
     public ShoppingCart(){
@@ -19,7 +20,7 @@ public class ShoppingCart {
         setCartID(cartID);
     }
 
-    public ShoppingCart(int userID, int productid, String name, double productCost, double deliveryCost, int quantity, double totalCost){
+    public ShoppingCart(int userID, int productid, String name, double productCost, double deliveryCost, int quantity, double totalCost, int photo){
         setCartID(userID);
         setProductID(productid);
         setProductName(name);
@@ -27,6 +28,7 @@ public class ShoppingCart {
         setDeliveryCost(deliveryCost);
         setProductQuantity(quantity);
         setTotalCost(totalCost);
+        setPhotoID(photo);
 
     }
 
@@ -85,5 +87,13 @@ public class ShoppingCart {
 
     public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
+    }
+
+    public int getPhotoID() {
+        return photoID;
+    }
+
+    public void setPhotoID(int photoID) {
+        this.photoID = photoID;
     }
 }

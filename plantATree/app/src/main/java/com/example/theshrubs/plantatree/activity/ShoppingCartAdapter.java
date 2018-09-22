@@ -36,9 +36,10 @@ public class ShoppingCartAdapter extends BaseAdapter {
 
     public class ViewHolder {
         TextView itemName;
-        TextView itemShipping;
+//        TextView itemShipping;
         TextView itemTotal;
         EditText itemQuantity;
+        ImageView itemPhoto;
     }
 
     @Override
@@ -56,20 +57,15 @@ public class ShoppingCartAdapter extends BaseAdapter {
         return position;
     }
 
-//    @Override
-//    public View getView(int position, View convertView, ViewGroup parent) {
-//        return null;
-//    }
-
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.shopping_cart_item, null);
             viewHolder = new ViewHolder();
             viewHolder.itemName = (TextView) convertView.findViewById(R.id.shopItemName);
-            viewHolder.itemShipping = (TextView) convertView.findViewById(R.id.shopShipping);
             viewHolder.itemTotal = (TextView) convertView.findViewById(R.id.shopItemTotal);
             viewHolder.itemQuantity = (EditText) convertView.findViewById(R.id.shopItemQuantity);
+            viewHolder.itemPhoto = (ImageView) convertView.findViewById(R.id.shopItemPhoto);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -79,9 +75,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
         viewHolder.itemName.setText(cartItem.getProductName());
         viewHolder.itemTotal.setText("$" + cartItem.getTotalCost());
         viewHolder.itemQuantity.setText(String.valueOf(cartItem.getProductQuantity()));
-        viewHolder.itemShipping.setText("Shipping: $" +cartItem.getDeliveryCost());
-
-        System.out.println("fdjkalf;djkalf;jdakal;lfjdka;fjdkal;fjdkla;fjdkala;jfdkla;jfkdla;");
+        viewHolder.itemPhoto.setImageResource(cartItem.getPhotoID());
         return convertView;
     }
 

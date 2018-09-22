@@ -10,10 +10,9 @@
         android:id="@+id/shopItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="22dp"
+        android:layout_alignStart="@+id/shopItemTotal"
+        android:layout_marginTop="31dp"
         android:text="TextView"
         tools:layout_editor_absoluteX="128dp"
         tools:layout_editor_absoluteY="66dp" />
@@ -23,31 +22,34 @@
         android:id="@+id/shopItemTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/shopItemQuantity"
-        android:layout_alignTop="@+id/shopShipping"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/shopItemQuantity"
+        android:layout_marginStart="131dp"
         android:text="TextView"
         tools:layout_editor_absoluteX="128dp"
         tools:layout_editor_absoluteY="92dp" />
 
     <EditText
         android:id="@+id/shopItemQuantity"
-        android:layout_width="40dp"
-        android:layout_height="32dp"
+        android:layout_width="49dp"
+        android:layout_height="51dp"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/shopItemName"
-        android:layout_marginEnd="53dp"
+        android:layout_marginEnd="35dp"
         android:ems="10"
         android:inputType="number"
+        android:textSize="14sp"
         tools:layout_editor_absoluteX="308dp"
         tools:layout_editor_absoluteY="66dp" />
 
-    <TextView
-        android:id="@+id/shopShipping"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/shopItemPhoto"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/shopItemName"
-        android:layout_marginTop="64dp"
-        android:text="TextView" />
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="19dp"
+        app:srcCompat="@mipmap/ic_launcher" />
 
 </RelativeLayout>
