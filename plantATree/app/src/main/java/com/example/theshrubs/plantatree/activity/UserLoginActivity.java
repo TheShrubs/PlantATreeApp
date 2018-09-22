@@ -103,13 +103,16 @@ public class UserLoginActivity extends AppCompatActivity implements View.OnClick
 
 
 
-                System.out.println("Login User" + textInputEditTextUsername.getText().toString().trim() + " pass " +  textInputEditTextPassword.getText().toString().trim());
+                System.out.println("Login User " + textInputEditTextUsername.getText().toString().trim() + " pass " +  textInputEditTextPassword.getText().toString().trim());
             if (user != null) {
+                System.out.println("found user with id "+ user.getUserID());
                 Intent accountsIntent = new Intent(activity, LandingPageActivity.class);
                 accountsIntent.putExtra("EMAIL", textInputEditTextUsername.getText().toString().trim());
+                accountsIntent.putExtra("USER_ID", user.getUserID());
                 emptyInputEditText();
                 startActivity(accountsIntent);
             } else {
+
                 Snackbar.make(nestedScrollView, getString(R.string.error_valid_email_password), Snackbar.LENGTH_LONG).show();
             }
         }

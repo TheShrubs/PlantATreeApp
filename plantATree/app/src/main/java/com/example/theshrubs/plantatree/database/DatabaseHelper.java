@@ -99,7 +99,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public Object findHandle(String id, String tableName) {
+    public Object findHandle(int id, String tableName) {
         Object obj = new Object();
         String query = "";
         SQLiteDatabase db = this.getWritableDatabase();
@@ -108,25 +108,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         switch (tableName) {
             case "Tree":
-                query = "Select * FROM " + TREE_TABLE + " WHERE TreeID" + " = " + "'" + Integer.parseInt(id) + "'";
+                query = "Select * FROM " + TREE_TABLE + " WHERE TreeID" + " = " + "'" + id + "'";
                 cursor = getReadableDatabase().rawQuery(query, null);
                 Tree foundTree = treeTable.findTree(cursor);
                 obj = (Object) foundTree;
 
                 break;
             case "Cart":
-                query = "Select * FROM " + CART_TABLE + " WHERE UserID" + " = " + "'" + Integer.parseInt(id) + "'";
+                query = "Select * FROM " + CART_TABLE + " WHERE UserID" + " = " + "'" + id + "'";
                 System.out.println(query);
                 cursor = getReadableDatabase().rawQuery(query, null);
                 ShoppingCart foundCart = cartTable.findCart(cursor); //foundTree = treeTable.findTree(cursor);
                 obj = (Object) foundCart;
                 break;
             case "User":
+                query = "Select * FROM " + USER_TABLE + " WHERE UserID = '" + id + "'";
+                System.out.println("User instance " + query);
+                cursor = getReadableDatabase().rawQuery(query, null);
+                User currentUser = userTable.findUser(cursor);
+                obj = (Object) currentUser;
+                break;
+            case "findExistingUser":
                 query = "Select * FROM " + USER_TABLE + " WHERE Email = '" + username + "' AND Password = '" + password + "'";
-                System.out.println(query);
+                System.out.println("find existng user "+query);
                 cursor = getReadableDatabase().rawQuery(query, null);
                 User foundUser = userTable.findUser(cursor);
-//                System.out.println("Found user from db helper " + foundUser.toString());
                 obj = (Object) foundUser;
                 break;
             default:

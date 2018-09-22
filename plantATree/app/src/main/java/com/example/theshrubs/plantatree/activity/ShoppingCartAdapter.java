@@ -23,13 +23,22 @@ public class ShoppingCartAdapter extends BaseAdapter {
     private List<ShoppingCart> productList;
     private LayoutInflater layoutInflater;
     private Context context;
+    private int currentUSER_ID;
 //    private DatabaseHelper databaseHelper;
 
-    public ShoppingCartAdapter(Context context, List<ShoppingCart> products){//}, DatabaseHelper databaseHelper){
+    public ShoppingCartAdapter(Context context, List<ShoppingCart> products, int id){//}, DatabaseHelper databaseHelper){
         this.context = context;
         this.productList = products;
         this.layoutInflater = LayoutInflater.from(context);
+        this.currentUSER_ID = id;
 //        this.databaseHelper = new DatabaseHelper(context);
+    }
+
+    public class ViewHolder {
+        TextView itemName;
+        TextView itemShipping;
+        TextView itemTotal;
+        EditText itemQuantity;
     }
 
     @Override
@@ -52,37 +61,30 @@ public class ShoppingCartAdapter extends BaseAdapter {
 //        return null;
 //    }
 
-    public View getView(int position, View view, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
-        if (view == null) {
-            view = layoutInflater.inflate(R.layout.shopping_cart_item, null);
+        if (convertView == null) {
+            convertView = layoutInflater.inflate(R.layout.shopping_cart_item, null);
             viewHolder = new ViewHolder();
-            viewHolder.itemName = (TextView) view.findViewById(R.id.shopItemName);
-            viewHolder.itemShipping = (TextView) view.findViewById(R.id.shopShipping);
-            viewHolder.itemTotal = (TextView) view.findViewById(R.id.shopItemTotal);
-            viewHolder.itemQuantity = (EditText) view.findViewById(R.id.shopItemQuantity);
-            view.setTag(viewHolder);
+            viewHolder.itemName = (TextView) convertView.findViewById(R.id.shopItemName);
+            viewHolder.itemShipping = (TextView) convertView.findViewById(R.id.shopShipping);
+            viewHolder.itemTotal = (TextView) convertView.findViewById(R.id.shopItemTotal);
+            viewHolder.itemQuantity = (EditText) convertView.findViewById(R.id.shopItemQuantity);
+            convertView.setTag(viewHolder);
         } else {
-            viewHolder = (ViewHolder) view.getTag();
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
         ShoppingCart cartItem = this.productList.get(position);
-//        Tree treeItem
         viewHolder.itemName.setText(cartItem.getProductName());
         viewHolder.itemTotal.setText("$" + cartItem.getTotalCost());
         viewHolder.itemQuantity.setText(String.valueOf(cartItem.getProductQuantity()));
         viewHolder.itemShipping.setText("Shipping: $" +cartItem.getDeliveryCost());
-//        view.item
 
         System.out.println("fdjkalf;djkalf;jdakal;lfjdka;fjdkal;fjdkla;fjdkala;jfdkla;jfkdla;");
-        return view;
+        return convertView;
     }
 
-    static class ViewHolder {
-        TextView itemName;
-        TextView itemShipping;
-        TextView itemTotal;
-        EditText itemQuantity;
-    }
+
 
 }

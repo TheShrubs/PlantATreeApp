@@ -49,7 +49,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         }
 
         final ListView listView = (ListView) findViewById(R.id.productListView);
-        listView.setAdapter(new ShoppingCartAdapter(this, cartObjectList));//, database));
+        listView.setAdapter(new ShoppingCartAdapter(this, cartObjectList, USER_ID));//, database));
 
     }
 

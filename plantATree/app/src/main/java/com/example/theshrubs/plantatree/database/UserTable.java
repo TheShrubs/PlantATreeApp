@@ -80,7 +80,7 @@ public class UserTable {
         dbHandler.setUser(user, pass);
         System.out.println("from login "+ user + " pass " + pass);
 
-        object = dbHandler.findHandle(user, "User");
+        object = dbHandler.findHandle(1, "findExistingUser");
         if(object == null){
             System.out.println("check login was  null");
 //            return null;

@@ -34,7 +34,7 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
     private ShoppingCart currentCart = new ShoppingCart();
 
     private int currentViewedTree;
-    private int currentUSER;
+    private int currentUSER_ID;
 
 
     @Override
@@ -58,13 +58,17 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
             Bundle extras = getIntent().getExtras();
             if(extras == null){
                 currentViewedTree = 1;
-                currentUSER = 1;
+                currentUSER_ID = 1;
                 System.out.println("Bundle extra was NULL user");
             }else{
                 currentViewedTree = extras.getInt("TREE_ID");
-                currentUSER = extras.getInt("USER_ID");
+                currentUSER_ID = extras.getInt("USER_ID");
             }
+
         }
+
+
+        System.out.println("USER ID FROM ADD ITEM TO CART ACTIVITY IS " + currentUSER_ID);
 
         quantity.addTextChangedListener(new TextWatcher() {
             @Override
@@ -95,6 +99,7 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
         itemPrice.setText("Price: $" + product.getProductPrice());
         shipping.setText("Shipping Cost: $" + product.getShipping());
         totalCost.setText("Total Cost: $" + product.getProductTotal());
+        productImage.setImageResource(product.getPhotoID());
 
 
     }
@@ -123,7 +128,8 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                Object foundUser = dbHandler.findHandle(String.valueOf(currentUSER),"User");
+//
+                Object foundUser = dbHandler.findHandle(currentUSER_ID,"User");
                 if(foundUser == null){
 //                    User newUser = new User("user", "user@gmail.com", "Upass");
 //                    dbHandler.addHandle(newUser);
@@ -132,10 +138,20 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
                 }else{
                     currentUser = (User) foundUser;
                 }
-
-                Object foundCart = dbHandler.findHandle(String.valueOf(currentUser.getUserID()), "Cart");
+                Object foundCart = dbHandler.findHandle(currentUser.getUserID(), "Cart");
                 if(foundCart == null){
-                    currentCart.setCartID(currentUser.getUserID());
+                    System.out.println("cart was NULL");
+//                }
+//                    currentCart.setCartID(currentUser.getUserID());
+//                    currentCart.getProdproductItem.getProductID())
+                        currentCart.setCartID(currentUser.getUserID());
+                        currentCart.setProductID(productItem.getProductID());
+                        currentCart.setProductName(productItem.getProductName());
+                        currentCart.setDeliveryCost(productItem.getShipping());
+                        currentCart.setTotalCost(productItem.getProductTotal());
+                        dbHandler.addHandle(currentCart);
+
+
 
                 }else{
                     currentCart = (ShoppingCart) foundCart;
@@ -145,6 +161,7 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
                         currentCart.setProductName(productItem.getProductName());
                         currentCart.setDeliveryCost(productItem.getShipping());
                         currentCart.setTotalCost(productItem.getProductTotal());
+                        dbHandler.addHandle(currentCart);
                     }
                     else{
                         showDialog_existingProduct(productItem.getProductName() + " already exists in your cart");

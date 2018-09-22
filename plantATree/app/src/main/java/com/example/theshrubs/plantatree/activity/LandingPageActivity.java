@@ -32,7 +32,7 @@ public class LandingPageActivity extends AppCompatActivity {
         setContentView(R.layout.landing_page);
 
         this.dbHandler = new DatabaseHelper(this);
-        dbHandler.populateDatabase();
+//        dbHandler.populateDatabase();
 
         treeList = new ArrayList<>();
         List<Object> objectList = dbHandler.loadAllContents(1, "Landing");
@@ -52,6 +52,9 @@ public class LandingPageActivity extends AppCompatActivity {
                 currentUser = extras.getInt("USER_ID");
             }
         }
+
+
+        System.out.println("USER ID FROM LANDING PAGE IS " + currentUser);
 
 
         landingAdapter = new LandingPageAdapter(this, treeList, currentUser);

@@ -28,6 +28,7 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
     private DatabaseHelper treeDB;
 
     private int currentViewedTree;
+    private int currentUser;
 
 
 
@@ -49,15 +50,13 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
             Bundle extras = getIntent().getExtras();
             if(extras == null){
                 currentViewedTree = 1;
+                currentUser = 0;
                 System.out.println("Bundle extra was NULL user");
             }else{
                 currentViewedTree = extras.getInt("TREE_ID");
+                currentUser = extras.getInt("USER_ID");
             }
         }
-
-
-
-
 
 
         shoppingCart.setOnClickListener(this);
@@ -66,7 +65,7 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
 //        treeDB.populateDatabase();
 
 
-        Object obj = treeDB.findHandle(String.valueOf(currentViewedTree), "Tree");
+        Object obj = treeDB.findHandle(currentViewedTree, "Tree");
         tree = new Tree();
         tree = (Tree) obj;
         if (tree == null){
@@ -98,10 +97,10 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
         double cost =  tree.getPrice() + tree.getShippingCost();
         System.out.println("");
 
-        this.product = new Product(tree.getTreeID(), tree.getTreeName(), tree.getPrice(), tree.getShippingCost(), cost);
+        this.product = new Product(tree.getTreeID(), tree.getTreeName(), tree.getPrice(), tree.getShippingCost(), cost, tree.getPhotoID());
 
         Intent intent = new Intent(ViewItemActivity.this, AddItemToCartActivity.class);
-        intent.putExtra("USER_ID", currentViewedTree);
+        intent.putExtra("USER_ID", currentUser);
         startActivity(intent);
 
 
