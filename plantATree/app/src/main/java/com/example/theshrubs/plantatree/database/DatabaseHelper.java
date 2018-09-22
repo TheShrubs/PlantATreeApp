@@ -19,7 +19,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
     //information of database
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "PLANTATREE";
+    private static final String DATABASE_NAME = "PLANT_TREE";
     //table names
     private static final String TREE_TABLE = "Trees";
     private static final String USER_TABLE = "User";
@@ -129,7 +129,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //                System.out.println("Found user from db helper " + foundUser.toString());
                 obj = (Object) foundUser;
                 break;
-
             default:
                 query = "Select * FROM " + TREE_TABLE + " WHERE TreeID" + " = " + "'" + id + "'";
                 cursor = getReadableDatabase().rawQuery(query, null);
