@@ -1,7 +1,10 @@
 package com.example.theshrubs.plantatree.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.theshrubs.plantatree.R;
@@ -17,11 +20,14 @@ public class ShoppingCartActivity extends AppCompatActivity {
     private List<ShoppingCart> cartObjectList = new ArrayList<>();
     private int USER_ID;
     private DatabaseHelper database;
+    private double productCost = 45.00;
+    private double deliveryCost = 33.44;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shopping_cart);
+
         this.database = new DatabaseHelper(this);
 
         if(savedInstanceState == null){
@@ -51,6 +57,26 @@ public class ShoppingCartActivity extends AppCompatActivity {
         final ListView listView = (ListView) findViewById(R.id.productListView);
         listView.setAdapter(new ShoppingCartAdapter(this, cartObjectList, USER_ID));//, database));
 
+        configureContinueButton();
+    }
+
+    // creates a continue button that connects to Payment Activity and sends product & delivery cost to CartTotalsActivity
+    private void configureContinueButton(){
+        Button nextButton = (Button) findViewById(R.id.checkoutButtonA);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            //start the Payment Activity and link the current activity to it
+            public void onClick(View view){
+                Intent intent = new Intent(ShoppingCartActivity.this,AddressActivity.class);
+                Bundle extras = new Bundle();
+                extras.putDouble("productCost",productCost);
+                extras.putDouble("deliveryCost",deliveryCost);
+
+                intent.putExtras(extras);
+                startActivity(intent);
+            }
+        });
     }
 
 

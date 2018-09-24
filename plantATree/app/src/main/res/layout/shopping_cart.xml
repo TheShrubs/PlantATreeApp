@@ -18,7 +18,7 @@
         android:layout_marginTop="89dp" />
 
     <Button
-        android:id="@+id/checkoutButton"
+        android:id="@+id/checkoutButtonA"
         android:layout_width="194dp"
         android:layout_height="37dp"
         android:layout_alignParentBottom="true"
