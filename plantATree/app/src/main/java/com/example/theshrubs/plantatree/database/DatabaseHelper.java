@@ -19,7 +19,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
     //information of database
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "PLANT_TREE";
+    private static final String DATABASE_NAME = "PLANT_TREES";
     //table names
     private static final String TREE_TABLE = "Trees";
     private static final String USER_TABLE = "User";

@@ -5,7 +5,7 @@ public class User {
     private int UserID;
     private String userName;
     private String userEmail;
-
+    private String userType;
     private String userPassword;
 
     //default constructor so user object can be instantiated with no parameters

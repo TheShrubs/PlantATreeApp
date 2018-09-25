@@ -10,11 +10,32 @@
 
     <ListView
         android:id="@+id/treeList"
-        android:layout_width="321dp"
-        android:layout_height="464dp"
+        android:layout_width="341dp"
+        android:layout_height="442dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="15dp"
         android:layout_marginEnd="21dp" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="296dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/treeList"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:hint="Search Keyword"
+        android:inputType="textPersonName"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="53dp"
+        android:layout_marginTop="79dp"
+        app:srcCompat="@drawable/magnifying_glass" />
 
 </RelativeLayout>
