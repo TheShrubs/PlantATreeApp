@@ -5,16 +5,26 @@ package com.example.theshrubs.plantatree.activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.theshrubs.plantatree.R;
+import com.example.theshrubs.plantatree.database.DatabaseHelper;
+import com.example.theshrubs.plantatree.models.ShoppingCart;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CartTotalActivity extends AppCompatActivity {
 
     Double deliveryCost, productCost, invoiceTotal, discoutCost;
+    boolean delivery;
+    private List<ShoppingCart> cartObjectList = new ArrayList<>();
+    private int USER_ID;
+    private DatabaseHelper database;
 
 
     @Override
@@ -23,17 +33,45 @@ public class CartTotalActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart_total);
-        configureContinueButton();
-        configureBackButton();
+
 
         // get values for product cost and total cost passed through intent from addressActivity
         Bundle b = getIntent().getExtras();
-        productCost = b.getDouble("productCost");
-        deliveryCost = b.getDouble("deliveryCost");
+        delivery = b.getBoolean("delivery");
+
+        this.database = new DatabaseHelper(this);
+
+        if(savedInstanceState == null){
+            Bundle extras = getIntent().getExtras();
+            if(extras == null){
+                USER_ID = 1;
+                System.out.println("Bundle extra was NULL user");
+            }else{
+                USER_ID = extras.getInt("CART_ID");
+            }
+        }else{
+            USER_ID = (Integer) savedInstanceState.getSerializable("CART_ID");
+            System.out.println("savedInstance was NULL");
+        }
+
+        List<Object> objectList = new ArrayList<>();
+        objectList = database.loadAllContents(USER_ID, "ShoppingCart");
+        ShoppingCart cartObject = new ShoppingCart();
+        for(int i = 0; i < objectList.size(); i++) {
+            cartObject = (ShoppingCart) objectList.get(i);
+
+//            loading car
+            System.out.println("ADDING " + cartObject.toString() + "to cart array");
+            cartObjectList.add(cartObject);
+        }
+
+
         //TODO implement discount calculation method
         discoutCost = 0.00;
+        calcTotals();
         displayTotals();
-
+        configureContinueButton();
+        configureBackButton();
 
 
     }
@@ -76,6 +114,27 @@ public class CartTotalActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void calcTotals(){
+        deliveryCost = 0.00;
+        productCost = 0.00;
+        Double tempDel =0.00;
+        Double tempProd = 0.00;
+        String name;
+        int quan;
+        for(int i=0; i< cartObjectList.size();i++) {
+            tempDel +=cartObjectList.get(i).getDeliveryCost();
+            tempProd +=cartObjectList.get(i).getTotalCost();
+          //  tempProd +=cartObjectList.get(i).getProductCost()();
+
+            name = cartObjectList.get(i).getProductName();
+            quan =  cartObjectList.get(i).getProductQuantity();
+
+            Log.i("tag", name + "qan: "+ quan +" del= " +tempDel);
+            Log.i("tag", name +"qan: "+ quan + " prod= " +tempProd);
+
+        }
     }
 
 }

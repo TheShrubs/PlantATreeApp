@@ -13,19 +13,20 @@ import com.example.theshrubs.plantatree.R;
 
 public class AddressActivity extends AppCompatActivity {
 
-    Double deliveryCost =0.0;
-    Double productCost;
+    boolean delivery;
+    int USER_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
-
+        delivery = false;
         //gets the passed value of the products in users cart from shoppingCartActivity
         Bundle b = getIntent().getExtras();
-        productCost = b.getDouble("productCost");
 
+        Bundle extras = getIntent().getExtras();
+        USER_ID = extras.getInt("CART_ID");
         configureContinueButton();
         configureBackButton();
         deliveryButtonPressed();
@@ -42,8 +43,8 @@ public class AddressActivity extends AppCompatActivity {
             public void onClick(View view){
                 Intent intent = new Intent(AddressActivity.this,CartTotalActivity.class);
                 Bundle extras = new Bundle();
-                extras.putDouble("productCost",productCost);
-                extras.putDouble("deliveryCost",deliveryCost);
+                extras.putBoolean("delivery",delivery);
+                extras.putInt("CART_ID", USER_ID);
 
                 intent.putExtras(extras);
                 startActivity(intent);
@@ -61,7 +62,8 @@ public class AddressActivity extends AppCompatActivity {
             public void onClick(View view){
                 Toast.makeText(getApplicationContext(), "You have requested delivery", Toast.LENGTH_SHORT).show();
                 //shipping is flat rate of 39.99 else no charge for pick up
-                deliveryCost = 39.99;
+                delivery = true;
+
             }
         });
     }

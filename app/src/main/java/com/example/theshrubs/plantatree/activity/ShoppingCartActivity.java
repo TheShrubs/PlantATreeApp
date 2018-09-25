@@ -20,8 +20,6 @@ public class ShoppingCartActivity extends AppCompatActivity {
     private List<ShoppingCart> cartObjectList = new ArrayList<>();
     private int USER_ID;
     private DatabaseHelper database;
-    private double productCost = 45.00;
-    private double deliveryCost = 33.44;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +67,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
             //start the Payment Activity and link the current activity to it
             public void onClick(View view){
                 Intent intent = new Intent(ShoppingCartActivity.this,AddressActivity.class);
-                Bundle extras = new Bundle();
-                extras.putDouble("productCost",productCost);
-                extras.putDouble("deliveryCost",deliveryCost);
-
-                intent.putExtras(extras);
+                intent.putExtra("CART_ID", USER_ID);
                 startActivity(intent);
             }
         });
