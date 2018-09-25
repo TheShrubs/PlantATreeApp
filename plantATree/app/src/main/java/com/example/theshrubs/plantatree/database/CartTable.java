@@ -46,7 +46,7 @@ public class CartTable {
         values.put(DELIVERY_COST, cartObject.getDeliveryCost());
         values.put(QUANTITY, cartObject.getProductQuantity());
         values.put(TOTAL_COST, cartObject.getTotalCost());
-//        values.put(PHOTO_ID, cartObject.getPhotoID());
+        values.put(PHOTO_ID, cartObject.getPhotoID());
 
         return values;
     }
@@ -63,7 +63,7 @@ public class CartTable {
             cartObject.setDeliveryCost(cursor.getDouble(4));
             cartObject.setProductQuantity(cursor.getInt(5));
             cartObject.setTotalCost(cursor.getDouble(6));
-//            cartObject.setPhotoID(cursor.getInt(7));
+            cartObject.setPhotoID(cursor.getInt(7));
             cursor.close();
         }else{
             return null;
@@ -85,7 +85,7 @@ public class CartTable {
             cartObject.setDeliveryCost(cursor.getDouble(4));
             cartObject.setProductQuantity(cursor.getInt(5));
             cartObject.setTotalCost(cursor.getDouble(6));
-//            cartObject.setPhotoID(cursor.getInt(7));
+            cartObject.setPhotoID(cursor.getInt(7));
             cartList.add(cartObject);
 
             System.out.println("reading from getallcontents!!!!!!!!!!!");

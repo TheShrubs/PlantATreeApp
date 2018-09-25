@@ -152,7 +152,6 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
             } else {
                 message = productItem.getProductName() + " already exists in your cart";
                 type = 2;
-
             }
 
             if (type == 2) {
