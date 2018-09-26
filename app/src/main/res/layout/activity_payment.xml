@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background2"
+
     tools:context=".activity.PaymentActivity">
 
     <Button
@@ -11,10 +13,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginLeft="39dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginStart="39dp"
         android:text="Back to Cart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/VisaContinueButton"
@@ -26,10 +28,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginStart="4dp"
         android:text="Pay Now"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,10 +40,10 @@
 
     <EditText
         android:id="@+id/VisaName"
-        android:layout_width="317dp"
+        android:layout_width="275dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="24dp"
         android:drawableLeft="@drawable/ic_person_black_24dp"
         android:ems="10"
@@ -74,8 +76,8 @@
         android:id="@+id/VisaExpiry"
         android:layout_width="132dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="8dp"
         android:drawableLeft="@drawable/ic_date_range_black_24dp"
         android:ems="10"
@@ -88,10 +90,10 @@
 
     <EditText
         android:id="@+id/VisaCardNo"
-        android:layout_width="317dp"
+        android:layout_width="276dp"
         android:layout_height="46dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
         android:drawableLeft="@drawable/ic_credit_card_black_24dp"
         android:ems="10"
         android:inputType="number"
@@ -103,13 +105,11 @@
 
     <Switch
         android:id="@+id/SaveVisa"
-        android:layout_width="318dp"
+        android:layout_width="276dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:text="Save card information for future  use"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/VisaExpiry"
         app:layout_constraintTop_toBottomOf="@+id/VisaExpiry" />
 
     <TextView
@@ -117,9 +117,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="110dp"
         android:text="Payment Information"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/VisaName"

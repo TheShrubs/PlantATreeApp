@@ -10,7 +10,7 @@
 
     <ListView
         android:id="@+id/treeList"
-        android:layout_width="321dp"
+        android:layout_width="311dp"
         android:layout_height="464dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
