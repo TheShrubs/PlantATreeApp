@@ -28,9 +28,9 @@
     <string name="ShoppingCartTitle"> Shopping Cart(placeholder)</string>
     <string name="AddressTitle"> Delivery Address(placeholder)</string>
 
-    <string name="productsTotal"> Item Total</string>
-    <string name="shippingTotal"> Shipping Total</string>
-    <string name="discountTotal"> Discount Applied</string>
-    <string name="invoiceTotal"> Invoice Total</string>
+    <string name="productsTotal"> Item Total:</string>
+    <string name="shippingTotal"> Shipping Total:</string>
+    <string name="discountTotal"> Discount Applied:</string>
+    <string name="invoiceTotal"> Invoice Total:</string>
 
 </resources>

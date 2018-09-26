@@ -65,10 +65,9 @@ public class CartTotalActivity extends AppCompatActivity {
             cartObjectList.add(cartObject);
         }
 
-
-        //TODO implement discount calculation method
-        discoutCost = 0.00;
         calcTotals();
+        calcDelivery();
+        calcDiscount();
         displayTotals();
         configureContinueButton();
         configureBackButton();
@@ -76,8 +75,13 @@ public class CartTotalActivity extends AppCompatActivity {
 
     }
 
+    //displays invoice totals to user
     private void displayTotals(){
-        invoiceTotal = deliveryCost + productCost - discoutCost;
+
+       invoiceTotal = 0.00;
+
+        invoiceTotal = (deliveryCost + productCost) + discoutCost;
+       // Log.d("tag2", "inv cost: " + invoiceTotal);
         TextView productText = (TextView) findViewById(R.id.ProductTotal);
         productText.setText("$"+productCost );
         TextView deliveryText = (TextView) findViewById(R.id.DeliveryTotal);
@@ -116,24 +120,36 @@ public class CartTotalActivity extends AppCompatActivity {
         });
     }
 
+    // iterates through User's shopping cart and gets the item and delivery totals
     private void calcTotals(){
-        deliveryCost = 0.00;
-        productCost = 0.00;
         Double tempDel =0.00;
         Double tempProd = 0.00;
-        String name;
-        int quan;
         for(int i=0; i< cartObjectList.size();i++) {
-            tempDel +=cartObjectList.get(i).getDeliveryCost();
-            tempProd +=cartObjectList.get(i).getTotalCost();
-          //  tempProd +=cartObjectList.get(i).getProductCost()();
+            tempDel +=(cartObjectList.get(i).getDeliveryCost()*cartObjectList.get(i).getProductQuantity());
+            tempProd +=(cartObjectList.get(i).getTotalCost());
+        }
+        deliveryCost = tempDel;
+        productCost = tempProd-tempDel;
+    }
 
-            name = cartObjectList.get(i).getProductName();
-            quan =  cartObjectList.get(i).getProductQuantity();
+    // checks if user selected delivery on the previous Address Activity, if they did not there is no charge
+    private void calcDelivery(){
+        if(!delivery){
+            deliveryCost = 0.00;
+        }
+    }
 
-            Log.i("tag", name + "qan: "+ quan +" del= " +tempDel);
-            Log.i("tag", name +"qan: "+ quan + " prod= " +tempProd);
-
+    //checks if user has more than 10 items in their cart, if they do they qualify for free shipping
+    private void calcDiscount(){
+        int totalItems=0;
+        for(int i=0; i< cartObjectList.size();i++){
+            totalItems += cartObjectList.get(i).getProductQuantity();
+        }
+        if(totalItems>=10)  {
+            discoutCost = deliveryCost * -1;
+            ((TextView)findViewById(R.id.discountDesc)).setText("Discount Applied: \n (Bulk purchase discount)");
+        }else{
+            discoutCost =0.00;
         }
     }
 

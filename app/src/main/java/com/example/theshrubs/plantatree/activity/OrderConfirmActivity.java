@@ -10,9 +10,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.theshrubs.plantatree.R;
+import com.example.theshrubs.plantatree.database.DatabaseHelper;
 
 
 public class OrderConfirmActivity extends AppCompatActivity {
+    private DatabaseHelper database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +22,12 @@ public class OrderConfirmActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_confirm);
+        this.database = new DatabaseHelper(this);
         configureBackButton();
         createOrder();
+
+        //empties user's cart
+        database.clearCartTable();
 
     }
 

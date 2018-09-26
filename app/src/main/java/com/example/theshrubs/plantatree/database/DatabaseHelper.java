@@ -191,6 +191,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    //used to clear User's shopping cart
+    public void clearCartTable(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + CART_TABLE);
+    }
+
+
 
     public void populateDatabase() {
         Tree tree1 = new Tree(0, "Austrian Pine", "The austrian pine is medium to large sized everdgreen, needle-leaved conifer.", "Non-flowering", 84.0, R.drawable.austrian_pine, 3, "High", "Low", "High", "High", "Low");
