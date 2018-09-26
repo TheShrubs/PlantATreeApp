@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.theshrubs.plantatree.R;
@@ -23,8 +24,10 @@ public class CartTotalActivity extends AppCompatActivity {
     Double deliveryCost, productCost, invoiceTotal, discoutCost;
     boolean delivery;
     private List<ShoppingCart> cartObjectList = new ArrayList<>();
-    private int USER_ID;
+    private int USER_ID, listSize;
     private DatabaseHelper database;
+    private ImageView[] itemImages= new ImageView[3];
+
 
 
     @Override
@@ -34,12 +37,12 @@ public class CartTotalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart_total);
 
-
         // get values for product cost and total cost passed through intent from addressActivity
         Bundle b = getIntent().getExtras();
         delivery = b.getBoolean("delivery");
 
         this.database = new DatabaseHelper(this);
+
 
         if(savedInstanceState == null){
             Bundle extras = getIntent().getExtras();
@@ -65,12 +68,22 @@ public class CartTotalActivity extends AppCompatActivity {
             cartObjectList.add(cartObject);
         }
 
+        // create array of ImageView for Cart Item Images
+        itemImages[0]=findViewById(R.id.ItemImage3);
+        itemImages[1]=findViewById(R.id.ItemImage1);
+        itemImages[2]=findViewById(R.id.ItemImage2);
+
+        //fill itemImageViews
+         listSize = cartObjectList.size();
+        for(int i =0; i<=listSize-1 && i<3  ;i++){ setImages(i);}
+
         calcTotals();
         calcDelivery();
         calcDiscount();
         displayTotals();
         configureContinueButton();
         configureBackButton();
+
 
 
     }
@@ -90,6 +103,7 @@ public class CartTotalActivity extends AppCompatActivity {
         InvoiceText.setText("$"+invoiceTotal);
         TextView DiscountText = (TextView) findViewById(R.id.DiscountTotal);
         DiscountText.setText("$"+discoutCost);
+
 
 
     }
@@ -145,7 +159,7 @@ public class CartTotalActivity extends AppCompatActivity {
         for(int i=0; i< cartObjectList.size();i++){
             totalItems += cartObjectList.get(i).getProductQuantity();
         }
-        if(totalItems>=10)  {
+        if(delivery && totalItems>=10)  {
             discoutCost = deliveryCost * -1;
             ((TextView)findViewById(R.id.discountDesc)).setText("Discount Applied: \n (Bulk purchase discount)");
         }else{
@@ -153,4 +167,38 @@ public class CartTotalActivity extends AppCompatActivity {
         }
     }
 
+    //sets the three ImageViews in cart Total activity to images of first 3 items in user's cart
+    //TODO access ImageID's through shopping cart (currently bugged?)
+    public void setImages(int pos){
+        String ItemName = cartObjectList.get(pos).getProductName();
+
+        switch(ItemName){
+            case "Austrian Pine":
+                itemImages[pos].setImageResource(R.drawable.austrian_pine);
+                break;
+            case "Bristlecone Pine":
+                itemImages[pos].setImageResource(R.drawable.bristlecone_pine);
+                break;
+            case "White Ash":
+                itemImages[pos].setImageResource(R.drawable.white_ash);
+                break;
+            case "Blue Spruce":
+                itemImages[pos].setImageResource(R.drawable.blue_spruce);
+                break;
+            case "Bonsai Cherry":
+                itemImages[pos].setImageResource(R.drawable.bonsai_cherry);
+                break;
+            case "Honeycrisp Apple":
+                itemImages[pos].setImageResource(R.drawable.tree_apple);
+                break;
+            case "Red Maple":
+                itemImages[pos].setImageResource(R.drawable.tree_maple);
+                break;
+            case "White Oak":
+                itemImages[pos].setImageResource(R.drawable.tree_oak);
+                break;
+            default:
+                break;
+        }
+    }
 }
