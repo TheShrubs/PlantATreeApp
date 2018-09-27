@@ -10,14 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.AddItemToCartActivity" />
-        <activity android:name=".activity.UserLoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".activity.UserRegistrationActivity" />
         <activity android:name=".activity.ViewItemActivity" />
         <activity
             android:name=".activity.ShoppingCartActivity"
@@ -26,14 +18,14 @@
             android:name=".activity.LandingPageActivity"
             android:parentActivityName=".activity.LandingPageActivity"
             android:windowSoftInputMode="stateVisible|adjustNothing" />
-        <activity android:name=".UserLogin">
+        <activity android:name=".activity.UserLoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserRegistration">
+        <activity android:name=".activity.UserRegistrationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
