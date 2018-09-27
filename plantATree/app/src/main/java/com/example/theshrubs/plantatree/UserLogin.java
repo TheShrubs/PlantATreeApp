@@ -52,10 +52,16 @@ public class UserLogin extends AppCompatActivity implements View.OnClickListener
                 Object obj = dbHelper.findHandle(1, "findExistingUser");
                 if(obj == null){
                     showToast("Invalid username or password");
+                }else{
+                    User user = (User) obj;
+                    USERID = user.getUserID();
+                    Intent intent = new Intent(UserLogin.this, LandingPageActivity.class);
+                    intent.putExtra("USER_ID", USERID);
+                    startActivity(intent);
                 }
             }
         }else if(v.getId() == R.id.regiser_link){
-            Intent intent = new Intent(UserLogin.this, UserRegistrationActivity.class);
+            Intent intent = new Intent(UserLogin.this, UserRegistration.class);
             startActivity(intent);
         }
 

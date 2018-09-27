@@ -52,7 +52,7 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
             @Override
             public void afterTextChanged(Editable s) {
                 String userEmail = email.getText().toString().trim();
-                if(!userEmail.contains("@") || (!userEmail.contains(".com"))){
+                if (!userEmail.contains("@") || (!userEmail.contains(".com"))) {
                     email.setError("Email must be valid!");
                 }
             }
@@ -63,28 +63,37 @@ public class UserRegistration extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.login_Link){
+        if (v.getId() == R.id.login_Link) {
             Intent intent = new Intent(UserRegistration.this, UserLogin.class);
             startActivity(intent);
-        }else if (v.getId() == R.id.reg_Button){
+        } else if (v.getId() == R.id.reg_Button) {
             String name = this.username.getText().toString().trim();
             String userEmail = this.email.getText().toString().trim();
             String password = this.password.getText().toString().trim();
             String confrim = this.confirmPasswordd.getText().toString().trim();
-            if(!password.equals(confrim)){
+            if (!password.equals(confrim)) {
                 setToast("Passwords do not match");
-            }else {
-                setToast("Registration Successful");
-                User user = new User(name,userEmail,password);
-                dbHelper.addHandle(user);
-                Intent intent = new Intent(UserRegistration.this, UserLogin.class);
-                startActivity(intent);
+            } else {
+                dbHelper.setUser(userEmail, password);
+                Object obj = dbHelper.findHandle(1, "findExistingUser");
+                if (obj != null) {
+                    User foundUser = (User) obj;
+                    if (foundUser.getUserEmail().equals(userEmail)) {
+                        setToast("Email already exists");
+                    }
+                } else {
+                    setToast("Registration Successful");
+                    User user = new User(name, userEmail, password);
+                    dbHelper.addHandle(user);
+                    Intent intent = new Intent(UserRegistration.this, UserLogin.class);
+                    startActivity(intent);
+                }
             }
         }
 
     }
 
-    private void setToast(String message){
+    private void setToast(String message) {
         Toast messageToast = Toast.makeText(UserRegistration.this, message, Toast.LENGTH_SHORT);
         messageToast.show();
     }

@@ -19,4 +19,18 @@
     <string name="error_password_match">Password does not match</string>
     <string name="error_valid_email_password">Wrong username or password</string>
     <string name="welcome">Welcome</string>
+    <string name="title_activity_payment">PaymentActivity</string>
+
+
+    <string name="orderConfirmTitle">Congratulations!</string>
+    <string name="cartTotalTitle"> Cart Totals</string>
+    <string name="paymentMethodTitle">Payment Method</string>
+    <string name="ShoppingCartTitle"> Shopping Cart(placeholder)</string>
+    <string name="AddressTitle"> Delivery Address(placeholder)</string>
+
+    <string name="productsTotal"> Item Total:</string>
+    <string name="shippingTotal"> Shipping Total:</string>
+    <string name="discountTotal"> Discount Applied:</string>
+    <string name="invoiceTotal"> Invoice Total:</string>
+
 </resources>

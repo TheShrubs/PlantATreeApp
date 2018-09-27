@@ -19,7 +19,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
     //information of database
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "PLANT_TREES";
+    private static final String DATABASE_NAME = "PLANTATREES";
     //table names
     private static final String TREE_TABLE = "Trees";
     private static final String USER_TABLE = "User";
@@ -191,6 +191,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void clearCartTable(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + CART_TABLE);
+    }
 
     public void populateDatabase() {
         Tree tree1 = new Tree(0, "Austrian Pine", "The austrian pine is medium to large sized everdgreen, needle-leaved conifer.", "Non-flowering", 84.0, R.drawable.austrian_pine, 3, "High", "Low", "High", "High", "Low");
