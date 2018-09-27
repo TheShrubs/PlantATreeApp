@@ -24,11 +24,9 @@ public class OrderConfirmActivityTest {
     @Test
     // tests if delivery cost is correctly assigned based on if user has chosen to pay for delivery
     public void calcDeliveryTest(){
+        boolean delivery = true;
 
-       boolean delivery = true;
         boolean deliveryResult = cta.calcDelivery(delivery);
-
-
         assertTrue (deliveryResult == true);
     }
 

@@ -24,14 +24,13 @@ public class OrderConfirmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_confirm);
         this.database = new DatabaseHelper(this);
+
         configureBackButton();
         orderNo=createOrder();
         confirmMessage(orderNo);
 
         //empties user's cart
         database.clearCartTable();
-        System.out.print("hi");
-
     }
 
     // creates a okay button that returns to Cart Total Activity
@@ -54,20 +53,20 @@ public class OrderConfirmActivity extends AppCompatActivity {
         startActivity(new Intent(OrderConfirmActivity.this,LandingPageActivity.class));
     }
 
-    //
+    //displays confirmation message to user with their invoice number
     private void confirmMessage(int orderNo){
 
         TextView confirmText = (TextView) findViewById(R.id.confirmText);
         confirmText.setText("Thank You! \nYour Order #" +orderNo +" has been placed successfully.");
     }
 
+    //creates an invoice number
     public int createOrder(){
         //TODO insert order details into previous order table
         int orderNo =(int)((Math.random()*90000)+10000);
         return orderNo;
     }
 
+    // constructor
     OrderConfirmActivity(){ }
-
-
 }

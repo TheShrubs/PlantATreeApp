@@ -22,12 +22,13 @@ public class AddressActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
         delivery = false;
+
         //gets the passed value of the products in users cart from shoppingCartActivity
         Bundle b = getIntent().getExtras();
-
         Bundle extras = getIntent().getExtras();
         USER_ID = extras.getInt("CART_ID");
         configureContinueButton();
+        pickUpButtonPressed();
         configureBackButton();
         deliveryButtonPressed();
 
@@ -45,7 +46,6 @@ public class AddressActivity extends AppCompatActivity {
                 Bundle extras = new Bundle();
                 extras.putBoolean("delivery",delivery);
                 extras.putInt("CART_ID", USER_ID);
-
                 intent.putExtras(extras);
                 startActivity(intent);
             }
@@ -63,13 +63,23 @@ public class AddressActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "You have requested delivery", Toast.LENGTH_SHORT).show();
                 //shipping is flat rate of 39.99 else no charge for pick up
                 delivery = true;
-
             }
         });
     }
 
+    public void pickUpButtonPressed(){
+        Button pickupButton = (Button) findViewById(R.id.PickupButton);
+        pickupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
 
-
+            //Ends this activity and returns to previous activity
+            public void onClick(View view){
+                Toast.makeText(getApplicationContext(), "You have requested to pick up in store", Toast.LENGTH_SHORT).show();
+                //shipping is flat rate of 39.99 else no charge for pick up
+                delivery = false;
+            }
+        });
+    }
 
     // creates a back button that returns to address Activity
     private void configureBackButton(){

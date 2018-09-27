@@ -66,10 +66,6 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
             }
 
         }
-
-
-        System.out.println("USER ID FROM ADD ITEM TO CART ACTIVITY IS " + currentUSER_ID);
-
         quantity.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

@@ -23,9 +23,9 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.shopping_cart);
-
         this.database = new DatabaseHelper(this);
 
         if(savedInstanceState == null){
@@ -44,14 +44,12 @@ public class ShoppingCartActivity extends AppCompatActivity {
         List<Object> objectList = new ArrayList<>();
         objectList = database.loadAllContents(USER_ID, "ShoppingCart");
         ShoppingCart cartObject = new ShoppingCart();
+
         for(int i = 0; i < objectList.size(); i++){
             cartObject = (ShoppingCart) objectList.get(i);
-
-//            loading car
             System.out.println("ADDING " + cartObject.toString() + "to cart array");
             cartObjectList.add(cartObject);
         }
-
         final ListView listView = (ListView) findViewById(R.id.productListView);
         listView.setAdapter(new ShoppingCartAdapter(this, cartObjectList, USER_ID));//, database));
 

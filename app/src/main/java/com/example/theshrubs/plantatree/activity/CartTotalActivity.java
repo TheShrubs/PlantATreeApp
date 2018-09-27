@@ -217,5 +217,7 @@ public class CartTotalActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    //constructor
     CartTotalActivity(){ }
 }
