@@ -96,4 +96,10 @@ public class ShoppingCart {
     public void setPhotoID(int photoID) {
         this.photoID = photoID;
     }
+
+    public String toString(){
+        return "CartID: " + getCartID()+ " ProdID " + getProductID() + " NAME: " + getProductName() + " COST: " + getProductCost() + "DELIVERY: " + getDeliveryCost() + " QUANTITY " + getProductQuantity() + " total: " + getTotalCost() + "photo" + getPhotoID();
+
+
+    }
 }

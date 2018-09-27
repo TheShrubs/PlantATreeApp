@@ -126,6 +126,7 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
             currentCart.setCartID(currentUser.getUserID());
             currentCart.setProductID(productItem.getProductID());
             currentCart.setProductName(productItem.getProductName());
+            currentCart.setProductCost(productItem.getProductPrice());
             currentCart.setDeliveryCost(productItem.getShipping());
             currentCart.setTotalCost(productItem.getProductTotal());
             currentCart.setPhotoID(productItem.getPhotoID());
@@ -142,6 +143,7 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
                 currentCart.setCartID(currentUser.getUserID());
                 currentCart.setProductID(productItem.getProductID());
                 currentCart.setProductName(productItem.getProductName());
+                currentCart.setProductCost(productItem.getProductPrice());
                 currentCart.setDeliveryCost(productItem.getShipping());
                 currentCart.setTotalCost(productItem.getProductTotal());
                 currentCart.setPhotoID(productItem.getPhotoID());
@@ -153,12 +155,12 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
                 message = productItem.getProductName() + " already exists in your cart";
                 type = 2;
             }
+        }
 
-            if (type == 2) {
-                showCustomExistingDialog(message);
-            } else {
-                showCustomDialog(message);
-            }
+        if (type == 2) {
+            showCustomExistingDialog(message);
+        } else {
+            showCustomDialog(message);
         }
 
     }

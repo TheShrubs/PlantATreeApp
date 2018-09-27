@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.example.theshrubs.plantatree.R;
+import com.example.theshrubs.plantatree.models.Address;
 import com.example.theshrubs.plantatree.models.ShoppingCart;
 import com.example.theshrubs.plantatree.models.Tree;
 import com.example.theshrubs.plantatree.models.User;
@@ -36,6 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private TreeTable treeTable = new TreeTable();
     private CartTable cartTable = new CartTable();
     private UserTable userTable = new UserTable();
+    private AddressTable addressTable = new AddressTable();
 
     private String username;
     private String password;
@@ -51,6 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(treeTable.createTreeTable(TREE_TABLE));
         db.execSQL(cartTable.createCartTable(CART_TABLE));
         db.execSQL(userTable.createTreeTable(USER_TABLE));
+        db.execSQL(addressTable.createAddressTable(ADDRESS_TABLE));
     }
 
 
@@ -79,6 +82,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             tableName = USER_TABLE;
             System.out.println("INSERTED " + userObject.toString());
             values = userTable.addNewUser(userObject);
+        } else if(object instanceof Address){
+            Address addressObject = (Address) object;
+            tableName = ADDRESS_TABLE;
+            values = addressTable.getAddressContents(addressObject);
         }
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -118,7 +125,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 query = "Select * FROM " + CART_TABLE + " WHERE UserID" + " = " + "'" + id + "'";
                 System.out.println(query);
                 cursor = getReadableDatabase().rawQuery(query, null);
-                ShoppingCart foundCart = cartTable.findCart(cursor); //foundTree = treeTable.findTree(cursor);
+                ShoppingCart foundCart = cartTable.findCart(cursor);
                 obj = (Object) foundCart;
                 break;
             case "User":
@@ -134,6 +141,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 cursor = getReadableDatabase().rawQuery(query, null);
                 User foundUser = userTable.findUser(cursor);
                 obj = (Object) foundUser;
+                break;
+            case "Address":
+                query = "Select * FROM " + ADDRESS_TABLE + " WHERE UserID = '" + id + "'";
+                cursor = getReadableDatabase().rawQuery(query, null);
+                Address foundAddress = addressTable.findAddress(cursor);
+                obj = (Object) foundAddress;
                 break;
             default:
                 query = "Select * FROM " + TREE_TABLE + " WHERE TreeID" + " = " + "'" + id + "'";
@@ -221,30 +234,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //
     }
 
-//
-//
-//    public User checkLogin(String user, String pass){
-//
-////        this.dbHandler = db;\\\
-//        User currentUser = new User();
-////        dbHandler.setUser(user, pass);
-//
-//        Object object = findHandle(user, "User");
-//        if(object == null){
-//            System.out.println("check login was  null");
-//            return null;
-//        }else{
-//            currentUser = (User) object;
-//            if(currentUser.getUserPassword().equals(pass)){
-//                System.out.println("User from check login " + currentUser);
-//                return currentUser;
-//            }else{
-//                return null;
-//            }
-//
-//        }
-////        return currentUser;
-//    }
 
 
     public void setUser(String user, String pass) {
@@ -270,45 +259,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return false;
     }
-//
-//
-//    //method to CHECK for a USER. Aids validation
-//    public boolean checkUser(String email) {
-//        String[] columns = {
-//                USER_ID
-//        };
-//        //call SQLite DB
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        String selection = USER_EMAIL + " = ?";
-//        String[] selectionArgs = {email};
-//
-//        Cursor cursor = db.query(USER_TABLE, columns, selection, selectionArgs, null, null, null);
-//        int cursorCount = cursor.getCount();
-//        cursor.close();
-//        db.close();
-//        if (cursorCount > 0) {
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    //check for USER when email and password is passed in. Follows same format as the checkUser method however, it takes in an email and password
-//    public boolean checkUser(String email, String password) {
-//        String[] columns = {
-//                USER_ID
-//        };
-//        //call SQLite DB
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        String selection = USER_EMAIL + " = ?" + " AND " + USER_PASSWORD + " = ?";
-//        String[] selectionArgs = {email, password};
-//
-//        Cursor cursor = db.query(USER_TABLE, columns, selection, selectionArgs, null, null, null);
-//        int cursorCount = cursor.getCount();
-//        cursor.close();
-//        db.close();
-//        if (cursorCount > 0) {
-//            return true;
-//        }
-//        return false;
-//    }
 }

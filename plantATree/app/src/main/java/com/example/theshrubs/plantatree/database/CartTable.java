@@ -31,7 +31,7 @@ public class CartTable {
                 DELIVERY_COST + " REAL," +
                 QUANTITY + " INTEGER," +
                 TOTAL_COST + " REAL," +
-                PHOTO_ID + "INTEGER" + ");";
+                PHOTO_ID + " INTEGER" + ");";
 
         return createTable;
     }
@@ -47,6 +47,8 @@ public class CartTable {
         values.put(QUANTITY, cartObject.getProductQuantity());
         values.put(TOTAL_COST, cartObject.getTotalCost());
         values.put(PHOTO_ID, cartObject.getPhotoID());
+
+        System.out.println(cartObject);
 
         return values;
     }

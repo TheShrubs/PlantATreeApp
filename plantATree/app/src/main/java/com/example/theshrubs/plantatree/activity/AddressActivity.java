@@ -6,15 +6,29 @@ import android.os.Bundle;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.theshrubs.plantatree.R;
+import com.example.theshrubs.plantatree.database.DatabaseHelper;
+import com.example.theshrubs.plantatree.models.Address;
 
 
-public class AddressActivity extends AppCompatActivity {
+public class AddressActivity extends AppCompatActivity implements View.OnClickListener{
 
-    boolean delivery;
-    int USER_ID;
+    private boolean delivery;
+    private int USER_ID;
+    private double TOTAL_COST;
+
+    private EditText streetNumber;
+    private EditText streetName;
+    private EditText suburb;
+    private EditText city;
+    private EditText postCode;
+    private Button nextButton;
+    private Button backButton;
+    private DatabaseHelper dbHelper;
+    private boolean returningUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,71 +40,84 @@ public class AddressActivity extends AppCompatActivity {
         //gets the passed value of the products in users cart from shoppingCartActivity
         Bundle b = getIntent().getExtras();
         Bundle extras = getIntent().getExtras();
-        USER_ID = extras.getInt("CART_ID");
-        configureContinueButton();
-        pickUpButtonPressed();
-        configureBackButton();
-        deliveryButtonPressed();
+        USER_ID = extras.getInt("USER_ID");
+        TOTAL_COST = extras.getDouble("TOTAL_COST");
+
+        this.dbHelper = new DatabaseHelper(this);
+
+        this.streetNumber = (EditText) findViewById(R.id.streetNumber);
+        this.streetName = (EditText) findViewById(R.id.streetName);
+        this.suburb = (EditText) findViewById(R.id.suburb);
+        this.city = (EditText) findViewById(R.id.city);
+        this.postCode = (EditText) findViewById(R.id.postcode);
+
+        this.nextButton = (Button) findViewById(R.id.AddressContinueButton);
+        this.backButton = (Button) findViewById(R.id.AddressBackButton);
+
+        this.nextButton.setOnClickListener(this);
+        this.backButton.setOnClickListener(this);
+        setFields();
 
     }
 
-    // creates a continue button that connects to Payment Activity and sends product & delivery cost to CartTotalsActivity
-    private void configureContinueButton(){
-        Button nextButton = (Button) findViewById(R.id.AddressContinueButton);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
+    public void setFields(){
+        Object obj = dbHelper.findHandle(USER_ID, "Address");
+        if(obj != null){
+            Address address = (Address) obj;
 
-            //start the Payment Activity and link the current activity to it
-            public void onClick(View view){
-                Intent intent = new Intent(AddressActivity.this,CartTotalActivity.class);
-                Bundle extras = new Bundle();
-                extras.putBoolean("delivery",delivery);
-                extras.putInt("CART_ID", USER_ID);
-                intent.putExtras(extras);
+            streetNumber.setText(address.getStreetNumber());
+            streetName.setText(address.getStreeName());
+            suburb.setText(address.getSuburb());
+            city.setText(address.getCity());
+            postCode.setText(address.getPostcode());
+
+            returningUser = true;
+        }else{
+            returningUser = false;
+        }
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.AddressContinueButton){
+            int sNumber = 0;
+            int post_Number = 0;
+            String street_number = streetNumber.getText().toString().trim();
+            String sName = streetNumber.getText().toString().trim();
+            String sub = suburb.getText().toString().trim();
+            String cit = city.getText().toString().trim();
+            String post = postCode.getText().toString().trim();
+
+
+            if(street_number.isEmpty() || sName.isEmpty() || sub.isEmpty() || cit.isEmpty() || post.isEmpty() ){
+                setToast("Please ensure all fields are filled out");
+            }else{
+                if(!returningUser){
+                    sNumber = Integer.parseInt(street_number);
+                    post_Number = Integer.parseInt(post);
+                    Address address = new Address(sNumber, sName, sub, cit, post_Number);
+                    dbHelper.addHandle(address);
+                }
+
+
+                Intent intent = new Intent(AddressActivity.this, PaymentActivity.class);
+                intent.putExtra("USER_ID", USER_ID);
+                intent.putExtra("TOTAL_COST", TOTAL_COST);
                 startActivity(intent);
             }
-        });
+
+
+
+
+        }else if(v.getId() == R.id.AddressBackButton){
+            finish();
+        }
+
     }
 
-    // if button is selected delivery fee will be charged
-    public void deliveryButtonPressed(){
-        Button deliveryButton = (Button) findViewById(R.id.DeliveryButton);
-        deliveryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-
-            //Ends this activity and returns to previous activity
-            public void onClick(View view){
-                Toast.makeText(getApplicationContext(), "You have requested delivery", Toast.LENGTH_SHORT).show();
-                //shipping is flat rate of 39.99 else no charge for pick up
-                delivery = true;
-            }
-        });
-    }
-
-    public void pickUpButtonPressed(){
-        Button pickupButton = (Button) findViewById(R.id.PickupButton);
-        pickupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-
-            //Ends this activity and returns to previous activity
-            public void onClick(View view){
-                Toast.makeText(getApplicationContext(), "You have requested to pick up in store", Toast.LENGTH_SHORT).show();
-                //shipping is flat rate of 39.99 else no charge for pick up
-                delivery = false;
-            }
-        });
-    }
-
-    // creates a back button that returns to address Activity
-    private void configureBackButton(){
-        Button backButton = (Button) findViewById(R.id.AddressBackButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-
-            //Ends this activity and returns to previous activity
-            public void onClick(View view){
-                finish();
-            }
-        });
+    public void setToast(String message){
+        Toast showToast = Toast.makeText(AddressActivity.this, message, Toast.LENGTH_SHORT);
+        showToast.show();
     }
 }

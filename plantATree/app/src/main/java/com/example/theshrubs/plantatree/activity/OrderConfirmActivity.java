@@ -13,7 +13,7 @@ import com.example.theshrubs.plantatree.R;
 import com.example.theshrubs.plantatree.database.DatabaseHelper;
 
 
-public class OrderConfirmActivity extends AppCompatActivity {
+public class OrderConfirmActivity extends AppCompatActivity implements View.OnClickListener{
     private DatabaseHelper database;
     private int orderNo;
 
@@ -67,6 +67,9 @@ public class OrderConfirmActivity extends AppCompatActivity {
         return orderNo;
     }
 
-    // constructor
-    OrderConfirmActivity(){ }
+
+    @Override
+    public void onClick(View v) {
+
+    }
 }

@@ -25,7 +25,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.UserRegistrationActivity">
+        <activity android:name=".activity.UserRegistrationActivity"></activity>
+        <activity android:name=".activity.AddressActivity"></activity>
+        <activity android:name=".activity.PaymentActivity"></activity>
+        <activity android:name=".activity.OrderConfirmActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
