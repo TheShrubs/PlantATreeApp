@@ -22,7 +22,7 @@ import java.util.List;
 public class CartTotalActivity extends AppCompatActivity {
 
     Double deliveryCost, productCost, invoiceTotal, discoutCost;
-    boolean delivery;
+    boolean delivery, delCheck;
     private List<ShoppingCart> cartObjectList = new ArrayList<>();
     private int USER_ID, listSize;
     private DatabaseHelper database;
@@ -78,9 +78,12 @@ public class CartTotalActivity extends AppCompatActivity {
         for(int i =0; i<=listSize-1 && i<3  ;i++){ setImages(i);}
 
         calcTotals();
-        calcDelivery();
+        delCheck= calcDelivery(delivery);
         calcDiscount();
-        displayTotals();
+        invoiceTotal = calcInv(deliveryCost,productCost,discoutCost);
+        setTotals();
+
+
         configureContinueButton();
         configureBackButton();
 
@@ -89,12 +92,13 @@ public class CartTotalActivity extends AppCompatActivity {
     }
 
     //displays invoice totals to user
-    private void displayTotals(){
-
-       invoiceTotal = 0.00;
+    public double calcInv(double deliveryCost, double productCost, double discoutCost){
 
         invoiceTotal = (deliveryCost + productCost) + discoutCost;
-       // Log.d("tag2", "inv cost: " + invoiceTotal);
+        return invoiceTotal;
+    }
+    public void setTotals(){
+        // Log.d("tag2", "inv cost: " + invoiceTotal);
         TextView productText = (TextView) findViewById(R.id.ProductTotal);
         productText.setText("$"+productCost );
         TextView deliveryText = (TextView) findViewById(R.id.DeliveryTotal);
@@ -103,9 +107,6 @@ public class CartTotalActivity extends AppCompatActivity {
         InvoiceText.setText("$"+invoiceTotal);
         TextView DiscountText = (TextView) findViewById(R.id.DiscountTotal);
         DiscountText.setText("$"+discoutCost);
-
-
-
     }
 
     // creates a continue button that connects to Payment Activity
@@ -147,10 +148,25 @@ public class CartTotalActivity extends AppCompatActivity {
     }
 
     // checks if user selected delivery on the previous Address Activity, if they did not there is no charge
-    private void calcDelivery(){
+    public double calcDelivery(boolean delivery,double dCost){
+        double cost;
+       if(delivery == true){
+           cost = dCost;
+       }
+       else{
+           cost = 0.00;
+       }
+       return cost;
+    }
+    public boolean calcDelivery(boolean delivery){
+       boolean del;
         if(!delivery){
-            deliveryCost = 0.00;
+            deliveryCost=0.00;
+            del = false;
+        }else{
+            del = true;
         }
+        return del;
     }
 
     //checks if user has more than 10 items in their cart, if they do they qualify for free shipping
@@ -168,7 +184,7 @@ public class CartTotalActivity extends AppCompatActivity {
     }
 
     //sets the three ImageViews in cart Total activity to images of first 3 items in user's cart
-    //TODO access ImageID's through shopping cart (currently bugged?)
+    //TODO access ImageID's through shopping cart
     public void setImages(int pos){
         String ItemName = cartObjectList.get(pos).getProductName();
 
@@ -201,4 +217,5 @@ public class CartTotalActivity extends AppCompatActivity {
                 break;
         }
     }
+    CartTotalActivity(){ }
 }

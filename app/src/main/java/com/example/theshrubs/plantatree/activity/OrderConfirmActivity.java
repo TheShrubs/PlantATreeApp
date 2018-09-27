@@ -15,6 +15,7 @@ import com.example.theshrubs.plantatree.database.DatabaseHelper;
 
 public class OrderConfirmActivity extends AppCompatActivity {
     private DatabaseHelper database;
+    private int orderNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +25,12 @@ public class OrderConfirmActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order_confirm);
         this.database = new DatabaseHelper(this);
         configureBackButton();
-        createOrder();
+        orderNo=createOrder();
+        confirmMessage(orderNo);
 
         //empties user's cart
         database.clearCartTable();
+        System.out.print("hi");
 
     }
 
@@ -58,11 +61,13 @@ public class OrderConfirmActivity extends AppCompatActivity {
         confirmText.setText("Thank You! \nYour Order #" +orderNo +" has been placed successfully.");
     }
 
-    private void createOrder(){
+    public int createOrder(){
         //TODO insert order details into previous order table
         int orderNo =(int)((Math.random()*90000)+10000);
-        confirmMessage(orderNo);
+        return orderNo;
     }
+
+    OrderConfirmActivity(){ }
 
 
 }
