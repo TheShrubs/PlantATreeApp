@@ -40,19 +40,20 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
         //gets the passed value of the products in users cart from shoppingCartActivity
         Bundle b = getIntent().getExtras();
         Bundle extras = getIntent().getExtras();
-        USER_ID = extras.getInt("USER_ID");
-        TOTAL_COST = extras.getDouble("TOTAL_COST");
+//        USER_ID = extras.getInt("USER_ID");
+//        TOTAL_COST = extras.getDouble("TOTAL_COST");
 
+        USER_ID = 2;
         this.dbHelper = new DatabaseHelper(this);
 
-        this.streetNumber = (EditText) findViewById(R.id.streetNumber);
-        this.streetName = (EditText) findViewById(R.id.streetName);
-        this.suburb = (EditText) findViewById(R.id.suburb);
-        this.city = (EditText) findViewById(R.id.city);
-        this.postCode = (EditText) findViewById(R.id.postcode);
+        this.streetNumber = findViewById(R.id.streetNumber);
+        this.streetName = findViewById(R.id.streetName);
+        this.suburb = findViewById(R.id.suburb);
+        this.city = findViewById(R.id.city);
+        this.postCode = findViewById(R.id.postcode);
 
-        this.nextButton = (Button) findViewById(R.id.AddressContinueButton);
-        this.backButton = (Button) findViewById(R.id.AddressBackButton);
+        this.nextButton = findViewById(R.id.AddressContinueButton);
+        this.backButton = findViewById(R.id.AddressBackButton);
 
         this.nextButton.setOnClickListener(this);
         this.backButton.setOnClickListener(this);
@@ -61,7 +62,7 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void setFields(){
-        Object obj = dbHelper.findHandle(USER_ID, "Address");
+        System.out.println(" addressObject," );Object obj = dbHelper.findHandle(USER_ID, "Address");
         if(obj != null){
             Address address = (Address) obj;
 

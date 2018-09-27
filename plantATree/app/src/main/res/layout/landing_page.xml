@@ -18,7 +18,7 @@
         android:layout_marginEnd="21dp" />
 
     <EditText
-        android:id="@+id/streetNumber"
+        android:id="@+id/search_text"
         android:layout_width="296dp"
         android:layout_height="wrap_content"
         android:layout_above="@+id/treeList"
@@ -29,7 +29,7 @@
         android:textSize="14sp" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/search_tree"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_alignParentEnd="true"

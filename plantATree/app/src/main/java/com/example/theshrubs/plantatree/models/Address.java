@@ -80,4 +80,8 @@ public class Address {
         this.postcode = postcode;
     }
 
+    public String toString(){
+        return "ADDRESS " + getStreeName();
+    }
+
 }

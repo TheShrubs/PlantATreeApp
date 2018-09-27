@@ -44,7 +44,6 @@ public class UserTable {
         values.put(USER_EMAIL, userObject.getUserEmail());
         values.put(USER_PASSWORD, userObject.getUserPassword());
 
-        System.out.println("User add new !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
         return values;
     }
@@ -62,12 +61,8 @@ public class UserTable {
             userObject.setUserEmail(cursor.getString(2));
             userObject.setUserPassword(cursor.getString(3));
 
-
-            System.out.println("in find user" + cursor.getInt(0));
             cursor.close();
         }else{
-
-            System.out.println("cursor was NULL");
             return null;
         }
 
@@ -91,47 +86,4 @@ public class UserTable {
         return currentUser;
     }
 
-
-//    public User checkLogin(String user, String pass, DatabaseHelper db){
-//
-//        this.dbHandler = db;
-//        User currentUser = new User();
-////        dbHandler.setUser(user, pass);
-//
-//        Object object = dbHandler.findHandle(user, "User");
-//        if(object == null){
-//            System.out.println("check login was  null");
-//            return null;
-//        }else{
-//            currentUser = (User) object;
-//            if(currentUser.getUserPassword().equals(pass)){
-//                System.out.println("User from check login " + currentUser);
-//                return currentUser;
-//            }else{
-//                return null;
-//            }
-//
-//        }
-////        return currentUser;
-//    }
-//
-//
-//    public boolean checkUser(String email) {
-//        String[] columns = {
-//                USER_ID
-//        };
-//        //call SQLite DB
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        String selection = USER_EMAIL + " = ?";
-//        String[] selectionArgs = {email};
-//
-//        Cursor cursor = db.query(USER_TABLE, columns, selection, selectionArgs, null, null, null);
-//        int cursorCount = cursor.getCount();
-//        cursor.close();
-//        db.close();
-//        if (cursorCount > 0) {
-//            return true;
-//        }
-//        return false;
-//    }
 }

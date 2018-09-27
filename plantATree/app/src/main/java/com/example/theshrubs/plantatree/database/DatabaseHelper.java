@@ -41,6 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private String username;
     private String password;
+    private String keyword;
 
 
     //initialize the database
@@ -181,10 +182,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 List<Tree> treeList = treeTable.loadTrees(cursor);
                 objectList = (List<Object>) (Object) treeList;
                 break;
+            case "SearchTree":
+                query = "Select * FROM " + TREE_TABLE + " WHERE TreeName LIKE '%" + keyword + "%'";
+                cursor = getReadableDatabase().rawQuery(query, null);
+                List<Tree> foundTrees = treeTable.loadTrees(cursor);
+                objectList = (List<Object>) (Object) foundTrees;
+                break;
 
         }
 
         return objectList;
+    }
+
+    public void setKeyword(String keyword){
+        this.keyword = keyword;
     }
 
     public boolean checkExistingUser(String username) {

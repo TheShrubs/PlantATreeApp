@@ -114,7 +114,6 @@ public class TreeTable {
             treeObject.setMaintenanceReq(cursor.getString(11));
             treeList.add(treeObject);
 
-            System.out.println("loading all trees!!!!!!!!!!!");
             cursor.moveToNext();
         }
 

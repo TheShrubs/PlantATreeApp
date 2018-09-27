@@ -61,32 +61,9 @@ public class AddressTable {
                 return null;
             }
 
+            System.out.println(" addressObject," +addressObject.toString());
             return addressObject;
         }
 
-//        public List<ShoppingCart> loadCart(Cursor cursor){
-//            List<ShoppingCart> cartList = new ArrayList<>();
-//
-//            cursor.moveToFirst();
-//            while (!cursor.isAfterLast()) {
-//                ShoppingCart cartObject = new ShoppingCart();
-//                cartObject.setCartID(cursor.getInt(0));
-//                cartObject.setProductID(cursor.getInt(1));
-//                cartObject.setProductName(cursor.getString(2));
-//                cartObject.setProductCost(cursor.getDouble(3));
-//                cartObject.setDeliveryCost(cursor.getDouble(4));
-//                cartObject.setProductQuantity(cursor.getInt(5));
-//                cartObject.setTotalCost(cursor.getDouble(6));
-//                cartObject.setPhotoID(cursor.getInt(7));
-//                cartList.add(cartObject);
-//
-//                System.out.println("reading from getallcontents!!!!!!!!!!!");
-//                cursor.moveToNext();
-//            }
-//
-//            return cartList;
-//
-//        }
-//    }
 
 }
