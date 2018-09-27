@@ -63,30 +63,4 @@ public class LandingPageActivity extends AppCompatActivity {
 
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu, menu);
-//
-//        MenuItem myActionMenuItem = menu.findItem(R.id.action_search);
-//        SearchView searchView = (SearchView) myActionMenuItem.getActionView();
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                if (TextUtils.isEmpty(newText)) {
-//                    landingAdapter.filter("");
-//                    landingList.clearTextFilter();
-//                } else {
-//                    landingAdapter.filter(newText);
-//                }
-//                return false;
-//            }
-//        });
-//
-//        return true;
-//    }
 }
