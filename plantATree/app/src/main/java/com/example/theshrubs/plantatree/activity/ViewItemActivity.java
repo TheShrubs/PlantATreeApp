@@ -1,7 +1,9 @@
 package com.example.theshrubs.plantatree.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,12 +25,16 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
     private TextView maintenanceReq;
     private ImageView itemPhoto;
     private ImageView shoppingCart;
+    private ImageView btnCamera;
     private static Product product;
     private Tree tree;
     private DatabaseHelper treeDB;
+    private static Bitmap photo;
 
     private int currentViewedTree;
     private int currentUser;
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
 
 
@@ -45,6 +51,7 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
         maintenanceReq = (TextView) findViewById(R.id.maintenance);
         itemPhoto = (ImageView) findViewById(R.id.photo);
         shoppingCart = (ImageView) findViewById(R.id.addToCart);
+        btnCamera = (ImageView) findViewById(R.id.btnCamera);
 
         if(savedInstanceState == null){
             Bundle extras = getIntent().getExtras();
@@ -60,6 +67,7 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
 
 
         shoppingCart.setOnClickListener(this);
+        btnCamera.setOnClickListener(this);
 
         treeDB = new DatabaseHelper(this);
 //        treeDB.populateDatabase();
@@ -77,6 +85,25 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
 
 
 
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            this.photo = (Bitmap) extras.get("data");
+            System.out.println("eneterd the on activity result !!!!!!!!!");
+            Intent i = new Intent(ViewItemActivity.this, ViewingTreeActivity.class);
+            startActivity(i);
+        }
+    }
+
+
     public void setInformation(Tree tree){
         itemName.setText("Name: " + tree.getTreeName());
         itemDescription.setText("Description: "+ tree.getTreeDescription());
@@ -91,19 +118,29 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        String name = itemName.getText().toString();
-        double price = tree.getPrice();
-        double shipCost = Double.valueOf(tree.getShippingCost());
-        double cost =  tree.getPrice() + tree.getShippingCost();
-        System.out.println("");
+        if(v.getId() == R.id.addToCart){
+            String name = itemName.getText().toString();
+            double price = tree.getPrice();
+            double shipCost = Double.valueOf(tree.getShippingCost());
+            double cost =  tree.getPrice() + tree.getShippingCost();
+            System.out.println("");
 
-        this.product = new Product(tree.getTreeID(), tree.getTreeName(), tree.getPrice(), tree.getShippingCost(), cost, tree.getPhotoID());
+            this.product = new Product(tree.getTreeID(), tree.getTreeName(), tree.getPrice(), tree.getShippingCost(), cost, tree.getPhotoID());
 
-        Intent intent = new Intent(ViewItemActivity.this, AddItemToCartActivity.class);
-        intent.putExtra("USER_ID", currentUser);
-        startActivity(intent);
+            Intent intent = new Intent(ViewItemActivity.this, AddItemToCartActivity.class);
+            intent.putExtra("USER_ID", currentUser);
+            startActivity(intent);
+        }else if (v.getId() == R.id.btnCamera){
+            System.out.println("Camera was pressed!!!!!!!!");
+            dispatchTakePictureIntent();
+        }
 
 
+
+    }
+
+    public static Bitmap getBitmap(){
+        return photo;
     }
 
     public static Product getProduct(){

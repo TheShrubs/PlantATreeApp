@@ -2,20 +2,25 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.theshrubs.plantatree">
 
+    <uses-feature android:name="android.hardware.camera2"
+        android:required="true" />
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.AddItemToCartActivity" />
-        <activity android:name=".activity.ViewItemActivity" />
-        <activity
-            android:name=".activity.ShoppingCartActivity"
+        <activity android:name=".activity.ViewItemActivity" >
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter></activity>
+        <activity android:name=".activity.ShoppingCartActivity"
             android:windowSoftInputMode="stateVisible|adjustNothing" />
-        <activity
-            android:name=".activity.LandingPageActivity"
+        <activity android:name=".activity.LandingPageActivity"
             android:parentActivityName=".activity.LandingPageActivity"
             android:windowSoftInputMode="stateVisible|adjustNothing" />
         <activity android:name=".activity.UserLoginActivity">
@@ -25,20 +30,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.UserRegistrationActivity"></activity>
-        <activity android:name=".activity.AddressActivity"><intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter></activity>
-        <activity android:name=".activity.PaymentActivity"></activity>
-        <activity android:name=".activity.OrderConfirmActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".activity.UserRegistrationActivity" />
+        <activity android:name=".activity.AddressActivity"></activity>
+        <activity android:name=".activity.PaymentActivity" />
+        <activity android:name=".activity.OrderConfirmActivity"></activity>
+        <activity android:name=".activity.ViewingTreeActivity"></activity>
     </application>
 
 </manifest>
