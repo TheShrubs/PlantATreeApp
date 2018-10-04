@@ -47,7 +47,7 @@ public class LandingPageActivity extends AppCompatActivity {
             }
         }
         this.dbHandler = new DatabaseHelper(this);
-//        dbHandler.populateDatabase();
+        dbHandler.populateDatabase();
 
         treeList = new ArrayList<>();
         List<Object> objectList = dbHandler.loadAllContents(1, "Landing");
@@ -85,18 +85,18 @@ public class LandingPageActivity extends AppCompatActivity {
 
     }
 
-//    public void loadLandingView(List<Object> objectList) {
-//
-//        landingList = (ListView) findViewById(R.id.treeList);
-//
-//        for (int i = 0; i < objectList.size(); i++) {
-//            Tree model = (Tree) objectList.get(i);
-//            treeList.add(model);
-//        }
-//
-//        landingAdapter = new LandingPageAdapter(this, treeList, currentUser);
-//        landingList.setAdapter(landingAdapter);
-//    }
+    public void loadLandingView(List<Object> objectList) {
+
+        landingList = (ListView) findViewById(R.id.treeList);
+
+        for (int i = 0; i < objectList.size(); i++) {
+            Tree model = (Tree) objectList.get(i);
+            treeList.add(model);
+        }
+
+        landingAdapter = new LandingPageAdapter(this, treeList, currentUser);
+        landingList.setAdapter(landingAdapter);
+    }
 
 //    @Override
 //    public void onClick(View v) {
