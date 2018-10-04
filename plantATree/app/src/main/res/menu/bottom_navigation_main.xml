@@ -9,12 +9,12 @@
         android:title="Home"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/action_search"
-        android:enabled="true"
-        android:icon="@drawable/ic_search"
-        android:title="Search"
-        app:showAsAction="ifRoom" />
+    <!--<item-->
+        <!--android:id="@+id/action_search"-->
+        <!--android:enabled="true"-->
+        <!--android:icon="@drawable/ic_search"-->
+        <!--android:title="Search"-->
+        <!--app:showAsAction="ifRoom" />-->
 
     <item
         android:id="@+id/action_wishlist"
