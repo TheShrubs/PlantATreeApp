@@ -8,6 +8,16 @@
     tools:context=".activity.ShoppingCartActivity"
    android:background="@drawable/background2">
 
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_naviation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/colorNavigationBottom"
+        app:itemIconTint="@drawable/nav_item_color_state"
+        app:itemTextColor="@drawable/nav_item_color_state"
+        app:menu="@menu/bottom_navigation_main"/>
+
     <ListView
         android:id="@+id/productListView"
         android:layout_width="321dp"
@@ -26,7 +36,8 @@
         android:layout_marginBottom="25dp"
         android:background="@android:color/holo_green_dark"
         android:text="CHECK OUT"
-        android:textColor="@android:color/background_light" />
+        android:textColor="@android:color/background_light"
+        android:layout_above="@+id/bottom_naviation"/>
 
     <TextView
         android:id="@+id/textView"

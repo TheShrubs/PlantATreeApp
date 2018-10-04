@@ -59,6 +59,8 @@ public class LandingPageActivity extends AppCompatActivity {
                 switch(menuItem.getItemId()){
                     case R.id.action_home:
                         Toast.makeText(LandingPageActivity.this, "Home Action Clicked", Toast.LENGTH_SHORT).show();
+                        //finish();
+                        startActivity(getIntent());
                         break;
 //                    case R.id.action_search:
 //                        Toast.makeText(LandingPageActivity.this, "Search Action Clicked", Toast.LENGTH_SHORT).show();
