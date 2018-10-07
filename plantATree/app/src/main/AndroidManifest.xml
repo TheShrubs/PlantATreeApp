@@ -13,19 +13,23 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".activity.UserLoginActivity">
-            <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity android:name=".activity.AddItemToCartActivity" />
         <activity android:name=".activity.ViewItemActivity" ></activity>
         <activity android:name=".activity.ShoppingCartActivity"
             android:windowSoftInputMode="stateVisible|adjustNothing" />
+
         <activity android:name=".activity.LandingPageActivity"
-            android:parentActivityName=".activity.LandingPageActivity"
-            android:windowSoftInputMode="stateVisible|adjustNothing" />
+            android:windowSoftInputMode="stateVisible|adjustNothing">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+
         <activity android:name=".activity.UserRegistrationActivity" />
         <activity android:name=".activity.AddressActivity"></activity>
         <activity android:name=".activity.PaymentActivity" />

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -144,5 +145,15 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
         intent.putExtra("USER_ID", USER_ID);
         startActivity(intent);
 
+    }
+
+    public void removeClickHandler(View view) {
+        //get the row the clicked button is in
+        RelativeLayout viewwParentRow = (RelativeLayout)view.getParent();
+
+        TextView child = (TextView) viewwParentRow.getChildAt(0);
+        Button btnChild = (Button) viewwParentRow.getChildAt(1);
+        btnChild.setText(child.getText());
+        btnChild.setText("CLICK");
     }
 }
