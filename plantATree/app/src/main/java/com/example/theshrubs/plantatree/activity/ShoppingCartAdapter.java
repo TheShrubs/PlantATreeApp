@@ -6,9 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.theshrubs.plantatree.R;
 import com.example.theshrubs.plantatree.database.DatabaseHelper;
@@ -40,6 +43,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
         TextView itemTotal;
         EditText itemQuantity;
         ImageView itemPhoto;
+        Button removeItem;
     }
 
     @Override
@@ -59,6 +63,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
+
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.shopping_cart_item, null);
             viewHolder = new ViewHolder();
@@ -66,6 +71,8 @@ public class ShoppingCartAdapter extends BaseAdapter {
             viewHolder.itemTotal = (TextView) convertView.findViewById(R.id.shopItemTotal);
             viewHolder.itemQuantity = (EditText) convertView.findViewById(R.id.shopItemQuantity);
             viewHolder.itemPhoto = (ImageView) convertView.findViewById(R.id.shopItemPhoto);
+            //viewHolder.removeItem = (Button) convertView.findViewById(R.id.removeItem);
+
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -76,9 +83,12 @@ public class ShoppingCartAdapter extends BaseAdapter {
         viewHolder.itemTotal.setText("$" + cartItem.getTotalCost());
         viewHolder.itemQuantity.setText(String.valueOf(cartItem.getProductQuantity()));
         viewHolder.itemPhoto.setImageResource(cartItem.getPhotoID());
+//        viewHolder.removeItem.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//        public void onClick(View v) {
+////                Toast.makeText(this, "Clicked Laugh Vote", Toast.LENGTH_SHORT).Show();
+//        }
+//    });
         return convertView;
     }
-
-
-
 }
