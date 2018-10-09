@@ -42,47 +42,11 @@ public class LandingPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.landing_page);
 
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if (extras == null) {
-                System.out.println("Bundle extra was NULL user");
-            } else {
-                currentUser = extras.getInt("USER_ID");
-            }
-        }
+        Bundle extras = getIntent().getExtras();
+        currentUser = extras.getInt("USER_ID");
 
-        //adding bottom naviation view
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_naviation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch(menuItem.getItemId()){
-                    case R.id.action_home:
-                        Toast.makeText(LandingPageActivity.this, "Home Action Clicked", Toast.LENGTH_SHORT).show();
-                        //finish();
-                        startActivity(getIntent());
-                        break;
-//                    case R.id.action_search:
-//                        Toast.makeText(LandingPageActivity.this, "Search Action Clicked", Toast.LENGTH_SHORT).show();
-//                        break;
-                    case R.id.action_wishlist:
-                        Toast.makeText(LandingPageActivity.this, "WishList Action Clicked", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.action_cart:
-                        Intent cartIntent = new Intent(LandingPageActivity.this, ShoppingCartActivity.class);
-                        cartIntent.putExtra("CART_ID", currentUser);
-                        startActivity(cartIntent);
-                        //Toast.makeText(LandingPageActivity.this, "Cart Action Clicked", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.action_account:
-                        Toast.makeText(LandingPageActivity.this, "Account Action Clicked", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-
-                return true;
-            }
-        });
-
+        BottomNavigationActivity.getBottomNavigation(this, bottomNavigationView, currentUser);
         this.dbHandler = new DatabaseHelper(this);
         dbHandler.populateDatabase();
 

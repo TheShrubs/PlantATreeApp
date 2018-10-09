@@ -54,27 +54,16 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
         addItem.setOnClickListener(this);
         setInformation(ViewItemActivity.getProduct());
 
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if (extras == null) {
-                currentViewedTree = 1;
-                currentUSER_ID = 1;
-                System.out.println("Bundle extra was NULL user");
-            } else {
-                currentViewedTree = extras.getInt("TREE_ID");
-                currentUSER_ID = extras.getInt("USER_ID");
-            }
-
-        }
+        Bundle extras = getIntent().getExtras();
+        currentUSER_ID = extras.getInt("USER_ID");
+        currentViewedTree = extras.getInt("TREE_ID");
 
 
         System.out.println("USER ID FROM ADD ITEM TO CART ACTIVITY IS " + currentUSER_ID);
 
         quantity.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {

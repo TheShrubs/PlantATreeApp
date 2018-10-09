@@ -53,17 +53,10 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
         shoppingCart = (ImageView) findViewById(R.id.addToCart);
         btnCamera = (ImageView) findViewById(R.id.btnCamera);
 
-        if(savedInstanceState == null){
-            Bundle extras = getIntent().getExtras();
-            if(extras == null){
-                currentViewedTree = 1;
-                currentUser = 0;
-                System.out.println("Bundle extra was NULL user");
-            }else{
-                currentViewedTree = extras.getInt("TREE_ID");
-                currentUser = extras.getInt("USER_ID");
-            }
-        }
+        Bundle extras = getIntent().getExtras();
+        currentUser = extras.getInt("USER_ID");
+        currentViewedTree = extras.getInt("TREE_ID");
+
 
 
         shoppingCart.setOnClickListener(this);

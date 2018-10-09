@@ -34,16 +34,11 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_address);
+        setContentView(R.layout.address);
         delivery = false;
 
-        //gets the passed value of the products in users cart from shoppingCartActivity
-        Bundle b = getIntent().getExtras();
         Bundle extras = getIntent().getExtras();
-//        USER_ID = extras.getInt("USER_ID");
-//        TOTAL_COST = extras.getDouble("TOTAL_COST");
-
-        USER_ID = 2;
+        USER_ID = extras.getInt("USER_ID");
         this.dbHelper = new DatabaseHelper(this);
 
         this.streetNumber = findViewById(R.id.streetNumber);

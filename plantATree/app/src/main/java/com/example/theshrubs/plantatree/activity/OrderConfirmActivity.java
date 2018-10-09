@@ -22,7 +22,7 @@ public class OrderConfirmActivity extends AppCompatActivity implements View.OnCl
 
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_confirm);
+        setContentView(R.layout.order_confirmation);
         this.database = new DatabaseHelper(this);
 
         configureBackButton();

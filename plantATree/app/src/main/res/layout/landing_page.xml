@@ -10,12 +10,14 @@
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_naviation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_alignParentBottom="true"
-        app:itemBackground="@color/colorNavigationBottom"
+        app:itemBackground="@android:color/holo_green_dark"
         app:itemIconTint="@drawable/nav_item_color_state"
         app:itemTextColor="@drawable/nav_item_color_state"
-        app:menu="@menu/bottom_navigation_main"/>
+        app:menu="@menu/bottom_navigation_main"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="519dp" />
 
 
     <ListView
@@ -24,12 +26,14 @@
         android:layout_height="404dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginBottom="53dp"
-        android:layout_marginEnd="21dp" />
+        android:layout_marginEnd="21dp"
+        android:layout_marginRight="21dp" />
 
     <EditText
         android:id="@+id/search_text"
-        android:layout_width="296dp"
+        android:layout_width="341dp"
         android:layout_height="wrap_content"
         android:layout_above="@+id/treeList"
         android:layout_centerHorizontal="true"
@@ -42,10 +46,12 @@
         android:id="@+id/search_tree"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="53dp"
-        android:layout_marginTop="79dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="75dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginRight="28dp"
         app:srcCompat="@drawable/magnifying_glass" />
 
 </RelativeLayout>

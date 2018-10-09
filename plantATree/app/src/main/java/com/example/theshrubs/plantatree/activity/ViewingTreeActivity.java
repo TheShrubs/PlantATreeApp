@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.example.theshrubs.plantatree.R;
 
-public class ViewingTreeActivity extends AppCompatActivity implements View.OnDragListener{
+public class ViewingTreeActivity extends AppCompatActivity {//implements View.OnDragListener{
 
     private ImageView takenPboto;
     private ImageView dragPhoto;
@@ -19,14 +19,22 @@ public class ViewingTreeActivity extends AppCompatActivity implements View.OnDra
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_viewing_tree);
+        setContentView(R.layout.visualize_tree);
 
         this.takenPboto = (ImageView) findViewById(R.id.housePhoto);
         this.photo = ViewItemActivity.getBitmap();
         this.takenPboto.setImageBitmap(photo);
 
+        int height = takenPboto.getHeight();
+        int width = takenPboto.getWidth();
+
         this.dragPhoto = (ImageView) findViewById(R.id.itemDrop);
-        this.dragPhoto.setOnDragListener(this);
+        this.dragPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 
@@ -35,7 +43,5 @@ public class ViewingTreeActivity extends AppCompatActivity implements View.OnDra
         return false;
     }
 
-//    public void setTakenPboto(Bitmap photo){
-//        this.takenPboto.setImageBitmap(photo);
-//    }
+
 }
