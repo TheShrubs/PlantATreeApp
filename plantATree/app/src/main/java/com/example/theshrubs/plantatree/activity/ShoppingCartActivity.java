@@ -22,7 +22,8 @@ import com.example.theshrubs.plantatree.models.Tree;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener{
+public class
+ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener{
 
     private List<ShoppingCart> cartObjectList = new ArrayList<>();
     private int USER_ID;

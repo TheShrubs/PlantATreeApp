@@ -60,7 +60,6 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
                 currentViewedTree = 1;
                 currentUSER_ID = 1;
                 System.out.println("Bundle extra was NULL user");
-                System.out.println("hello");
             } else {
                 currentViewedTree = extras.getInt("TREE_ID");
                 currentUSER_ID = extras.getInt("USER_ID");
@@ -153,7 +152,7 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
                 message = productItem.getProductName() + " has been to cart. Proceed to shopping cart?";
                 type = 1;
             } else {
-                message = productItem.getProductName() + " already exists in your cart";
+                message = productItem.getProductName() + " already exists in your cart. Proceed to shopping cart?";
                 type = 2;
             }
         }
@@ -170,10 +169,18 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
         final android.support.v7.app.AlertDialog.Builder dialog = new android.support.v7.app.AlertDialog.Builder(this);
         dialog.setTitle("Product Exists");
         dialog.setMessage(message);
-        dialog.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton("Continue Shopping", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finish();
+            }
+        });
+        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(AddItemToCartActivity.this, ShoppingCartActivity.class);
+                intent.putExtra("CART_ID", currentUser.getUserID());
+                startActivity(intent);
             }
         });
         dialog.show();
