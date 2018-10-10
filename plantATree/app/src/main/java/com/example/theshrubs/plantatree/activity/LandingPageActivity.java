@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -18,6 +19,8 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.example.theshrubs.plantatree.R;
@@ -35,6 +38,8 @@ public class LandingPageActivity extends AppCompatActivity {
     private int currentUser;
     private EditText searchKeyword;
     private ImageView searchButton;
+    private boolean sort;
+    private Button sortButton;
 
 
     @Override
@@ -42,12 +47,15 @@ public class LandingPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.landing_page);
 
+
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
                 System.out.println("Bundle extra was NULL user");
             } else {
                 currentUser = extras.getInt("USER_ID");
+                sort = false;
+                sort = extras.getBoolean("sort");
             }
         }
 
@@ -56,9 +64,9 @@ public class LandingPageActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch(menuItem.getItemId()){
+                switch (menuItem.getItemId()) {
                     case R.id.action_home:
-                       // Toast.makeText(LandingPageActivity.this, "Home Action Clicked", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(LandingPageActivity.this, "Home Action Clicked", Toast.LENGTH_SHORT).show();
                         //finish();
                         startActivity(getIntent());
                         break;
@@ -66,19 +74,19 @@ public class LandingPageActivity extends AppCompatActivity {
 //                        Toast.makeText(LandingPageActivity.this, "Search Action Clicked", Toast.LENGTH_SHORT).show();
 //                        break;
                     case R.id.action_wishlist:
-                      //  Toast.makeText(LandingPageActivity.this, "WishList Action Clicked", Toast.LENGTH_SHORT).show();
+                        //  Toast.makeText(LandingPageActivity.this, "WishList Action Clicked", Toast.LENGTH_SHORT).show();
                         Intent cartIntent = new Intent(LandingPageActivity.this, WishlistActivity.class);
                         cartIntent.putExtra("CART_ID", currentUser);
                         startActivity(cartIntent);
                         break;
                     case R.id.action_cart:
-                         cartIntent = new Intent(LandingPageActivity.this, ShoppingCartActivity.class);
+                        cartIntent = new Intent(LandingPageActivity.this, ShoppingCartActivity.class);
                         cartIntent.putExtra("CART_ID", currentUser);
                         startActivity(cartIntent);
                         //Toast.makeText(LandingPageActivity.this, "Cart Action Clicked", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_account:
-                     //   Toast.makeText(LandingPageActivity.this, "Account Action Clicked", Toast.LENGTH_SHORT).show();
+                        //   Toast.makeText(LandingPageActivity.this, "Account Action Clicked", Toast.LENGTH_SHORT).show();
                         break;
                 }
 
@@ -97,6 +105,8 @@ public class LandingPageActivity extends AppCompatActivity {
             Tree model = (Tree) objectList.get(i);
             treeList.add(model);
         }
+        configureSortButton();
+        sortTrees(sort);
 
         landingAdapter = new LandingPageAdapter(this, treeList, currentUser);
         landingList.setAdapter(landingAdapter);
@@ -136,6 +146,42 @@ public class LandingPageActivity extends AppCompatActivity {
 
         landingAdapter = new LandingPageAdapter(this, treeList, currentUser);
         landingList.setAdapter(landingAdapter);
+    }
+
+    //toggles the price based sort of tree list and refreshes view
+    public void configureSortButton() {
+        sortButton = findViewById(R.id.priceSortButton);
+        sortButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               if(sort){
+                   sort = false;
+                   Intent cartIntent = new Intent(LandingPageActivity.this, LandingPageActivity.class);
+                   cartIntent.putExtra("USER_ID", currentUser);
+                   cartIntent.putExtra("sort", sort);
+                   startActivity(cartIntent);
+               } else {
+                   sort = true;
+                   Intent cartIntent = new Intent(LandingPageActivity.this, LandingPageActivity.class);
+                   cartIntent.putExtra("USER_ID", currentUser);
+                   cartIntent.putExtra("sort", sort);
+                   startActivity(cartIntent);
+               }
+            }
+        });
+    }
+
+    //sorts the list of trees by price in descending order if condition is met
+    public void sortTrees(boolean sort) {
+        if (sort) {
+            Collections.sort(treeList, new Comparator<Tree>() {
+                @Override
+                public int compare(Tree t1, Tree t2) {
+                    return Double.compare(t1.getPrice(), t2.getPrice());
+                }
+            });
+
+        }
     }
 
 //    @Override

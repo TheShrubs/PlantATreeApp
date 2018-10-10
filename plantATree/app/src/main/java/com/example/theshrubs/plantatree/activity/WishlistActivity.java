@@ -173,6 +173,7 @@ WishlistActivity extends AppCompatActivity implements View.OnClickListener{
             @Override
             public void onClick(View view){
                 database.clearWish();
+                Toast.makeText(WishlistActivity.this, "Wishlist Cleared", Toast.LENGTH_SHORT).show();
                 Intent cartIntent = new Intent(WishlistActivity.this, WishlistActivity.class);
                 cartIntent.putExtra("USER_ID", USER_ID);
                 startActivity(cartIntent);
