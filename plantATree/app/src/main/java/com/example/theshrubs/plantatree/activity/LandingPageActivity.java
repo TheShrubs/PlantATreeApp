@@ -58,7 +58,7 @@ public class LandingPageActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch(menuItem.getItemId()){
                     case R.id.action_home:
-                        Toast.makeText(LandingPageActivity.this, "Home Action Clicked", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(LandingPageActivity.this, "Home Action Clicked", Toast.LENGTH_SHORT).show();
                         //finish();
                         startActivity(getIntent());
                         break;
@@ -66,7 +66,7 @@ public class LandingPageActivity extends AppCompatActivity {
 //                        Toast.makeText(LandingPageActivity.this, "Search Action Clicked", Toast.LENGTH_SHORT).show();
 //                        break;
                     case R.id.action_wishlist:
-                        Toast.makeText(LandingPageActivity.this, "WishList Action Clicked", Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(LandingPageActivity.this, "WishList Action Clicked", Toast.LENGTH_SHORT).show();
                         Intent cartIntent = new Intent(LandingPageActivity.this, WishlistActivity.class);
                         cartIntent.putExtra("CART_ID", currentUser);
                         startActivity(cartIntent);
@@ -78,7 +78,7 @@ public class LandingPageActivity extends AppCompatActivity {
                         //Toast.makeText(LandingPageActivity.this, "Cart Action Clicked", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_account:
-                        Toast.makeText(LandingPageActivity.this, "Account Action Clicked", Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(LandingPageActivity.this, "Account Action Clicked", Toast.LENGTH_SHORT).show();
                         break;
                 }
 

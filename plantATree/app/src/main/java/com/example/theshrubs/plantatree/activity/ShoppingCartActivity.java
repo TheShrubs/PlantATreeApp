@@ -51,7 +51,7 @@ ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener{
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch(menuItem.getItemId()){
                     case R.id.action_home:
-                        Toast.makeText(ShoppingCartActivity.this, "Home Action Clicked", Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(ShoppingCartActivity.this, "Home Action Clicked", Toast.LENGTH_SHORT).show();
                         Intent cartIntent = new Intent(ShoppingCartActivity.this, LandingPageActivity.class);
                         cartIntent.putExtra("USER_ID", USER_ID);
                         startActivity(cartIntent);
@@ -60,7 +60,7 @@ ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener{
 //                        Toast.makeText(LandingPageActivity.this, "Search Action Clicked", Toast.LENGTH_SHORT).show();
 //                        break;
                     case R.id.action_wishlist:
-                        Toast.makeText(ShoppingCartActivity.this, "WishList Action Clicked", Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(ShoppingCartActivity.this, "WishList Action Clicked", Toast.LENGTH_SHORT).show();
                         cartIntent = new Intent(ShoppingCartActivity.this, WishlistActivity.class);
                         cartIntent.putExtra("USER_ID", USER_ID);
                         startActivity(cartIntent);
@@ -70,7 +70,7 @@ ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener{
                         //Toast.makeText(LandingPageActivity.this, "Cart Action Clicked", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_account:
-                        Toast.makeText(ShoppingCartActivity.this, "Account Action Clicked", Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(ShoppingCartActivity.this, "Account Action Clicked", Toast.LENGTH_SHORT).show();
                         break;
                 }
 
