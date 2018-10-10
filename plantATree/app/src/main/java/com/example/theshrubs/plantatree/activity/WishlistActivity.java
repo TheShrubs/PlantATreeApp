@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class
-ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener{
+WishlistActivity extends AppCompatActivity implements View.OnClickListener{
 
     private List<ShoppingCart> cartObjectList = new ArrayList<>();
     private int USER_ID;
@@ -35,14 +35,14 @@ ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener{
     private Button checkoutButton;
     private double subTotal;
     private double delivery;
-//    private double discount;
+    //    private double discount;
     private double total;
     private int quantity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shopping_cart);
+        setContentView(R.layout.activity_wishlist);
 
         //adding bottom naviation view
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_naviation);
@@ -51,8 +51,8 @@ ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener{
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch(menuItem.getItemId()){
                     case R.id.action_home:
-                        Toast.makeText(ShoppingCartActivity.this, "Home Action Clicked", Toast.LENGTH_SHORT).show();
-                        Intent cartIntent = new Intent(ShoppingCartActivity.this, LandingPageActivity.class);
+                        Toast.makeText(WishlistActivity.this, "Home Action Clicked", Toast.LENGTH_SHORT).show();
+                        Intent cartIntent = new Intent(WishlistActivity.this, LandingPageActivity.class);
                         cartIntent.putExtra("USER_ID", USER_ID);
                         startActivity(cartIntent);
                         break;
@@ -60,17 +60,19 @@ ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener{
 //                        Toast.makeText(LandingPageActivity.this, "Search Action Clicked", Toast.LENGTH_SHORT).show();
 //                        break;
                     case R.id.action_wishlist:
-                        Toast.makeText(ShoppingCartActivity.this, "WishList Action Clicked", Toast.LENGTH_SHORT).show();
-                        cartIntent = new Intent(ShoppingCartActivity.this, WishlistActivity.class);
+                        Toast.makeText(WishlistActivity.this, "WishList Action Clicked", Toast.LENGTH_SHORT).show();
+                        cartIntent = new Intent(WishlistActivity.this, WishlistActivity.class);
                         cartIntent.putExtra("USER_ID", USER_ID);
                         startActivity(cartIntent);
                         break;
                     case R.id.action_cart:
-                        startActivity(getIntent());
-                        //Toast.makeText(LandingPageActivity.this, "Cart Action Clicked", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(WishlistActivity.this, "Cart Action Clicked", Toast.LENGTH_SHORT).show();
+                        cartIntent = new Intent(WishlistActivity.this, ShoppingCartActivity.class);
+                        cartIntent.putExtra("USER_ID", USER_ID);
+                        startActivity(cartIntent);
                         break;
                     case R.id.action_account:
-                        Toast.makeText(ShoppingCartActivity.this, "Account Action Clicked", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(WishlistActivity.this, "Account Action Clicked", Toast.LENGTH_SHORT).show();
                         break;
                 }
 
@@ -98,15 +100,15 @@ ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener{
         total = 0;
         quantity = 0;
 
-        cartSubTotal = (TextView) findViewById(R.id.cart_subtotal);
-        cartDelivery = (TextView) findViewById(R.id.cart_delivery);
-        cartDiscount = (TextView) findViewById(R.id.cart_discount);
-        catTotalCost = (TextView) findViewById(R.id.cart_totalcost);
-        checkoutButton = (Button) findViewById(R.id.checkoutButton);
-        checkoutButton.setOnClickListener(this);
+    //    cartSubTotal = (TextView) findViewById(R.id.cart_subtotal);
+      //  cartDelivery = (TextView) findViewById(R.id.cart_delivery);
+      //  cartDiscount = (TextView) findViewById(R.id.cart_discount);
+    //    catTotalCost = (TextView) findViewById(R.id.cart_totalcost);
+      //  checkoutButton = (Button) findViewById(R.id.checkoutButton);
+//        checkoutButton.setOnClickListener(this);
 
         List<Object> objectList = new ArrayList<>();
-        objectList = database.loadAllContents(USER_ID, "ShoppingCart");
+        objectList = database.loadAllContents(USER_ID, "Wishlist");
         ShoppingCart cartObject = new ShoppingCart();
         for(int i = 0; i < objectList.size(); i++){
             cartObject = (ShoppingCart) objectList.get(i);
@@ -128,10 +130,10 @@ ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener{
         }
         double totalDelivery = quantity * delivery;
         total = (subTotal + delivery) - discount;
-        cartSubTotal.setText("$" + String.format("%.2f",subTotal));
-        cartDelivery.setText("$" +String.format("%.2f",totalDelivery));
-        cartDiscount.setText("$" +String.format("%.2f", discount));
-        catTotalCost.setText("$" +String.format("%.2f", total));
+//        cartSubTotal.setText("$" + String.format("%.2f",subTotal));
+      //  cartDelivery.setText("$" +String.format("%.2f",totalDelivery));
+     //   cartDiscount.setText("$" +String.format("%.2f", discount));
+    //    catTotalCost.setText("$" +String.format("%.2f", total));
 
     }
 
@@ -144,7 +146,7 @@ ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(ShoppingCartActivity.this, AddressActivity.class);
+        Intent intent = new Intent(WishlistActivity.this, AddressActivity.class);
         intent.putExtra("TOTAL", total);
         intent.putExtra("USER_ID", USER_ID);
         startActivity(intent);

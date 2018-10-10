@@ -27,6 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String ADDRESS_TABLE = "Address";
     private static final String BILLING = "Billing";
     private static final String CART_TABLE = "ShoppingCart";
+    private static final String WISH_TABLE = "Wishlist";
 
     private static final String USER_ID = "UserID";
     private static final String USER_NAME = "UserName";
@@ -35,6 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     private TreeTable treeTable = new TreeTable();
+    private CartTable wishTable = new CartTable();
     private CartTable cartTable = new CartTable();
     private UserTable userTable = new UserTable();
     private AddressTable addressTable = new AddressTable();
@@ -52,6 +54,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(treeTable.createTreeTable(TREE_TABLE));
+        db.execSQL(wishTable.createCartTable(WISH_TABLE));
         db.execSQL(cartTable.createCartTable(CART_TABLE));
         db.execSQL(userTable.createTreeTable(USER_TABLE));
         db.execSQL(addressTable.createAddressTable(ADDRESS_TABLE));
@@ -62,6 +65,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS " + TREE_TABLE);
         onCreate(db);
+
     }
 
 
@@ -129,6 +133,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ShoppingCart foundCart = cartTable.findCart(cursor);
                 obj = (Object) foundCart;
                 break;
+            case "Wish":
+                query = "Select * FROM " + WISH_TABLE + " WHERE UserID" + " = " + "'" + id + "'";
+                System.out.println(query);
+                cursor = getReadableDatabase().rawQuery(query, null);
+                ShoppingCart wishCart = wishTable.findCart(cursor);
+                obj = (Object) wishCart;
+                break;
+
             case "User":
                 query = "Select * FROM " + USER_TABLE + " WHERE UserID = '" + id + "'";
                 System.out.println("User instance " + query);
@@ -187,6 +199,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 cursor = getReadableDatabase().rawQuery(query, null);
                 List<Tree> foundTrees = treeTable.loadTrees(cursor);
                 objectList = (List<Object>) (Object) foundTrees;
+                break;
+            case "Wishlist":
+               // db.execSQL(wishTable.createCartTable(WISH_TABLE));
+                query = "Select * FROM " + WISH_TABLE + " WHERE UserID" + " = " + "'" + id + "'";
+                cursor = getReadableDatabase().rawQuery(query, null);
+                List<ShoppingCart> wishList = wishTable.loadCart(cursor);
+                objectList = (List<Object>) (Object) wishList;
                 break;
 
         }

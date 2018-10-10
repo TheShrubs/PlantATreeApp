@@ -67,9 +67,12 @@ public class LandingPageActivity extends AppCompatActivity {
 //                        break;
                     case R.id.action_wishlist:
                         Toast.makeText(LandingPageActivity.this, "WishList Action Clicked", Toast.LENGTH_SHORT).show();
+                        Intent cartIntent = new Intent(LandingPageActivity.this, WishlistActivity.class);
+                        cartIntent.putExtra("CART_ID", currentUser);
+                        startActivity(cartIntent);
                         break;
                     case R.id.action_cart:
-                        Intent cartIntent = new Intent(LandingPageActivity.this, ShoppingCartActivity.class);
+                         cartIntent = new Intent(LandingPageActivity.this, ShoppingCartActivity.class);
                         cartIntent.putExtra("CART_ID", currentUser);
                         startActivity(cartIntent);
                         //Toast.makeText(LandingPageActivity.this, "Cart Action Clicked", Toast.LENGTH_SHORT).show();
