@@ -26,6 +26,7 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
     private ImageView itemPhoto;
     private ImageView shoppingCart;
     private ImageView btnCamera;
+    private ImageView wishlist;
     private static Product product;
     private Tree tree;
     private DatabaseHelper treeDB;
@@ -51,6 +52,7 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
         maintenanceReq = (TextView) findViewById(R.id.maintenance);
         itemPhoto = (ImageView) findViewById(R.id.photo);
         shoppingCart = (ImageView) findViewById(R.id.addToCart);
+        wishlist = (ImageView) findViewById(R.id.addToWish);
         btnCamera = (ImageView) findViewById(R.id.btnCamera);
 
         if(savedInstanceState == null){
@@ -67,6 +69,7 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
 
 
         shoppingCart.setOnClickListener(this);
+        wishlist.setOnClickListener(this);
         btnCamera.setOnClickListener(this);
 
         treeDB = new DatabaseHelper(this);
@@ -130,9 +133,23 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
             Intent intent = new Intent(ViewItemActivity.this, AddItemToCartActivity.class);
             intent.putExtra("USER_ID", currentUser);
             startActivity(intent);
+
         }else if (v.getId() == R.id.btnCamera){
             System.out.println("Camera was pressed!!!!!!!!");
             dispatchTakePictureIntent();
+
+        }else if(v.getId() == R.id.addToWish){
+            String name = itemName.getText().toString();
+            double price = tree.getPrice();
+            double shipCost = Double.valueOf(tree.getShippingCost());
+            double cost =  tree.getPrice() + tree.getShippingCost();
+            System.out.println("");
+
+            this.product = new Product(tree.getTreeID(), tree.getTreeName(), tree.getPrice(), tree.getShippingCost(), cost, tree.getPhotoID());
+
+            Intent intent = new Intent(ViewItemActivity.this, AddItemToWishActivity.class);
+            intent.putExtra("USER_ID", currentUser);
+            startActivity(intent);
         }
 
 

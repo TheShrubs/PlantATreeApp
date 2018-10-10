@@ -12,6 +12,7 @@ import com.example.theshrubs.plantatree.models.Address;
 import com.example.theshrubs.plantatree.models.ShoppingCart;
 import com.example.theshrubs.plantatree.models.Tree;
 import com.example.theshrubs.plantatree.models.User;
+import com.example.theshrubs.plantatree.models.Wishlist;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     private TreeTable treeTable = new TreeTable();
-    private CartTable wishTable = new CartTable();
+    private WishTable wishTable = new WishTable();
     private CartTable cartTable = new CartTable();
     private UserTable userTable = new UserTable();
     private AddressTable addressTable = new AddressTable();
@@ -54,7 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(treeTable.createTreeTable(TREE_TABLE));
-        db.execSQL(wishTable.createCartTable(WISH_TABLE));
+        db.execSQL(wishTable.createWishTable(WISH_TABLE));
         db.execSQL(cartTable.createCartTable(CART_TABLE));
         db.execSQL(userTable.createTreeTable(USER_TABLE));
         db.execSQL(addressTable.createAddressTable(ADDRESS_TABLE));
@@ -91,6 +92,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Address addressObject = (Address) object;
             tableName = ADDRESS_TABLE;
             values = addressTable.getAddressContents(addressObject);
+        }else if (object instanceof Wishlist) {
+            Wishlist wishlistObject = (Wishlist) object;
+            tableName = WISH_TABLE;
+            values = wishTable.getWishContents(wishlistObject);
         }
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -137,7 +142,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 query = "Select * FROM " + WISH_TABLE + " WHERE UserID" + " = " + "'" + id + "'";
                 System.out.println(query);
                 cursor = getReadableDatabase().rawQuery(query, null);
-                ShoppingCart wishCart = wishTable.findCart(cursor);
+                Wishlist wishCart = wishTable.findWish(cursor);
                 obj = (Object) wishCart;
                 break;
 
@@ -204,7 +209,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                // db.execSQL(wishTable.createCartTable(WISH_TABLE));
                 query = "Select * FROM " + WISH_TABLE + " WHERE UserID" + " = " + "'" + id + "'";
                 cursor = getReadableDatabase().rawQuery(query, null);
-                List<ShoppingCart> wishList = wishTable.loadCart(cursor);
+                List<Wishlist> wishList = wishTable.loadWish(cursor);
                 objectList = (List<Object>) (Object) wishList;
                 break;
 
@@ -238,6 +243,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + CART_TABLE);
     }
+
+    public void clearWish(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + WISH_TABLE);
+    }
+
 
     public void populateDatabase() {
         Tree tree1 = new Tree(0, "Austrian Pine", "The austrian pine is medium to large sized everdgreen, needle-leaved conifer.", "Non-flowering", 84.0, R.drawable.austrian_pine, 3, "High", "Low", "High", "High", "Low");

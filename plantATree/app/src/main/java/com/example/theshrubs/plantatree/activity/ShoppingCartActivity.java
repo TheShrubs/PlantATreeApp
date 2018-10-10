@@ -120,16 +120,16 @@ ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener{
         listView.setAdapter(new ShoppingCartAdapter(this, cartObjectList, USER_ID));
 
         double discount = 0.0;
+        //discount = free delivery if quantity over 10
         if(quantity >= 10){
             double beforeDiscount = subTotal + delivery;
             System.out.println("Before Discount " + beforeDiscount);
-            discount = beforeDiscount * .25;
+            discount = delivery ;
             System.out.println("CurrentDiscount" + discount);
         }
-        double totalDelivery = quantity * delivery;
-        total = (subTotal + delivery) - discount;
+        total = subTotal - discount;
         cartSubTotal.setText("$" + String.format("%.2f",subTotal));
-        cartDelivery.setText("$" +String.format("%.2f",totalDelivery));
+        cartDelivery.setText("$" +String.format("%.2f",delivery));
         cartDiscount.setText("$" +String.format("%.2f", discount));
         catTotalCost.setText("$" +String.format("%.2f", total));
 
@@ -137,8 +137,8 @@ ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener{
 
     public void setCosts(ShoppingCart cart){
         subTotal = subTotal + cart.getTotalCost();
-        delivery = delivery + cart.getDeliveryCost();
         quantity = quantity + cart.getProductQuantity();
+        delivery = delivery + cart.getDeliveryCost()*cart.getProductQuantity();
     }
 
 

@@ -124,7 +124,7 @@
         app:srcCompat="@drawable/ic_camera" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/addToWish"
         android:layout_width="39dp"
         android:layout_height="32dp"
         android:layout_below="@+id/photo"

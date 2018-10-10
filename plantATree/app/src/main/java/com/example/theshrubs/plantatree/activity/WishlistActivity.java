@@ -18,6 +18,7 @@ import com.example.theshrubs.plantatree.R;
 import com.example.theshrubs.plantatree.database.DatabaseHelper;
 import com.example.theshrubs.plantatree.models.ShoppingCart;
 import com.example.theshrubs.plantatree.models.Tree;
+import com.example.theshrubs.plantatree.models.Wishlist;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.List;
 public class
 WishlistActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private List<ShoppingCart> cartObjectList = new ArrayList<>();
+    private List<Wishlist> cartObjectList = new ArrayList<>();
     private int USER_ID;
     private DatabaseHelper database;
     private TextView cartSubTotal;
@@ -33,7 +34,7 @@ WishlistActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView cartDiscount;
     private TextView catTotalCost;
     private Button checkoutButton;
-    private double subTotal;
+        private double subTotal;
     private double delivery;
     //    private double discount;
     private double total;
@@ -43,6 +44,9 @@ WishlistActivity extends AppCompatActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wishlist);
+        configureClearButton();
+        //configureAddButton();
+
 
         //adding bottom naviation view
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_naviation);
@@ -51,7 +55,7 @@ WishlistActivity extends AppCompatActivity implements View.OnClickListener{
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch(menuItem.getItemId()){
                     case R.id.action_home:
-                        Toast.makeText(WishlistActivity.this, "Home Action Clicked", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(WishlistActivity.this, "Home Action Clicked", Toast.LENGTH_SHORT).show();
                         Intent cartIntent = new Intent(WishlistActivity.this, LandingPageActivity.class);
                         cartIntent.putExtra("USER_ID", USER_ID);
                         startActivity(cartIntent);
@@ -60,19 +64,19 @@ WishlistActivity extends AppCompatActivity implements View.OnClickListener{
 //                        Toast.makeText(LandingPageActivity.this, "Search Action Clicked", Toast.LENGTH_SHORT).show();
 //                        break;
                     case R.id.action_wishlist:
-                        Toast.makeText(WishlistActivity.this, "WishList Action Clicked", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(WishlistActivity.this, "WishList Action Clicked", Toast.LENGTH_SHORT).show();
                         cartIntent = new Intent(WishlistActivity.this, WishlistActivity.class);
                         cartIntent.putExtra("USER_ID", USER_ID);
                         startActivity(cartIntent);
                         break;
                     case R.id.action_cart:
-                        Toast.makeText(WishlistActivity.this, "Cart Action Clicked", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(WishlistActivity.this, "Cart Action Clicked", Toast.LENGTH_SHORT).show();
                         cartIntent = new Intent(WishlistActivity.this, ShoppingCartActivity.class);
                         cartIntent.putExtra("USER_ID", USER_ID);
                         startActivity(cartIntent);
                         break;
                     case R.id.action_account:
-                        Toast.makeText(WishlistActivity.this, "Account Action Clicked", Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(WishlistActivity.this, "Account Action Clicked", Toast.LENGTH_SHORT).show();
                         break;
                 }
 
@@ -109,17 +113,17 @@ WishlistActivity extends AppCompatActivity implements View.OnClickListener{
 
         List<Object> objectList = new ArrayList<>();
         objectList = database.loadAllContents(USER_ID, "Wishlist");
-        ShoppingCart cartObject = new ShoppingCart();
+        Wishlist cartObject = new Wishlist();
         for(int i = 0; i < objectList.size(); i++){
-            cartObject = (ShoppingCart) objectList.get(i);
-            setCosts(cartObject);
+            cartObject = (Wishlist) objectList.get(i);
+            //setCosts(cartObject);
 
             System.out.println("ADDING " + cartObject.toString() + "to cart array");
             cartObjectList.add(cartObject);
         }
 
         final ListView listView = (ListView) findViewById(R.id.productListView);
-        listView.setAdapter(new ShoppingCartAdapter(this, cartObjectList, USER_ID));
+        listView.setAdapter(new WishlistAdapter(this, cartObjectList, USER_ID));
 
         double discount = 0.0;
         if(quantity >= 10){
@@ -153,13 +157,28 @@ WishlistActivity extends AppCompatActivity implements View.OnClickListener{
 
     }
 
-    public void removeClickHandler(View view) {
+   // public void removeClickHandler(View view) {
         //get the row the clicked button is in
-        RelativeLayout viewwParentRow = (RelativeLayout)view.getParent();
+  //      RelativeLayout viewwParentRow = (RelativeLayout)view.getParent();
+//
+  //      TextView child = (TextView) viewwParentRow.getChildAt(0);
+ //       Button btnChild = (Button) viewwParentRow.getChildAt(1);
+ //       btnChild.setText(child.getText());
+  //      btnChild.setText("CLICK");
+   // }
 
-        TextView child = (TextView) viewwParentRow.getChildAt(0);
-        Button btnChild = (Button) viewwParentRow.getChildAt(1);
-        btnChild.setText(child.getText());
-        btnChild.setText("CLICK");
+    private void configureClearButton(){
+        Button clearButton = findViewById(R.id.clearWishButton);
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                database.clearWish();
+                Intent cartIntent = new Intent(WishlistActivity.this, WishlistActivity.class);
+                cartIntent.putExtra("USER_ID", USER_ID);
+                startActivity(cartIntent);
+            }
+        });
     }
+
+
 }

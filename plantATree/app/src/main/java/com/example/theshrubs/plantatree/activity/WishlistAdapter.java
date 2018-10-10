@@ -22,15 +22,15 @@ import com.example.theshrubs.plantatree.models.Wishlist;
 
 import java.util.List;
 
-public class ShoppingCartAdapter extends BaseAdapter {
+public class WishlistAdapter extends BaseAdapter {
 
-    private List<ShoppingCart> productList;
+    private List<Wishlist> productList;
     private LayoutInflater layoutInflater;
     private Context context;
     private int currentUSER_ID;
 //    private DatabaseHelper databaseHelper;
 
-    public ShoppingCartAdapter(Context context, List<ShoppingCart> products, int id){//}, DatabaseHelper databaseHelper){
+    public WishlistAdapter(Context context, List<Wishlist> products, int id){//}, DatabaseHelper databaseHelper){
         this.context = context;
         this.productList = products;
         this.layoutInflater = LayoutInflater.from(context);
@@ -41,7 +41,7 @@ public class ShoppingCartAdapter extends BaseAdapter {
 
     public class ViewHolder {
         TextView itemName;
-//        TextView itemShipping;
+        //        TextView itemShipping;
         TextView itemTotal;
         EditText itemQuantity;
         ImageView itemPhoto;
@@ -75,12 +75,13 @@ public class ShoppingCartAdapter extends BaseAdapter {
             viewHolder.itemPhoto = (ImageView) convertView.findViewById(R.id.shopItemPhoto);
             //viewHolder.removeItem = (Button) convertView.findViewById(R.id.removeItem);
 
+
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        ShoppingCart cartItem = this.productList.get(position);
+        Wishlist cartItem = this.productList.get(position);
         viewHolder.itemName.setText(cartItem.getProductName());
         viewHolder.itemTotal.setText("$" + cartItem.getTotalCost());
         viewHolder.itemQuantity.setText(String.valueOf(cartItem.getProductQuantity()));
@@ -93,4 +94,5 @@ public class ShoppingCartAdapter extends BaseAdapter {
 //    });
         return convertView;
     }
+
 }
