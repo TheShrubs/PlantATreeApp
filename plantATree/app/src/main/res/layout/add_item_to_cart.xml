@@ -8,67 +8,44 @@
     tools:context=".activity.AddItemToCartActivity"
     android:background="@drawable/background3">
 
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/add_item_Navigation"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@android:color/holo_green_dark"
+        app:itemIconTint="@drawable/nav_item_color_state"
+        app:itemTextColor="@drawable/nav_item_color_state"
+        app:menu="@menu/bottom_navigation_main"
+        tools:layout_editor_absoluteX="39dp"
+        tools:layout_editor_absoluteY="519dp" />
+
     <Button
         android:id="@+id/treeBuyButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="29dp"
+        android:layout_marginBottom="66dp"
         android:background="@android:color/holo_green_dark"
         android:text="Buy Now"
         android:textColor="@android:color/background_light"
         tools:layout_editor_absoluteX="156dp"
         tools:layout_editor_absoluteY="473dp" />
 
-    <TextView
-        android:id="@+id/treeName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="214dp"
-        android:layout_marginStart="54dp"
-        android:text="TextView"
-        android:textColor="@android:color/background_dark"
-        tools:layout_editor_absoluteX="43dp"
-        tools:layout_editor_absoluteY="128dp" />
-
-    <TextView
-        android:id="@+id/treePrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/itemQuantity"
-        android:layout_alignStart="@+id/treeName"
-        android:text="TextView"
-        android:textColor="@android:color/background_dark"
-        tools:layout_editor_absoluteX="43dp"
-        tools:layout_editor_absoluteY="240dp" />
-
-    <TextView
-        android:id="@+id/treeShip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/treeName"
-        android:layout_marginBottom="133dp"
-        android:text="TextView"
-        android:textColor="@android:color/background_dark"
-        tools:layout_editor_absoluteX="43dp"
-        tools:layout_editor_absoluteY="274dp" />
 
     <EditText
         android:id="@+id/itemQuantity"
         android:layout_width="54dp"
         android:layout_height="42dp"
-        android:layout_alignStart="@+id/textView8"
-        android:layout_below="@+id/treeName"
-        android:layout_marginTop="-214dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="76dp"
+        android:layout_marginRight="76dp"
+        android:layout_marginBottom="141dp"
         android:ems="10"
-        android:inputType="number"
-        android:textColor="@android:color/background_dark"
-        tools:layout_editor_absoluteX="269dp"
-        tools:layout_editor_absoluteY="262dp" />
+        android:inputType="number" />
 
     <TextView
         android:id="@+id/textView6"
@@ -81,25 +58,6 @@
         android:textColor="@android:color/background_dark"
         android:textStyle="italic" />
 
-    <TextView
-        android:id="@+id/treeTotal"
-        android:layout_width="102dp"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/itemQuantity"
-        android:layout_alignTop="@+id/treeShip"
-        android:text="Tree Total"
-        android:textColor="@android:color/background_dark"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/treeName"
-        android:layout_toEndOf="@+id/textView6"
-        android:text="Quantity"
-        android:textColor="@android:color/background_dark" />
-
     <ImageView
         android:id="@+id/addPhoto"
         android:layout_width="150dp"
@@ -108,4 +66,54 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="72dp"
         app:srcCompat="@mipmap/ic_launcher" />
+
+    <LinearLayout
+        android:layout_width="170dp"
+        android:layout_height="121dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="37dp"
+        android:layout_marginLeft="37dp"
+        android:layout_marginBottom="116dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/treeName"
+            android:layout_width="match_parent"
+            android:layout_height="31dp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/treePrice"
+            android:layout_width="match_parent"
+            android:layout_height="31dp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/treeShip"
+            android:layout_width="match_parent"
+            android:layout_height="31dp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/treeTotal"
+            android:layout_width="match_parent"
+            android:layout_height="31dp"
+            android:text="Tree Total"
+            android:textColor="@android:color/background_dark"
+            android:textSize="14sp"
+            android:textStyle="bold|italic" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/itemQuantity"
+        android:layout_alignLeft="@+id/itemQuantity"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="196dp"
+        android:text="Quantity" />
 </RelativeLayout>

@@ -41,8 +41,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private String username;
     private String password;
-    private String keyword;
-
 
     //initialize the database
     public DatabaseHelper(Context context) {
@@ -108,10 +106,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public Object findHandle(int id, String tableName) {
-        Object obj = new Object();
+        Object obj;
         String query = "";
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = null;
+        Cursor cursor;
 
 
         switch (tableName) {
@@ -182,38 +180,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 List<Tree> treeList = treeTable.loadTrees(cursor);
                 objectList = (List<Object>) (Object) treeList;
                 break;
-            case "SearchTree":
-                query = "Select * FROM " + TREE_TABLE + " WHERE TreeName LIKE '%" + keyword + "%'";
-                cursor = getReadableDatabase().rawQuery(query, null);
-                List<Tree> foundTrees = treeTable.loadTrees(cursor);
-                objectList = (List<Object>) (Object) foundTrees;
-                break;
+//            case "SearchTree":
+//                query = "Select * FROM " + TREE_TABLE + " WHERE TreeName LIKE '%" + keyword + "%'";
+//                cursor = getReadableDatabase().rawQuery(query, null);
+//                List<Tree> foundTrees = treeTable.loadTrees(cursor);
+//                objectList = (List<Object>) (Object) foundTrees;
+//                break;
 
         }
 
         return objectList;
     }
 
-    public void setKeyword(String keyword){
-        this.keyword = keyword;
-    }
-
-    public boolean checkExistingUser(String username) {
-        String query = "SELECT * FROM " + USER_TABLE + " WHERE UserName = '" + username + "'";
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor.getCount() <= 0) {
-            cursor.close();
-            db.close();
-            return false;
-        } else {
-            cursor.close();
-            db.close();
-            return true;
-        }
-    }
+//    public void setKeyword(String keyword){
+//        this.keyword = keyword;
+//    }
+//
+//    public boolean checkExistingUser(String username) {
+//        String query = "SELECT * FROM " + USER_TABLE + " WHERE UserName = '" + username + "'";
+//
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        Cursor cursor = db.rawQuery(query, null);
+//
+//        if (cursor.getCount() <= 0) {
+//            cursor.close();
+//            db.close();
+//            return false;
+//        } else {
+//            cursor.close();
+//            db.close();
+//            return true;
+//        }
+//    }
 
     public void clearCartTable(){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -230,8 +228,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Tree tree7 = new Tree(6, "Red Maple", "A red maple tree gets its common name from its brilliant red foliage that become the focal point of the landscape in autumn.", "Flowering", 45.5, R.drawable.tree_maple, 2.5, "High", "Medium", "Medium", "High", "Low");
         Tree tree8 = new Tree(7, "White Oak", "Quercus alba, the white oak, is one of the preeminent hardwoods of eastern and central North America.", "Non-Flowering", 45.0, R.drawable.tree_oak, 4.5, "High", "High", "Medium", "Medium", "Low");
 
-//
-////
         addHandle(tree1);
         addHandle(tree2);
         addHandle(tree3);
@@ -240,9 +236,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         addHandle(tree6);
         addHandle(tree7);
         addHandle(tree8);
-//
+
         System.out.println("PASSED THROUGH POPULATE DATABASE");
-//
+
     }
 
 
@@ -252,22 +248,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         this.password = pass;
 
     }
-    public boolean checkUser(String email) {
-        String[] columns = {
-                USER_ID
-        };
-        //call SQLite DB
-        SQLiteDatabase db = this.getWritableDatabase();
-        String selection = USER_EMAIL + " = ?";
-        String[] selectionArgs = {email};
-
-        Cursor cursor = db.query(USER_TABLE, columns, selection, selectionArgs, null, null, null);
-        int cursorCount = cursor.getCount();
-        cursor.close();
-        db.close();
-        if (cursorCount > 0) {
-            return true;
-        }
-        return false;
-    }
+//    public boolean checkUser(String email) {
+//        String[] columns = {
+//                USER_ID
+//        };
+//        //call SQLite DB
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        String selection = USER_EMAIL + " = ?";
+//        String[] selectionArgs = {email};
+//
+//        Cursor cursor = db.query(USER_TABLE, columns, selection, selectionArgs, null, null, null);
+//        int cursorCount = cursor.getCount();
+//        cursor.close();
+//        db.close();
+//        if (cursorCount > 0) {
+//            return true;
+//        }
+//        return false;
+//    }
 }
