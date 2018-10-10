@@ -1,5 +1,6 @@
 package com.example.theshrubs.plantatree.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -8,11 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.theshrubs.plantatree.R;
 import com.example.theshrubs.plantatree.database.DatabaseHelper;
 import com.example.theshrubs.plantatree.models.Product;
 import com.example.theshrubs.plantatree.models.Tree;
+import com.example.theshrubs.plantatree.models.Wishlist;
 
 public class ViewItemActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -34,6 +37,9 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
 
     private int currentViewedTree;
     private int currentUser;
+
+    private Wishlist currentCart = new Wishlist();
+    private DatabaseHelper dbHandler = new DatabaseHelper(this);
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
@@ -138,22 +144,58 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
             System.out.println("Camera was pressed!!!!!!!!");
             dispatchTakePictureIntent();
 
-        }else if(v.getId() == R.id.addToWish){
+        }else if(v.getId() == R.id.addToWish) {
+            Toast.makeText(ViewItemActivity.this, "Add to Wishlist", Toast.LENGTH_SHORT).show();
+            String message;
+            int type;
             String name = itemName.getText().toString();
             double price = tree.getPrice();
             double shipCost = Double.valueOf(tree.getShippingCost());
-            double cost =  tree.getPrice() + tree.getShippingCost();
+            double cost = tree.getPrice() + tree.getShippingCost();
+
             System.out.println("");
 
             this.product = new Product(tree.getTreeID(), tree.getTreeName(), tree.getPrice(), tree.getShippingCost(), cost, tree.getPhotoID());
+            product.setQuantity(1);
+            //check if User has a cart!
+            Object foundCart = dbHandler.findHandle(currentUser, "Wish");
+            //if user is NOT found - then it creates cart for user;
+            if (foundCart == null) {
+                System.out.println("cart was NULL");
+                currentCart.setCartID(currentUser);
+                currentCart.setProductID(product.getProductID());
+                currentCart.setProductName(product.getProductName());
+                currentCart.setProductCost(product.getProductPrice());
+                currentCart.setDeliveryCost(product.getShipping());
+                currentCart.setTotalCost(product.getProductTotal());
+                currentCart.setPhotoID(product.getPhotoID());
+                currentCart.setProductQuantity(product.getQuantity());
+                dbHandler.addHandle(currentCart);
 
-            Intent intent = new Intent(ViewItemActivity.this, AddItemToWishActivity.class);
+            }
+            //if cart is found - it searches the cart to see if product exists in cart.
+            else {
+                currentCart = (Wishlist) foundCart;
+                if (currentCart.getProductID() != product.getProductID()) {
+                    currentCart.setCartID(currentUser);
+                    currentCart.setProductID(product.getProductID());
+                    currentCart.setProductName(product.getProductName());
+                    currentCart.setProductCost(product.getProductPrice());
+                    currentCart.setDeliveryCost(product.getShipping());
+                    currentCart.setTotalCost(product.getProductTotal());
+                    currentCart.setPhotoID(product.getPhotoID());
+                    currentCart.setProductQuantity(product.getQuantity());
+                    dbHandler.addHandle(currentCart);
+
+                }
+
+            }
+            Intent intent = new Intent(ViewItemActivity.this, WishlistActivity.class);
             intent.putExtra("USER_ID", currentUser);
             startActivity(intent);
+
+
         }
-
-
-
     }
 
     public static Bitmap getBitmap(){

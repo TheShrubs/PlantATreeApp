@@ -16,8 +16,10 @@ import android.widget.Toast;
 
 import com.example.theshrubs.plantatree.R;
 import com.example.theshrubs.plantatree.database.DatabaseHelper;
+import com.example.theshrubs.plantatree.models.Product;
 import com.example.theshrubs.plantatree.models.ShoppingCart;
 import com.example.theshrubs.plantatree.models.Tree;
+import com.example.theshrubs.plantatree.models.User;
 import com.example.theshrubs.plantatree.models.Wishlist;
 
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ import java.util.List;
 public class
 WishlistActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private List<Wishlist> cartObjectList = new ArrayList<>();
+    private List<Wishlist> cartObjectList;
     private int USER_ID;
     private DatabaseHelper database;
     private TextView cartSubTotal;
@@ -39,6 +41,9 @@ WishlistActivity extends AppCompatActivity implements View.OnClickListener{
     //    private double discount;
     private double total;
     private int quantity;
+    private Tree tree;
+    private ShoppingCart currentCart = new ShoppingCart();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,7 @@ WishlistActivity extends AppCompatActivity implements View.OnClickListener{
         configureClearButton();
         //configureAddButton();
 
+        cartObjectList =  new ArrayList<Wishlist>();
 
         //adding bottom naviation view
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_naviation);
@@ -116,11 +122,9 @@ WishlistActivity extends AppCompatActivity implements View.OnClickListener{
         Wishlist cartObject = new Wishlist();
         for(int i = 0; i < objectList.size(); i++){
             cartObject = (Wishlist) objectList.get(i);
-            //setCosts(cartObject);
-
-            System.out.println("ADDING " + cartObject.toString() + "to cart array");
             cartObjectList.add(cartObject);
         }
+
 
         final ListView listView = (ListView) findViewById(R.id.productListView);
         listView.setAdapter(new WishlistAdapter(this, cartObjectList, USER_ID));
@@ -139,6 +143,7 @@ WishlistActivity extends AppCompatActivity implements View.OnClickListener{
      //   cartDiscount.setText("$" +String.format("%.2f", discount));
     //    catTotalCost.setText("$" +String.format("%.2f", total));
 
+      //  wishToCart();
     }
 
     public void setCosts(ShoppingCart cart){
@@ -156,16 +161,6 @@ WishlistActivity extends AppCompatActivity implements View.OnClickListener{
         startActivity(intent);
 
     }
-
-   // public void removeClickHandler(View view) {
-        //get the row the clicked button is in
-  //      RelativeLayout viewwParentRow = (RelativeLayout)view.getParent();
-//
-  //      TextView child = (TextView) viewwParentRow.getChildAt(0);
- //       Button btnChild = (Button) viewwParentRow.getChildAt(1);
- //       btnChild.setText(child.getText());
-  //      btnChild.setText("CLICK");
-   // }
 
     private void configureClearButton(){
         Button clearButton = findViewById(R.id.clearWishButton);

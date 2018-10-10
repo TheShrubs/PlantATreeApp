@@ -52,7 +52,12 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
         addItem.setEnabled(false);
 
         addItem.setOnClickListener(this);
-        setInformation(ViewItemActivity.getProduct());
+
+        if(ViewItemActivity.getProduct() == null){
+            setInformation(WishlistAdapter.getProduct());
+        }else {
+            setInformation(ViewItemActivity.getProduct());
+        }
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -91,7 +96,7 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
                 addItem.setEnabled(true);
 
             }
-        });
+                });
     }
 
     public void setInformation(Product product) {

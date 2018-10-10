@@ -1,6 +1,7 @@
 package com.example.theshrubs.plantatree.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,8 @@ public class WishlistAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private Context context;
     private int currentUSER_ID;
+
+    private static Product currentProduct;
 //    private DatabaseHelper databaseHelper;
 
     public WishlistAdapter(Context context, List<Wishlist> products, int id){//}, DatabaseHelper databaseHelper){
@@ -35,6 +38,7 @@ public class WishlistAdapter extends BaseAdapter {
         this.productList = products;
         this.layoutInflater = LayoutInflater.from(context);
         this.currentUSER_ID = id;
+
 //        this.databaseHelper = new DatabaseHelper(context);
     }
 
@@ -81,11 +85,27 @@ public class WishlistAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Wishlist cartItem = this.productList.get(position);
+        final Wishlist cartItem = this.productList.get(position);
         viewHolder.itemName.setText(cartItem.getProductName());
         viewHolder.itemTotal.setText("$" + cartItem.getTotalCost());
         viewHolder.itemQuantity.setText(String.valueOf(cartItem.getProductQuantity()));
         viewHolder.itemPhoto.setImageResource(cartItem.getPhotoID());
+        //listview item clicks
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int newID = cartItem.getCartID();
+                currentProduct = new Product(cartItem.getProductID(),cartItem.getProductName(),cartItem.getProductCost(),cartItem.getDeliveryCost(),cartItem.getTotalCost(),cartItem.getPhotoID());
+
+
+                Intent intent = new Intent(context, AddItemToCartActivity.class);
+                intent.putExtra("TREE_ID", newID);
+                intent.putExtra("USER_ID", currentUSER_ID);
+
+                context.startActivity(intent);
+            }
+        });
 //        viewHolder.removeItem.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //        public void onClick(View v) {
@@ -95,4 +115,11 @@ public class WishlistAdapter extends BaseAdapter {
         return convertView;
     }
 
+
+    public static Product getProduct(){
+        return currentProduct;
+    }
 }
+
+
+
