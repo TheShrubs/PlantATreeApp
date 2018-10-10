@@ -124,10 +124,10 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
         }
         double totalDelivery = quantity * delivery;
         total = (subTotal + delivery) - discount;
-        cartSubTotal.setText("$" + String.valueOf(subTotal));
-        cartDelivery.setText("$" +String.valueOf(totalDelivery));
+        cartSubTotal.setText("$" + String.format("%.2f",subTotal));
+        cartDelivery.setText("$" +String.format("%.2f",totalDelivery));
         cartDiscount.setText("$" +String.format("%.2f", discount));
-        catTotalCost.setText("$" +String.valueOf(total));
+        catTotalCost.setText("$" +String.format("%.2f", total));
 
     }
 

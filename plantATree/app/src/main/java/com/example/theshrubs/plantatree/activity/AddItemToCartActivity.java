@@ -60,6 +60,7 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
                 currentViewedTree = 1;
                 currentUSER_ID = 1;
                 System.out.println("Bundle extra was NULL user");
+                System.out.println("hello");
             } else {
                 currentViewedTree = extras.getInt("TREE_ID");
                 currentUSER_ID = extras.getInt("USER_ID");
