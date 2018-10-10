@@ -10,6 +10,17 @@
     android:background="@drawable/background3">
 
 
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/view_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@android:color/holo_green_dark"
+        app:itemIconTint="@drawable/nav_item_color_state"
+        app:itemTextColor="@drawable/nav_item_color_state"
+        app:menu="@menu/bottom_navigation_main"/>
+
+
     <ImageView
         android:id="@+id/photo"
         android:layout_width="280dp"
@@ -22,105 +33,29 @@
         tools:layout_editor_absoluteX="52dp"
         tools:layout_editor_absoluteY="90dp" />
 
-    <TextView
-        android:id="@+id/itemName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/itemDescription"
-        android:layout_marginBottom="205dp"
-        android:text="Name: "
-        android:textColor="@android:color/background_dark"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="425dp" />
-
-    <TextView
-        android:id="@+id/itemDescription"
-        android:layout_width="302dp"
-        android:layout_height="38dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="236dp"
-        android:text="Description:"
-        android:textColor="@android:color/background_dark"
-        android:textStyle="italic"
-        tools:layout_editor_absoluteX="41dp"
-        tools:layout_editor_absoluteY="323dp" />
-
-    <TextView
-        android:id="@+id/itemPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/itemDescription"
-        android:layout_alignTop="@+id/itemName"
-        android:text="Price:"
-        android:textColor="@android:color/holo_green_dark"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="398dp" />
-
     <ImageView
         android:id="@+id/addToCart"
         android:layout_width="39dp"
         android:layout_height="32dp"
-        android:layout_alignParentEnd="true"
         android:layout_below="@+id/photo"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginEnd="86dp"
+        android:layout_marginRight="86dp"
         android:src="@drawable/ic_shoppingcart"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="238dp"
         tools:layout_editor_absoluteY="237dp" />
 
-    <TextView
-        android:id="@+id/maxHeight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/itemName"
-        android:layout_marginBottom="165dp"
-        android:text="TextView"
-        android:textColor="@android:color/background_dark" />
-
-    <TextView
-        android:id="@+id/exposure"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/itemName"
-        android:layout_below="@+id/maxHeight"
-        android:layout_marginTop="-151dp"
-        android:text="TextView"
-        android:textColor="@android:color/background_dark" />
-
-    <TextView
-        android:id="@+id/soilDrainage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/itemName"
-        android:layout_marginBottom="92dp"
-        android:text="TextView"
-        android:textColor="@android:color/background_dark" />
-
-    <TextView
-        android:id="@+id/maintenance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/itemName"
-        android:layout_marginBottom="42dp"
-        android:text="TextView"
-        android:textColor="@android:color/background_dark" />
-
     <ImageView
         android:id="@+id/btnCamera"
         android:layout_width="39dp"
         android:layout_height="32dp"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/photo"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_marginStart="73dp"
+        android:layout_marginLeft="73dp"
         app:srcCompat="@drawable/ic_camera" />
 
     <ImageView
@@ -130,5 +65,67 @@
         android:layout_below="@+id/photo"
         android:layout_centerHorizontal="true"
         app:srcCompat="@drawable/ic_wishlist" />
+
+    <LinearLayout
+        android:layout_width="333dp"
+        android:layout_height="249dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="25dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/itemDescription"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:text="Description:"
+            android:textColor="@android:color/background_dark"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/itemName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Name: "
+            android:textColor="@android:color/background_dark" />
+
+        <TextView
+            android:id="@+id/itemPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Price:"
+            android:textColor="@android:color/background_dark"/>
+
+        <TextView
+            android:id="@+id/maxHeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Max Height"
+            android:textColor="@android:color/background_dark" />
+
+        <TextView
+            android:id="@+id/exposure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sun Exposure"
+            android:textColor="@android:color/background_dark" />
+
+        <TextView
+            android:id="@+id/soilDrainage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Soil Drainage"
+            android:textColor="@android:color/background_dark" />
+
+        <TextView
+            android:id="@+id/maintenance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Maintenance"
+            android:textColor="@android:color/background_dark" />
+    </LinearLayout>
 
 </RelativeLayout>

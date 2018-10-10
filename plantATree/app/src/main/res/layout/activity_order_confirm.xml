@@ -8,6 +8,21 @@
 
     tools:context=".activity.OrderConfirmActivity">
 
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/shopping_Navigation"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@android:color/holo_green_dark"
+        app:itemIconTint="@drawable/nav_item_color_state"
+        app:itemTextColor="@drawable/nav_item_color_state"
+        app:menu="@menu/bottom_navigation_main"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="523dp"
+        tools:ignore="MissingConstraints" />
+
+
     <Button
         android:id="@+id/confirmBackButton"
         android:layout_width="wrap_content"

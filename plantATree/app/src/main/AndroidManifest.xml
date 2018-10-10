@@ -28,7 +28,7 @@
         <activity android:name=".activity.AddressActivity"/>
         <activity android:name=".activity.PaymentActivity" />
         <activity android:name=".activity.OrderConfirmActivity"/>
-        <activity android:name=".activity.ViewingTreeActivity"/>
+        <activity android:name=".activity.VisualizationActivity"/>
     </application>
 
 </manifest>

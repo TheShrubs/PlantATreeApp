@@ -1,30 +1,19 @@
 package com.example.theshrubs.plantatree.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import com.example.theshrubs.plantatree.R;
 import com.example.theshrubs.plantatree.database.DatabaseHelper;
 import com.example.theshrubs.plantatree.models.Tree;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LandingPageActivity extends AppCompatActivity {
 
@@ -34,7 +23,8 @@ public class LandingPageActivity extends AppCompatActivity {
     private DatabaseHelper dbHandler;
     private int currentUser;
     private EditText searchKeyword;
-    private ImageView searchButton;
+    private BottomNavigationView navigationView;
+    private BottomNavigationMenu navigationControl;
 
 
     @Override
@@ -42,49 +32,16 @@ public class LandingPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.landing_page);
 
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if (extras == null) {
-                System.out.println("Bundle extra was NULL user");
-            } else {
-                currentUser = extras.getInt("USER_ID");
-            }
-        }
+        Bundle extras = getIntent().getExtras();
+        currentUser = extras.getInt("USER_ID");
 
-        //adding bottom naviation view
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_naviation);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch(menuItem.getItemId()){
-                    case R.id.action_home:
-                        Toast.makeText(LandingPageActivity.this, "Home Action Clicked", Toast.LENGTH_SHORT).show();
-                        //finish();
-                        startActivity(getIntent());
-                        break;
-//                    case R.id.action_search:
-//                        Toast.makeText(LandingPageActivity.this, "Search Action Clicked", Toast.LENGTH_SHORT).show();
-//                        break;
-                    case R.id.action_wishlist:
-                        Toast.makeText(LandingPageActivity.this, "WishList Action Clicked", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.action_cart:
-                        Intent cartIntent = new Intent(LandingPageActivity.this, ShoppingCartActivity.class);
-                        cartIntent.putExtra("CART_ID", currentUser);
-                        startActivity(cartIntent);
-                        //Toast.makeText(LandingPageActivity.this, "Cart Action Clicked", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.action_account:
-                        Toast.makeText(LandingPageActivity.this, "Account Action Clicked", Toast.LENGTH_SHORT).show();
-                        break;
-                }
+        navigationView = (BottomNavigationView) findViewById(R.id.landing_Navigation);
+        navigationControl = new BottomNavigationMenu();
+        navigationControl.getBottomNavigation(this, navigationView, currentUser);
 
-                return true;
-            }
-        });
 
         this.dbHandler = new DatabaseHelper(this);
-        dbHandler.populateDatabase();
+//        dbHandler.populateDatabase();
 
         treeList = new ArrayList<>();
         List<Object> objectList = dbHandler.loadAllContents(1, "Landing");
@@ -99,9 +56,7 @@ public class LandingPageActivity extends AppCompatActivity {
         landingList.setAdapter(landingAdapter);
 
         searchKeyword = (EditText) findViewById(R.id.search_text);
-        searchButton = (ImageView) findViewById(R.id.search_tree);
 
-//        searchButton.setOnClickListener(this);
 
         searchKeyword.addTextChangedListener(new TextWatcher() {
             @Override
@@ -122,24 +77,5 @@ public class LandingPageActivity extends AppCompatActivity {
 
     }
 
-    public void loadLandingView(List<Object> objectList) {
 
-        landingList = (ListView) findViewById(R.id.treeList);
-
-        for (int i = 0; i < objectList.size(); i++) {
-            Tree model = (Tree) objectList.get(i);
-            treeList.add(model);
-        }
-
-        landingAdapter = new LandingPageAdapter(this, treeList, currentUser);
-        landingList.setAdapter(landingAdapter);
-    }
-
-//    @Override
-//    public void onClick(View v) {
-//
-//        String keyword = searchKeyword.getText().toString().trim();
-//        landingAdapter.filter(keyword);
-//
-//    }
 }

@@ -20,7 +20,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
     //information of database
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "PLANTATREES";
+    private static final String DATABASE_NAME = "PLANTATREE";
     //table names
     private static final String TREE_TABLE = "Trees";
     private static final String USER_TABLE = "User";
@@ -227,7 +227,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Tree tree6 = new Tree(5, "Honeycrisp Apple", "The Honeycrisp apple tree is compact (for small spaces) and exceptionally cold-hardy.", "Flowering", 69.0, R.drawable.tree_apple, 3.0, "Medium", "Medium", "High", "Medium", "Low");
         Tree tree7 = new Tree(6, "Red Maple", "A red maple tree gets its common name from its brilliant red foliage that become the focal point of the landscape in autumn.", "Flowering", 45.5, R.drawable.tree_maple, 2.5, "High", "Medium", "Medium", "High", "Low");
         Tree tree8 = new Tree(7, "White Oak", "Quercus alba, the white oak, is one of the preeminent hardwoods of eastern and central North America.", "Non-Flowering", 45.0, R.drawable.tree_oak, 4.5, "High", "High", "Medium", "Medium", "Low");
-
+        Tree tree9 = new Tree(8, "Douglas Fir", "Boasting a pyramidal shape and blue to dark green needles,", "Non-FLowering", 55.0, R.drawable.tree_pine, 5.5, "High", "Low", "Low", "Low", "Medium");
         addHandle(tree1);
         addHandle(tree2);
         addHandle(tree3);
