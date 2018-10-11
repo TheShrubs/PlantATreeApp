@@ -8,6 +8,8 @@ public class Tree {
     private Category category;
     private double price;
     private int photoID;
+    private int photoThumb;
+    private int photoDrag;
     private double shippingCost;
     private MaxHeight maxHeight;
     private SoilDrainage soilDrainage;
@@ -29,13 +31,15 @@ public class Tree {
 
     }
 
-    public Tree(int id, String name, String description, String category, double price, int photo, double shippingCost, String maxHeight, String soilDrainage, String sunExposure, String growthRate, String maintenanceReq) {
+    public Tree(int id, String name, String description, String category, double price, int photo, int photoThumb, int photoDrag, double shippingCost, String maxHeight, String soilDrainage, String sunExposure, String growthRate, String maintenanceReq) {
         this.setTreeID(id);
         this.setTreeName(name);
         this.setTreeDescription(description);
         this.setCategory(category);
         this.setPrice(price);
         this.setPhotoID(photo);
+        this.setPhotoThumb(photoThumb);
+        this.setPhotoDrag(photoDrag);
         this.setShippingCost(shippingCost);
         this.setMaxHeight(maxHeight);
         this.setSoilDrainage(soilDrainage);
@@ -101,6 +105,22 @@ public class Tree {
 
     public void setPhotoID(int photoID) {
         this.photoID = photoID;
+    }
+
+    public int getPhotoThumb() {
+        return photoThumb;
+    }
+
+    public void setPhotoThumb(int photoThumb) {
+        this.photoThumb = photoThumb;
+    }
+
+    public int getPhotoDrag() {
+        return photoDrag;
+    }
+
+    public void setPhotoDrag(int photoDrag) {
+        this.photoDrag = photoDrag;
     }
 
     public double getShippingCost() {
@@ -224,6 +244,6 @@ public class Tree {
 
     public String toString() {
 
-        return getTreeID() + getTreeName() + getTreeDescription() + getCategory() + getPrice() + getPhotoID() + getMaxHeight() + getSoilDrainage() + getSunExposure() + getGrowthRate() + getMaintenanceReq();
+        return getTreeID() + getTreeName() + getTreeDescription() + getCategory() + getPrice() + getPhotoID() + getPhotoThumb() + getPhotoDrag() + getMaxHeight() + getSoilDrainage() + getSunExposure() + getGrowthRate() + getMaintenanceReq();
     }
 }

@@ -36,7 +36,7 @@ public class BottomNavigationMenu {
                         break;
                     case R.id.action_account:
 //                        Intent intent = new Intent(activity, UserProfileActivity.class);
-                        activity.startActivity(intent);
+//                        activity.startActivity(intent);
                         break;
                 }
 
