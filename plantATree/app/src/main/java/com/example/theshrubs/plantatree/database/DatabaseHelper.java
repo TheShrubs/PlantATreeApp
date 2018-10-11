@@ -22,7 +22,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
     //information of database
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "PLANTATREES";
+    private static final String DATABASE_NAME = "PLANTATREE";
     //table names
     private static final String TREE_TABLE = "Trees";
     private static final String USER_TABLE = "User";
@@ -168,6 +168,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 query = "Select * FROM " + WISH_TABLE + " WHERE UserID = '" + id + "' AND ProductID = '" + ViewItemActivity.getProduct().getProductID() + "'";
                 cursor = getReadableDatabase().rawQuery(query, null);
                 Wishlist wishlist = wishTable.findWish(cursor);
+                System.out.println("in db helper lookin for wish list");
                 obj = (Object) wishlist;
                 break;
             default:

@@ -88,12 +88,15 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
 
             @Override
             public void afterTextChanged(Editable s) {
-                int quant = Integer.parseInt(quantity.getText().toString());
-                double newTotal = (productItem.getProductPrice() + productItem.getShipping()) * quant;
-                totalCost.setText("Total Cost: $" + newTotal);
-                productItem.setProductTotal(newTotal);
-                productItem.setQuantity(quant);
-                addItem.setEnabled(true);
+                String stringValue = quantity.getText().toString();
+                if (!(stringValue.equals(""))) {
+                    int quant = Integer.parseInt(stringValue);
+                    double newTotal = (productItem.getProductPrice() + productItem.getShipping()) * quant;
+                    totalCost.setText("Total Cost: $" + newTotal);
+                    productItem.setProductTotal(newTotal);
+                    productItem.setQuantity(quant);
+                    addItem.setEnabled(true);
+                }
 
             }
                 });

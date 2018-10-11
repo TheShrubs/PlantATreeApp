@@ -1,6 +1,5 @@
 package com.example.theshrubs.plantatree.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -33,9 +32,7 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
     private ImageView wishlist;
     private static Product product;
     private Tree tree;
-//    private DatabaseHelper treeDB;
     private static Bitmap photo;
-    private boolean inWishlist;
     private BottomNavigationView navigationView;
     private BottomNavigationMenu navigationControl;
 
@@ -44,7 +41,6 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
     private DatabaseHelper dbHandler;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
-
 
 
     @Override
@@ -74,7 +70,6 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
         navigationControl.getBottomNavigation(this, navigationView, currentUser);
 
 
-
         shoppingCart.setOnClickListener(this);
         wishlist.setOnClickListener(this);
         btnCamera.setOnClickListener(this);
@@ -83,17 +78,16 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
         Object obj = dbHandler.findHandle(currentViewedTree, "Tree");
         tree = new Tree();
         tree = (Tree) obj;
-        if (tree == null){
+        if (tree == null) {
             System.out.println("table is null");
-        }else {
+        } else {
             setInformation(tree);
         }
 
-        double cost =  tree.getPrice() + tree.getShippingCost();
+        double cost = tree.getPrice() + tree.getShippingCost();
         this.product = new Product(tree.getTreeID(), tree.getTreeName(), tree.getPrice(), tree.getShippingCost(), cost, tree.getPhotoID());
 
     }
-
 
 
     private void dispatchTakePictureIntent() {
@@ -117,9 +111,9 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-    public void setInformation(Tree tree){
+    public void setInformation(Tree tree) {
         itemName.setText("Name: " + tree.getTreeName());
-        itemDescription.setText("Description: "+ tree.getTreeDescription());
+        itemDescription.setText("Description: " + tree.getTreeDescription());
         itemPrice.setText("Price: " + tree.getPrice());
         maxHeight.setText("Maximum Height at Maturity: " + tree.getMaxHeight());
         sunExposure.setText("Sun Exposure: " + tree.getSunExposure());
@@ -131,117 +125,43 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.addToCart){
-
-
+        if (v.getId() == R.id.addToCart) {
             Intent intent = new Intent(ViewItemActivity.this, AddItemToCartActivity.class);
             intent.putExtra("USER_ID", currentUser);
-            intent.putExtra("PAGE_ID","ViewItem");
+            intent.putExtra("PAGE_ID", "ViewItem");
             startActivity(intent);
 
-        }else if (v.getId() == R.id.btnCamera){
+        } else if (v.getId() == R.id.btnCamera) {
             System.out.println("Camera was pressed!!!!!!!!");
             dispatchTakePictureIntent();
 
-        }else if(v.getId() == R.id.addToWish) {
+        } else if (v.getId() == R.id.addToWish) {
 
-            Wishlist exisitngInWish = (Wishlist) dbHandler.findHandle(currentViewedTree, "ExistingWishlist");
-            String message;
-            int type;
-//            int userID, int productid, String description, String name, double productCost, int photo
+            Wishlist exisitngInWish = (Wishlist) dbHandler.findHandle(currentUser, "ExistingWishlist");
+
             //If it returns NULL then that means its not in the wishlist table so it should be added!
-            if(exisitngInWish == null){
+            if (exisitngInWish == null) {
+//                System.out.println(exisitngInWish.toString());
                 Wishlist newWish = new Wishlist(currentUser, tree.getTreeID(), tree.getTreeDescription(), tree.getTreeName(), tree.getPrice(), tree.getPhotoID());
                 boolean wishListAdded = dbHandler.addHandle(newWish);
-                if(wishListAdded){
+                if (wishListAdded) {
                     Toast.makeText(this, "Item added to Wish List", Toast.LENGTH_SHORT).show();
-                }else{
-                    dbHandler.deleteHandle("Wishlist", currentViewedTree);
-                    Toast.makeText(this, "Item removed from Wish List", Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                dbHandler.deleteHandle("Wishlist", currentViewedTree);
+                Toast.makeText(this, "Item removed from Wish List", Toast.LENGTH_SHORT).show();
 
             }
-//            System.out.println("");
-//
-//            this.product = new Product(tree.getTreeID(), tree.getTreeName(), tree.getPrice(), tree.getShippingCost(), cost, tree.getPhotoID());
-//            product.setQuantity(1);
-//            //check if User has a cart!
-//            Object foundCart = dbHandler.findHandle(currentUser, "Wish");
-//            //if user is NOT found - then it creates cart for user;
-//            if (foundCart == null) {
-//                currentCart.setWishlistID(currentUser);
-//                currentCart.setProductID(product.getProductID());
-//                currentCart.setProductName(product.getProductName());
-//                currentCart.setProductCost(product.getProductPrice());
-//                currentCart.setDeliveryCost(product.getShipping());
-//                currentCart.setTotalCost(product.getProductTotal());
-//                currentCart.setPhotoID(product.getPhotoID());
-//                currentCart.setProductQuantity(product.getQuantity());
-//                dbHandler.addHandle(currentCart);
-//                showCustomDialog(product.getProductName() + " added to Wishlist");
-//            }
-//            //if cart is found - it searches the cart to see if product exists in cart.
-//            else {
-//                currentCart = (Wishlist) foundCart;
-//                inWishlist =dbHandler.search(product.getProductID(),"Wishlist");
-//                if (inWishlist) {
-//                    showCustomDialog(product.getProductName() + " already added to Wishlist");
-//                }else{
-//                    currentCart.setWishlistID(currentUser);
-//                    currentCart.setProductID(product.getProductID());
-//                    currentCart.setProductName(product.getProductName());
-//                    currentCart.setProductCost(product.getProductPrice());
-//                    currentCart.setDeliveryCost(product.getShipping());
-//                    currentCart.setTotalCost(product.getProductTotal());
-//                    currentCart.setPhotoID(product.getPhotoID());
-//                    currentCart.setProductQuantity(product.getQuantity());
-//                    dbHandler.addHandle(currentCart);
-//                    showCustomDialog(product.getProductName() +" added to Wishlist");
-//
-//                }
-//
-//            }
-
         }
     }
 
-    public void showCustomDialog(String message) {
-        final android.support.v7.app.AlertDialog.Builder dialog = new android.support.v7.app.AlertDialog.Builder(this);
 
-        dialog.setTitle("Add To Wishlist");
-
-        dialog.setMessage(message);
-//        dialog.setNegativeButton("Continue Shopping",
-//                new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        finish();
-//                    }
-//                });
-        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(ViewItemActivity.this, WishListActivity.class);
-                intent.putExtra("CART_ID", currentUser);
-                startActivity(intent);
-            }
-        });
-
-
-        dialog.show();
-
-    }
-
-
-    public static Bitmap getBitmap(){
+    public static Bitmap getBitmap() {
         return photo;
     }
 
-//    public static int getProductID(){
-//        return
-//    }
 
-    public static Product getProduct(){
+    public static Product getProduct() {
         return product;
     }
 }

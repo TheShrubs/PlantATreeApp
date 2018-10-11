@@ -1,10 +1,9 @@
 package com.example.theshrubs.plantatree.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -14,11 +13,10 @@ import com.example.theshrubs.plantatree.R;
 import com.example.theshrubs.plantatree.database.DatabaseHelper;
 import com.example.theshrubs.plantatree.models.ShoppingCart;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
-public class ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener{
+public class ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener {
     private int USER_ID;
     private DatabaseHelper database;
     private TextView cartSubTotal;
@@ -29,11 +27,13 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
     private LinearLayout cartListView;
     private BottomNavigationMenu navigationControl;
     private BottomNavigationView navigationView;
+    private TextView congratsMessage;
 
     private double subTotal;
     private double delivery;
     private double total;
     private int quantity;
+    private int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
         delivery = 0;
         total = 0;
         quantity = 0;
+        type = 0;
 
         this.cartSubTotal = (TextView) findViewById(R.id.cart_subtotal);
         this.cartDelivery = (TextView) findViewById(R.id.cart_delivery);
@@ -59,39 +60,31 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
         this.catTotalCost = (TextView) findViewById(R.id.cart_totalcost);
         this.checkoutButton = (Button) findViewById(R.id.checkoutButton);
         this.cartListView = (LinearLayout) findViewById(R.id.cartListView);
+        this.congratsMessage = (TextView) findViewById(R.id.congrats_message);
         checkoutButton.setOnClickListener(this);
 
         //pull all objects in user's cart from the database
         List<Object> objectList = database.loadAllContents(USER_ID, "ShoppingCart");
         inflateShoppingCart(objectList);
 
-        if(objectList == null){
-            showCustomDialog("There is nothing in your cart!");
-        }
-//
-//        if(objectList != null){
-//            for(int i = 0; i < objectList.size(); i++){
-//                ShoppingCart cart = (ShoppingCart) objectList.get(i);
-//                setCosts(cart);
-//            }
-//        }
-
         calculateCosts();
+        setMessage();
 
-        //calculates the current totals from database data.
 
     }
 
-    public void reCalculation(List<ShoppingCart> cartObjectList){
+    public void reCalculation(List<ShoppingCart> cartObjectList) {
         subTotal = 0;
         delivery = 0;
         total = 0;
         quantity = 0;
-        for(int i = 0; i < cartObjectList.size(); i++){
+        for (int i = 0; i < cartObjectList.size(); i++) {
             setCosts(cartObjectList.get(i));
         }
 
         calculateCosts();
+        setMessage();
+
     }
 
     public void setCosts(ShoppingCart cart) {
@@ -101,23 +94,39 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
 
     }
 
-    public void calculateCosts(){
+    public void calculateCosts() {
         double discount = 0.0;
-
-        if (quantity >= 10) {
-
-            double beforeDiscount = subTotal + delivery;
-            System.out.println("Before Discount " + beforeDiscount);
-            discount = delivery ;
-            System.out.println("CurrentDiscount" + discount);
-        }
-
         double totalDelivery = quantity * delivery;
         total = (subTotal + totalDelivery) - discount;
-        cartSubTotal.setText("Sub-Total:    $ " + String.valueOf(subTotal));
-        cartDelivery.setText("Delivery:       $ " + String.format("%.2f", totalDelivery));
-        cartDiscount.setText("Discount:     $ " + String.format("%.2f", discount));
-        catTotalCost.setText("Total Cost:   $ " + String.format("%.2f",total));
+        type = 0;
+
+        if (quantity >= 10 && quantity <= 24) {
+            discount = total * .1;
+
+            cartSubTotal.setText("Sub-Total:    $ " + String.valueOf(subTotal));
+            cartDelivery.setText("Delivery:       $ " + String.format("%.2f", totalDelivery));
+            cartDiscount.setText("Discount:     $ " + String.format("%.2f", discount));
+            catTotalCost.setText("Total Cost:   $ " + String.format("%.2f", total));
+            type = 1;
+
+        } else if (quantity >= 25) {
+            discount = total * .1;
+            delivery = 0.0;
+
+            cartSubTotal.setText("Sub-Total:    $ " + String.valueOf(subTotal));
+            cartDelivery.setText("Delivery:        FREE DELIVERY!");
+            cartDiscount.setText("Discount:     $ " + String.format("%.2f", discount));
+            catTotalCost.setText("Total Cost:   $ " + String.format("%.2f", total));
+            type = 2;
+        }else{
+            cartSubTotal.setText("Sub-Total:    $ " + String.valueOf(subTotal));
+            cartDelivery.setText("Delivery:       $ " + String.format("%.2f", totalDelivery));
+            cartDiscount.setText("Discount:     $ " + String.format("%.2f", discount));
+            catTotalCost.setText("Total Cost:   $ " + String.format("%.2f", total));
+        }
+
+
+
     }
 
 
@@ -131,14 +140,13 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-    public void refreshView(int id, int userID){
+    public void refreshView(int id, int userID) {
         database.deleteHandle("ShoppingCart", id);
         System.out.println("ID FOR DELECTED HANDLE IS " + id);
         finish();
         Intent i = new Intent(ShoppingCartActivity.this, ShoppingCartActivity.class);
         i.putExtra("CART_ID", userID);
         startActivity(i);
-//        inflateShoppingCart(objects);
     }
 
     @Override
@@ -150,21 +158,21 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
 
     }
 
-    public void showCustomDialog(String message) {
-        final android.support.v7.app.AlertDialog.Builder dialog = new android.support.v7.app.AlertDialog.Builder(this);
-
-        dialog.setTitle("Cart Empty!");
-
-        dialog.setMessage(message);
-        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-            }
-        });
-
-
-        dialog.show();
+    private void setMessage() {
+        switch (type) {
+            case 0:
+                congratsMessage.setText("");
+                break;
+            case 1:
+                congratsMessage.setText("Congratulations, you have added more than 10 trees to the cart, earning you 10% off!");
+                break;
+            case 2:
+                congratsMessage.setText("Congratulations, you have added more than 25 trees to the cart, earning your 10% off and FREE DELIVERY!!");
+                break;
+            default:
+                congratsMessage.setText("");
+                break;
+        }
 
     }
 }
