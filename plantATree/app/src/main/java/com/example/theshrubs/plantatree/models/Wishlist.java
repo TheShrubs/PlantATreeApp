@@ -1,43 +1,39 @@
 package com.example.theshrubs.plantatree.models;
 
 public class Wishlist {
-    private int cartID;
+    private int wishlistID;
     private String productName;
     private int productID;
+    private String productDescription;
     private double productCost;
-    private double deliveryCost;
-    private int productQuantity;
-    private double totalCost;
     private int photoID;
 
     //default constructor allowing Cart to be instantiated with no values
-    public Wishlist(){
+    public Wishlist() {
 
     }
 
     //Constructor for creating a NEW empty cart!
-    public Wishlist(int cartID){
-        setCartID(cartID);
+    public Wishlist(int wishlistID) {
+        setWishlistID(wishlistID);
     }
 
-    public Wishlist(int userID, int productid, String name, double productCost, double deliveryCost, int quantity, double totalCost, int photo){
-        setCartID(userID);
+    public Wishlist(int userID, int productid, String description, String name, double productCost, int photo) {
+        setWishlistID(userID);
         setProductID(productid);
+        setProductDescription(description);
         setProductName(name);
         setProductCost(productCost);
-        setDeliveryCost(deliveryCost);
-        setProductQuantity(quantity);
-        setTotalCost(totalCost);
         setPhotoID(photo);
 
     }
 
-        public int getCartID() {
-        return cartID;
+    public int getWishlistID() {
+        return wishlistID;
     }
 
-    public void setCartID(int cartID) {
-        this.cartID = cartID;
+    public void setWishlistID(int wishlistID) {
+        this.wishlistID = wishlistID;
     }
 
     public int getProductID() {
@@ -56,6 +52,13 @@ public class Wishlist {
         this.productName = productName;
     }
 
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
+    }
 
     public double getProductCost() {
         return productCost;
@@ -63,30 +66,6 @@ public class Wishlist {
 
     public void setProductCost(double productCost) {
         this.productCost = productCost;
-    }
-
-    public double getDeliveryCost() {
-        return deliveryCost;
-    }
-
-    public void setDeliveryCost(double deliveryCost) {
-        this.deliveryCost = deliveryCost;
-    }
-
-    public int getProductQuantity() {
-        return productQuantity;
-    }
-
-    public void setProductQuantity(int productQuantity) {
-        this.productQuantity = productQuantity;
-    }
-
-    public double getTotalCost() {
-        return totalCost;
-    }
-
-    public void setTotalCost(double totalCost) {
-        this.totalCost = totalCost;
     }
 
     public int getPhotoID() {
@@ -97,8 +76,8 @@ public class Wishlist {
         this.photoID = photoID;
     }
 
-    public String toString(){
-        return "CartID: " + getCartID()+ " ProdID " + getProductID() + " NAME: " + getProductName() + " COST: " + getProductCost() + "DELIVERY: " + getDeliveryCost() + " QUANTITY " + getProductQuantity() + " total: " + getTotalCost() + "photo" + getPhotoID();
+    public String toString() {
+        return "CartID: " + getWishlistID() + " ProdID " + getProductID() + " NAME: " + getProductName() + " COST: " + getProductCost() + "photo" + getPhotoID();
 
 
     }

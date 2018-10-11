@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottom_naviation"
+        android:id="@+id/wishlist_navigation"
         android:layout_width="match_parent"
         android:layout_height="46dp"
         app:itemBackground="@android:color/holo_green_dark"

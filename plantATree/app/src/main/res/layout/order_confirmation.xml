@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_login"
-
     tools:context=".activity.OrderConfirmActivity">
 
 
@@ -17,21 +16,19 @@
         app:itemBackground="@android:color/holo_green_dark"
         app:itemIconTint="@drawable/nav_item_color_state"
         app:itemTextColor="@drawable/nav_item_color_state"
-        app:menu="@menu/bottom_navigation_main"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="523dp"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_navigation_main" />
 
 
     <Button
         android:id="@+id/confirmBackButton"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginBottom="92dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_height="30dp"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="88dp"
         android:background="@android:color/holo_green_dark"
         android:text="Okay"
         android:textColor="@android:color/background_light"
@@ -43,7 +40,7 @@
         android:id="@+id/confirmTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="352dp"
+        android:layout_marginTop="316dp"
         android:text="@string/orderConfirmTitle"
         android:textSize="28sp"
         android:textStyle="bold"

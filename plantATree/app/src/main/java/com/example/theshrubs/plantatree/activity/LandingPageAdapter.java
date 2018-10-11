@@ -35,8 +35,10 @@ public class LandingPageAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
-        TextView mTitleTV, mPriceTV;
-        ImageView mIconIV;
+        TextView treeTitle;
+        TextView treePrice;
+        TextView treeDescription;
+        ImageView treePhoto;
     }
 
     @Override
@@ -60,17 +62,19 @@ public class LandingPageAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.landing_page_item, null);
-            holder.mTitleTV = convertView.findViewById(R.id.mainTitle);
-            holder.mPriceTV = convertView.findViewById(R.id.mainPrice);
-            holder.mIconIV = convertView.findViewById(R.id.mainImage);
+            holder.treeTitle = convertView.findViewById(R.id.mainTitle);
+            holder.treeDescription = convertView.findViewById(R.id.mainDescription);
+            holder.treePrice = convertView.findViewById(R.id.mainPrice);
+            holder.treePhoto = convertView.findViewById(R.id.mainImage);
 
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.mTitleTV.setText(treeList.get(position).getTreeName());
-        holder.mPriceTV.setText("$" + treeList.get(position).getPrice());
-        holder.mIconIV.setImageResource(treeList.get(position).getPhotoID());
+        holder.treeTitle.setText(treeList.get(position).getTreeName());
+        holder.treeDescription.setText(treeList.get(position).getTreeDescription());
+        holder.treePrice.setText("$ " + treeList.get(position).getPrice());
+        holder.treePhoto.setImageResource(treeList.get(position).getPhotoID());
 
         //listview item clicks
         convertView.setOnClickListener(new View.OnClickListener() {
@@ -80,7 +84,6 @@ public class LandingPageAdapter extends BaseAdapter {
                 int newID = treeList.get(position).getTreeID();
                 Intent intent = new Intent(mContext, ViewItemActivity.class);
                 intent.putExtra("TREE_ID", newID);
-                ;
                 intent.putExtra("USER_ID", currentUserID);
 
                 mContext.startActivity(intent);
@@ -92,6 +95,7 @@ public class LandingPageAdapter extends BaseAdapter {
         return convertView;
     }
 
+
     public void filter(String charText, DatabaseHelper db) {
         charText = charText.toLowerCase();
         searchList = new ArrayList<>();
@@ -99,7 +103,7 @@ public class LandingPageAdapter extends BaseAdapter {
         if (charText.length() == 0) {
             treeList.clear();
             List<Object> obj = db.loadAllContents(1, "Landing");
-            for(int i = 0; i < obj.size(); i++){
+            for (int i = 0; i < obj.size(); i++) {
                 Tree tree = (Tree) obj.get(i);
                 fullList.add(tree);
             }

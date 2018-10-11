@@ -39,7 +39,7 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_address);
+        setContentView(R.layout.address);
 //        delivery = false;
 
         Bundle extras = getIntent().getExtras();

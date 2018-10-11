@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.theshrubs.plantatree.R;
 
@@ -26,7 +25,7 @@ public class BottomNavigationMenu {
                         activity.startActivity(intent);
                         break;
                     case R.id.action_wishlist:
-                        intent = new Intent(activity, WishlistActivity.class);
+                        intent = new Intent(activity, WishListActivity.class);
                         intent.putExtra("USER_ID", USER_ID);
                         activity.startActivity(intent);
                         break;

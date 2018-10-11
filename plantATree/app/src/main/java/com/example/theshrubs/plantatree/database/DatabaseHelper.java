@@ -1,13 +1,14 @@
 package com.example.theshrubs.plantatree.database;
 
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.content.Context;
-import android.content.ContentValues;
-import android.database.Cursor;
 
 import com.example.theshrubs.plantatree.R;
+import com.example.theshrubs.plantatree.activity.ViewItemActivity;
 import com.example.theshrubs.plantatree.models.Address;
 import com.example.theshrubs.plantatree.models.ShoppingCart;
 import com.example.theshrubs.plantatree.models.Tree;
@@ -86,11 +87,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             tableName = USER_TABLE;
             System.out.println("INSERTED " + userObject.toString());
             values = userTable.addNewUser(userObject);
-        } else if(object instanceof Address){
+        } else if (object instanceof Address) {
             Address addressObject = (Address) object;
             tableName = ADDRESS_TABLE;
             values = addressTable.getAddressContents(addressObject);
-        }else if (object instanceof Wishlist) {
+        } else if (object instanceof Wishlist) {
             Wishlist wishlistObject = (Wishlist) object;
             tableName = WISH_TABLE;
             values = wishTable.getWishContents(wishlistObject);
@@ -143,7 +144,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Wishlist wishCart = wishTable.findWish(cursor);
                 obj = (Object) wishCart;
                 break;
-
             case "User":
                 query = "Select * FROM " + USER_TABLE + " WHERE UserID = '" + id + "'";
                 System.out.println("User instance " + query);
@@ -153,7 +153,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 break;
             case "findExistingUser":
                 query = "Select * FROM " + USER_TABLE + " WHERE Email = '" + username + "' AND Password = '" + password + "'";
-                System.out.println("find existng user "+query);
+                System.out.println("find existng user " + query);
                 cursor = getReadableDatabase().rawQuery(query, null);
                 User foundUser = userTable.findUser(cursor);
                 obj = (Object) foundUser;
@@ -163,6 +163,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 cursor = getReadableDatabase().rawQuery(query, null);
                 Address foundAddress = addressTable.findAddress(cursor);
                 obj = (Object) foundAddress;
+                break;
+            case "ExistingWishlist":
+                query = "Select * FROM " + WISH_TABLE + " WHERE UserID = '" + id + "' AND ProductID = '" + ViewItemActivity.getProduct().getProductID() + "'";
+                cursor = getReadableDatabase().rawQuery(query, null);
+                Wishlist wishlist = wishTable.findWish(cursor);
+                obj = (Object) wishlist;
                 break;
             default:
                 query = "Select * FROM " + TREE_TABLE + " WHERE TreeID" + " = " + "'" + id + "'";
@@ -184,7 +190,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = null;
 
-        switch (tableName){
+        switch (tableName) {
             case "ShoppingCart":
                 query = "Select * FROM " + CART_TABLE + " WHERE UserID" + " = " + "'" + id + "'";
                 cursor = getReadableDatabase().rawQuery(query, null);
@@ -198,7 +204,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 objectList = (List<Object>) (Object) treeList;
                 break;
             case "Wishlist":
-               // db.execSQL(wishTable.createCartTable(WISH_TABLE));
+                // db.execSQL(wishTable.createCartTable(WISH_TABLE));
                 query = "Select * FROM " + WISH_TABLE + " WHERE UserID" + " = " + "'" + id + "'";
                 cursor = getReadableDatabase().rawQuery(query, null);
                 List<Wishlist> wishList = wishTable.loadWish(cursor);
@@ -211,25 +217,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return objectList;
     }
 
-    public void deleteHandle(String tableName, int id){
+    public void deleteHandle(String tableName, int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM " + tableName + " WHERE ProductID = '" + id + "'";
+        String query = "";
+
+        switch (tableName) {
+            case "ShoppingCart":
+                query = "DELETE FROM " + tableName + " WHERE ProductID = '" + id + "'";
+                break;
+            case "Wishlist" :
+                query = "DELETE FROM " + tableName + " WHERE ProductID = '" + id + "'";
+        }
+
+
         db.execSQL(query);
+        db.close();
     }
 
-    public void clearCartTable(){
+    public void clearCartTable() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + CART_TABLE);
+        db.close();
     }
 
-    public void clearWish(){
+    public void clearWish() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + WISH_TABLE);
+        db.close();
     }
 
-    public boolean search(int id, String tableName){
+    public boolean search(int id, String tableName) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query ="SELECT * FROM " +tableName + " WHERE ProductID = "+ id;
+        String query = "SELECT * FROM " + tableName + " WHERE ProductID = " + id;
         Cursor cursor = db.rawQuery(query, null);
 
         if (cursor.getCount() <= 0) {
@@ -248,11 +267,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Tree tree2 = new Tree(1, "Bristlecone Pine", "Pinus longaeva is a long-living species of bristlecone pine tree", "Non-Flowering", 54.5, R.drawable.bristlecone_pine, R.drawable.tree2, R.drawable.drag2, 2.9, "High", "High", "High", "High", "Low");
         Tree tree3 = new Tree(2, "White Ash", "A species of the ass tree native to eastern and central North America", "Flowering", 20.0, R.drawable.white_ash, R.drawable.tree3, R.drawable.drag3, 1.5, "High", "High", "High", "High", "High");
         Tree tree4 = new Tree(3, "Blue Spruce", "It is native to the Rocky Mountains o the United States", "Non-Flowering", 35.0, R.drawable.blue_spruce, R.drawable.tree4, R.drawable.drag4, 6, "High", "Low", "Medium", "High", "Low");
-        Tree tree5 = new Tree(4, "Bonsai Cherry", "A cerry bonsai tree comes from a simle cerry seed", "Flowering", 15.0, R.drawable.bonsai_cherry, R.drawable.tree5, R.drawable.drag5,2, "Low", "Low", "Medium", "High", "High");
-        Tree tree6 = new Tree(5, "Honeycrisp Apple", "The Honeycrisp apple tree is compact (for small spaces) and exceptionally cold-hardy.", "Flowering", 69.0, R.drawable.tree_apple, R.drawable.tree6, R.drawable.drag6,3.0, "Medium", "Medium", "High", "Medium", "Low");
-        Tree tree7 = new Tree(6, "Red Maple", "A red maple tree gets its common name from its brilliant red foliage that become the focal point of the landscape in autumn.", "Flowering", 45.5, R.drawable.tree_maple, R.drawable.tree7, R.drawable.drag7,2.5, "High", "Medium", "Medium", "High", "Low");
-        Tree tree8 = new Tree(7, "White Oak", "Quercus alba, the white oak, is one of the preeminent hardwoods of eastern and central North America.", "Non-Flowering", 45.0, R.drawable.tree_oak, R.drawable.tree8, R.drawable.drag8,4.5, "High", "High", "Medium", "Medium", "Low");
-        Tree tree9 = new Tree(8, "Douglas Fir", "Boasting a pyramidal shape and blue to dark green needles,", "Non-FLowering", 55.0, R.drawable.tree_pine, R.drawable.tree9, R.drawable.drag9,5.5, "High", "Low", "Low", "Low", "Medium");
+        Tree tree5 = new Tree(4, "Bonsai Cherry", "A cerry bonsai tree comes from a simle cerry seed", "Flowering", 15.0, R.drawable.bonsai_cherry, R.drawable.tree5, R.drawable.drag5, 2, "Low", "Low", "Medium", "High", "High");
+        Tree tree6 = new Tree(5, "Honeycrisp Apple", "The Honeycrisp apple tree is compact (for small spaces) and exceptionally cold-hardy.", "Flowering", 69.0, R.drawable.tree_apple, R.drawable.tree6, R.drawable.drag6, 3.0, "Medium", "Medium", "High", "Medium", "Low");
+        Tree tree7 = new Tree(6, "Red Maple", "A red maple tree gets its common name from its brilliant red foliage that become the focal point of the landscape in autumn.", "Flowering", 45.5, R.drawable.tree_maple, R.drawable.tree7, R.drawable.drag7, 2.5, "High", "Medium", "Medium", "High", "Low");
+        Tree tree8 = new Tree(7, "White Oak", "Quercus alba, the white oak, is one of the preeminent hardwoods of eastern and central North America.", "Non-Flowering", 45.0, R.drawable.tree_oak, R.drawable.tree8, R.drawable.drag8, 4.5, "High", "High", "Medium", "Medium", "Low");
+        Tree tree9 = new Tree(8, "Douglas Fir", "Boasting a pyramidal shape and blue to dark green needles,", "Non-FLowering", 55.0, R.drawable.tree_pine, R.drawable.tree9, R.drawable.drag9, 5.5, "High", "Low", "Low", "Low", "Medium");
         addHandle(tree1);
         addHandle(tree2);
         addHandle(tree3);
@@ -272,26 +291,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public String getUserEmail()
-    {
+    public String getUserEmail() {
         return username;
     }
-//    public boolean checkUser(String email) {
-//        String[] columns = {
-//                USER_ID
-//        };
-//        //call SQLite DB
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        String selection = USER_EMAIL + " = ?";
-//        String[] selectionArgs = {email};
-//
-//        Cursor cursor = db.query(USER_TABLE, columns, selection, selectionArgs, null, null, null);
-//        int cursorCount = cursor.getCount();
-//        cursor.close();
-//        db.close();
-//        if (cursorCount > 0) {
-//            return true;
-//        }
-//        return false;
-//    }
 }

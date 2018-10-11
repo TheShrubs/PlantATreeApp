@@ -1,7 +1,6 @@
 package com.example.theshrubs.plantatree.activity;
 
 import android.content.Intent;
-import android.media.Image;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,7 +32,7 @@ public class PickupActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pickup);
+        setContentView(R.layout.pickup);
 
 //        string array is located in values/strings called addresses - referenced from there
 //        String[] address = {"22 Symonds St", "106 Great North Road", "43 Titirangi Road"};
@@ -80,7 +79,7 @@ public class PickupActivity extends AppCompatActivity implements View.OnClickLis
         }
         else if(v.getId() == R.id.PickupBackButton){
             pickupRadioButton.setChecked(false);
-            Intent intent = new Intent(PickupActivity.this, AddressActivity.class);
+            Intent intent = new Intent(PickupActivity.this, PaymentActivity.class);
             intent.putExtra("USER_ID", USER_ID);
             intent.putExtra("TOTAL_COST", TOTAL_COST);
             startActivity(intent);
