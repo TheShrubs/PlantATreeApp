@@ -67,7 +67,7 @@ public class WishlistAdapter extends BaseAdapter {
         return position;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
 
         if (convertView == null) {
@@ -92,10 +92,10 @@ public class WishlistAdapter extends BaseAdapter {
         viewHolder.itemPhoto.setImageResource(cartItem.getPhotoID());
         //listview item clicks
         convertView.setOnClickListener(new View.OnClickListener() {
+            int newID = productList.get(position).getProductID();
             @Override
             public void onClick(View v) {
 
-                int newID = cartItem.getProductID();
                 currentProduct = new Product(cartItem.getProductID(),cartItem.getProductName(),cartItem.getProductCost(),cartItem.getDeliveryCost(),cartItem.getTotalCost(),cartItem.getPhotoID());
 
 
