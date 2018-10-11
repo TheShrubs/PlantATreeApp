@@ -2,6 +2,7 @@ package com.example.theshrubs.plantatree.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -30,6 +31,8 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
     private ImageView productImage;
     private String sourcePage;
     private boolean inCart;
+    private BottomNavigationView navigationView;
+    private BottomNavigationMenu navigationControl;
 
     private DatabaseHelper dbHandler = new DatabaseHelper(this);
     private User currentUser = new User();
@@ -56,19 +59,10 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
         addItem.setOnClickListener(this);
 
 
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if (extras == null) {
-                currentViewedTree = 1;
-                currentUSER_ID = 1;
-                System.out.println("Bundle extra was NULL user");
-            } else {
-                currentViewedTree = extras.getInt("TREE_ID");
-                currentUSER_ID = extras.getInt("USER_ID");
-                sourcePage = extras.getString("PAGE_ID");
-            }
+        Bundle extras = getIntent().getExtras();
+        currentUSER_ID = extras.getInt("USER_ID");
+        currentViewedTree = extras.getInt("TREE_ID");
 
-        }
         if(sourcePage.equals("Wishlist")){
             setInformation(WishlistAdapter.getProduct());
         }else if(sourcePage.equals("ViewItem")){
@@ -76,18 +70,20 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
         }
 
 
+
+        navigationView = (BottomNavigationView) findViewById(R.id.add_item_Navigation);
+        navigationControl = new BottomNavigationMenu();
+        navigationControl.getBottomNavigation(this, navigationView, currentUSER_ID);
+
+
         System.out.println("USER ID FROM ADD ITEM TO CART ACTIVITY IS " + currentUSER_ID);
 
         quantity.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
             public void afterTextChanged(Editable s) {

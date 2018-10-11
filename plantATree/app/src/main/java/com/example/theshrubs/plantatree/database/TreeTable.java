@@ -19,6 +19,8 @@ public class TreeTable {
     private static final String TREE_CATEGORY = "Category";
     private static final String TREE_PRICE = "Price";
     private static final String TREE_PHOTO = "Photo";
+    private static final String TREE_THUMB = "Thumbnail";
+    private static final String TREE_DRAG = "DragPhoto";
     private static final String TREE_SHIPPING_COST = "ShippingCost";
     private static final String TREE_MAX_HEIGHT = "MaxHeight";
     private static final String TREE_SOIL_DRAINAGE = "SoilDrainage";
@@ -34,7 +36,9 @@ public class TreeTable {
                 TREE_DESCRIPTION + " NVARCHAR," +
                 TREE_CATEGORY + " INTEGER," +
                 TREE_PRICE + " REAL," +
-                TREE_PHOTO + " NVARCHAR," +
+                TREE_PHOTO + " INTEGER," +
+                TREE_THUMB + " INTEGER," +
+                TREE_DRAG + " INTEGER," +
                 TREE_SHIPPING_COST + " REAL," +
                 TREE_MAX_HEIGHT + " NVARCHAR," +
                 TREE_SOIL_DRAINAGE + " NVARCHAR," +
@@ -53,6 +57,8 @@ public class TreeTable {
         values.put(TREE_CATEGORY, treeObject.getCategory());
         values.put(TREE_PRICE, treeObject.getPrice());
         values.put(TREE_PHOTO, treeObject.getPhotoID());
+        values.put(TREE_THUMB, treeObject.getPhotoThumb());
+        values.put(TREE_DRAG, treeObject.getPhotoDrag());
         values.put(TREE_SHIPPING_COST, treeObject.getShippingCost());
         values.put(TREE_MAX_HEIGHT, treeObject.getMaxHeight());
         values.put(TREE_SOIL_DRAINAGE, treeObject.getSoilDrainage());
@@ -78,12 +84,14 @@ public class TreeTable {
             treeObject.setCategory(cursor.getString(3));
             treeObject.setPrice(cursor.getDouble(4));
             treeObject.setPhotoID(cursor.getInt(5));
-            treeObject.setShippingCost(cursor.getDouble(6));
-            treeObject.setMaxHeight(cursor.getString(7));
-            treeObject.setSoilDrainage(cursor.getString(8));
-            treeObject.setSunExposure(cursor.getString(9));
-            treeObject.setGrowthRate(cursor.getString(10));
-            treeObject.setMaintenanceReq(cursor.getString(11));
+            treeObject.setPhotoThumb(cursor.getInt(6));
+            treeObject.setPhotoDrag(cursor.getInt(7));
+            treeObject.setShippingCost(cursor.getDouble(8));
+            treeObject.setMaxHeight(cursor.getString(9));
+            treeObject.setSoilDrainage(cursor.getString(10));
+            treeObject.setSunExposure(cursor.getString(11));
+            treeObject.setGrowthRate(cursor.getString(12));
+            treeObject.setMaintenanceReq(cursor.getString(13));
             cursor.close();
         }else{
             return null;
@@ -106,12 +114,14 @@ public class TreeTable {
             treeObject.setCategory(cursor.getString(3));
             treeObject.setPrice(cursor.getDouble(4));
             treeObject.setPhotoID(cursor.getInt(5));
-            treeObject.setShippingCost(cursor.getDouble(6));
-            treeObject.setMaxHeight(cursor.getString(7));
-            treeObject.setSoilDrainage(cursor.getString(8));
-            treeObject.setSunExposure(cursor.getString(9));
-            treeObject.setGrowthRate(cursor.getString(10));
-            treeObject.setMaintenanceReq(cursor.getString(11));
+            treeObject.setPhotoThumb(cursor.getInt(6));
+            treeObject.setPhotoDrag(cursor.getInt(7));
+            treeObject.setShippingCost(cursor.getDouble(8));
+            treeObject.setMaxHeight(cursor.getString(9));
+            treeObject.setSoilDrainage(cursor.getString(10));
+            treeObject.setSunExposure(cursor.getString(11));
+            treeObject.setGrowthRate(cursor.getString(12));
+            treeObject.setMaintenanceReq(cursor.getString(13));
             treeList.add(treeObject);
 
             cursor.moveToNext();

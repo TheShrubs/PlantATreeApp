@@ -1,6 +1,9 @@
 package com.example.theshrubs.plantatree.activity;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,42 +23,45 @@ import com.example.theshrubs.plantatree.models.ShoppingCart;
 import com.example.theshrubs.plantatree.models.Tree;
 import com.example.theshrubs.plantatree.models.Wishlist;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCartAdapter extends BaseAdapter {
-
-    private List<ShoppingCart> productList;
+    private List<ShoppingCart> cartObejctsList;
     private LayoutInflater layoutInflater;
+    private ShoppingCartActivity activity;
     private Context context;
     private int currentUSER_ID;
-//    private DatabaseHelper databaseHelper;
 
-    public ShoppingCartAdapter(Context context, List<ShoppingCart> products, int id){//}, DatabaseHelper databaseHelper){
+    public ShoppingCartAdapter(Context context, List<Object> objList, int id) {
+        this.activity = (ShoppingCartActivity) context;
         this.context = context;
-        this.productList = products;
         this.layoutInflater = LayoutInflater.from(context);
         this.currentUSER_ID = id;
-//        this.databaseHelper = new DatabaseHelper(context);
+
+        this.cartObejctsList = new ArrayList<>();
+        for (int i = 0; i < objList.size(); i++) {
+            cartObejctsList.add((ShoppingCart) objList.get(i));
+        }
     }
 
 
-    public class ViewHolder {
+    private class ViewHolder {
+
         TextView itemName;
-//        TextView itemShipping;
         TextView itemTotal;
         EditText itemQuantity;
         ImageView itemPhoto;
-        Button removeItem;
     }
 
     @Override
     public int getCount() {
-        return productList.size();
+        return cartObejctsList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return productList.get(position);
+        return cartObejctsList.get(position);
     }
 
     @Override
@@ -63,34 +69,59 @@ public class ShoppingCartAdapter extends BaseAdapter {
         return position;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        final ViewHolder viewHolder;
 
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.shopping_cart_item, null);
             viewHolder = new ViewHolder();
             viewHolder.itemName = (TextView) convertView.findViewById(R.id.shopItemName);
             viewHolder.itemTotal = (TextView) convertView.findViewById(R.id.shopItemTotal);
-            viewHolder.itemQuantity = (EditText) convertView.findViewById(R.id.shopItemQuantity);
             viewHolder.itemPhoto = (ImageView) convertView.findViewById(R.id.shopItemPhoto);
-            //viewHolder.removeItem = (Button) convertView.findViewById(R.id.removeItem);
+            viewHolder.itemQuantity = (EditText) convertView.findViewById(R.id.shopItemQuantity);
+            viewHolder.itemQuantity.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
 
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+                }
+                @Override
+                public void afterTextChanged(Editable s) {
+                    String stringValue = viewHolder.itemQuantity.getText().toString();
+                    if (!(stringValue.equals(""))) {
+
+                        int quantity = Integer.parseInt(stringValue);
+                        System.out.println("New quantity is " + quantity + " for item " + cartObejctsList.get(position).getProductName());
+                        int oldQuantity = cartObejctsList.get(position).getProductQuantity();
+                        System.out.println("Old quantity is " + oldQuantity + cartObejctsList.get(position).getProductName());
+
+                        double newTotal = cartObejctsList.get(position).getProductCost() * quantity;
+                        viewHolder.itemTotal.setText("$ " + newTotal);
+                        cartObejctsList.get(position).setProductQuantity(quantity);
+                        cartObejctsList.get(position).setTotalCost(newTotal);
+
+                        activity.reCalculation(cartObejctsList);
+                    }
+
+                }
+
+            });
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        ShoppingCart cartItem = this.productList.get(position);
-        viewHolder.itemName.setText(cartItem.getProductName());
-        viewHolder.itemTotal.setText("$" + cartItem.getTotalCost());
-        viewHolder.itemQuantity.setText(String.valueOf(cartItem.getProductQuantity()));
-        viewHolder.itemPhoto.setImageResource(cartItem.getPhotoID());
-//        viewHolder.removeItem.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//        public void onClick(View v) {
-////                Toast.makeText(this, "Clicked Laugh Vote", Toast.LENGTH_SHORT).Show();
-//        }
-//    });
+        Object obj = cartObejctsList.get(position);
+        ShoppingCart cartObject = (ShoppingCart) obj;
+        viewHolder.itemName.setText(cartObject.getProductName());
+        viewHolder.itemTotal.setText("$ " + cartObject.getTotalCost());
+        viewHolder.itemQuantity.setText(String.valueOf(cartObject.getProductQuantity()));
+        viewHolder.itemPhoto.setImageResource(cartObject.getPhotoID());
         return convertView;
     }
+
 }

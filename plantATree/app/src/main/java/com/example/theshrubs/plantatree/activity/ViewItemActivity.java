@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,6 +36,8 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
     private DatabaseHelper treeDB;
     private static Bitmap photo;
     private boolean inWishlist;
+    private BottomNavigationView navigationView;
+    private BottomNavigationMenu navigationControl;
 
     private int currentViewedTree;
     private int currentUser;
@@ -62,17 +65,14 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
         wishlist = (ImageView) findViewById(R.id.addToWish);
         btnCamera = (ImageView) findViewById(R.id.btnCamera);
 
-        if(savedInstanceState == null){
-            Bundle extras = getIntent().getExtras();
-            if(extras == null){
-                currentViewedTree = 1;
-                currentUser = 0;
-                System.out.println("Bundle extra was NULL user");
-            }else{
-                currentViewedTree = extras.getInt("TREE_ID");
-                currentUser = extras.getInt("USER_ID");
-            }
-        }
+        Bundle extras = getIntent().getExtras();
+        currentUser = extras.getInt("USER_ID");
+        currentViewedTree = extras.getInt("TREE_ID");
+
+        navigationView = (BottomNavigationView) findViewById(R.id.view_navigation);
+        navigationControl = new BottomNavigationMenu();
+        navigationControl.getBottomNavigation(this, navigationView, currentUser);
+
 
 
         shoppingCart.setOnClickListener(this);
@@ -108,7 +108,9 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
             Bundle extras = data.getExtras();
             this.photo = (Bitmap) extras.get("data");
             System.out.println("eneterd the on activity result !!!!!!!!!");
-            Intent i = new Intent(ViewItemActivity.this, ViewingTreeActivity.class);
+            Intent i = new Intent(ViewItemActivity.this, VisualizationActivity.class);
+            Object treeObject = (Object) tree;
+            i.putExtra("TREE", currentViewedTree);
             startActivity(i);
         }
     }
@@ -129,9 +131,9 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.addToCart){
-            String name = itemName.getText().toString();
-            double price = tree.getPrice();
-            double shipCost = Double.valueOf(tree.getShippingCost());
+//            String name = itemName.getText().toString();
+//            double price = tree.getPrice();
+//            double shipCost = Double.valueOf(tree.getShippingCost());
             double cost =  tree.getPrice() + tree.getShippingCost();
             System.out.println("");
 

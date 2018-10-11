@@ -1,9 +1,9 @@
 package com.example.theshrubs.plantatree.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
+import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +14,7 @@ import com.example.theshrubs.plantatree.database.DatabaseHelper;
 import com.example.theshrubs.plantatree.models.Address;
 
 
-public class AddressActivity extends AppCompatActivity implements View.OnClickListener{
+public class AddressActivity extends AppCompatActivity implements View.OnClickListener {
 
     private boolean delivery;
     private int USER_ID;
@@ -29,6 +29,8 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
     private Button backButton;
     private DatabaseHelper dbHelper;
     private boolean returningUser;
+    private BottomNavigationMenu navigationControl;
+    private BottomNavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +39,19 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
         setContentView(R.layout.activity_address);
         delivery = false;
 
-        //gets the passed value of the products in users cart from shoppingCartActivity
-        Bundle b = getIntent().getExtras();
-        Bundle extras = getIntent().getExtras();
-//        USER_ID = extras.getInt("USER_ID");
-//        TOTAL_COST = extras.getDouble("TOTAL_COST");
 
-        USER_ID = 2;
+        Bundle extras = getIntent().getExtras();
+        USER_ID = extras.getInt("USER_ID");
+        TOTAL_COST = extras.getDouble("TOTAL_COST");
+
+        navigationView = (BottomNavigationView) findViewById(R.id.address_Navigation);
+        navigationControl = new BottomNavigationMenu();
+        navigationControl.getBottomNavigation(this, navigationView, USER_ID);
+
+
+
+
+
         this.dbHelper = new DatabaseHelper(this);
 
         this.streetNumber = findViewById(R.id.streetNumber);
@@ -59,11 +67,13 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
         this.backButton.setOnClickListener(this);
         setFields();
 
+
     }
 
-    public void setFields(){
-        System.out.println(" addressObject," );Object obj = dbHelper.findHandle(USER_ID, "Address");
-        if(obj != null){
+    public void setFields() {
+        System.out.println(" addressObject,");
+        Object obj = dbHelper.findHandle(USER_ID, "Address");
+        if (obj != null) {
             Address address = (Address) obj;
 
             streetNumber.setText(address.getStreetNumber());
@@ -73,7 +83,7 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
             postCode.setText(address.getPostcode());
 
             returningUser = true;
-        }else{
+        } else {
             returningUser = false;
         }
 
@@ -81,7 +91,7 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.AddressContinueButton){
+        if (v.getId() == R.id.AddressContinueButton) {
             int sNumber = 0;
             int post_Number = 0;
             String street_number = streetNumber.getText().toString().trim();
@@ -91,10 +101,10 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
             String post = postCode.getText().toString().trim();
 
 
-            if(street_number.isEmpty() || sName.isEmpty() || sub.isEmpty() || cit.isEmpty() || post.isEmpty() ){
+            if (street_number.isEmpty() || sName.isEmpty() || sub.isEmpty() || cit.isEmpty() || post.isEmpty()) {
                 setToast("Please ensure all fields are filled out");
-            }else{
-                if(!returningUser){
+            } else {
+                if (!returningUser) {
                     sNumber = Integer.parseInt(street_number);
                     post_Number = Integer.parseInt(post);
                     Address address = new Address(sNumber, sName, sub, cit, post_Number);
@@ -109,15 +119,13 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
             }
 
 
-
-
-        }else if(v.getId() == R.id.AddressBackButton){
+        } else if (v.getId() == R.id.AddressBackButton) {
             finish();
         }
 
     }
 
-    public void setToast(String message){
+    public void setToast(String message) {
         Toast showToast = Toast.makeText(AddressActivity.this, message, Toast.LENGTH_SHORT);
         showToast.show();
     }
