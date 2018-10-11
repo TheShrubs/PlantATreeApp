@@ -149,7 +149,7 @@ public class VisualizationActivity extends AppCompatActivity {
                     float X = event.getX();
                     float Y = event.getY();
                     if(dragEvent == R.id.housePhoto){
-                        if (view.getId() == R.id.drag_vis1) {
+//                        if (view.getId() == R.id.drag_vis1) {
                             view.animate()
                                 .x(takenPboto.getX())
                                 .y(takenPboto.getY())
@@ -158,25 +158,25 @@ public class VisualizationActivity extends AppCompatActivity {
 //                            view.setX(X);
 //                            view.setY(Y);
 //                            view.setVisibility(View.VISIBLE);
-                        }else if(view.getId() == R.id.drag_vis2){
-                            view.setX(X);
-                            view.setY(Y);
-                            view.setVisibility(View.VISIBLE);
-//                        view.animate()
-//                                .x(takenPboto.getX())
-//                                .y(takenPboto.getY())
-//                                .setDuration(700)
-//                                .start();
-                        }
+//                        }else if(view.getId() == R.id.drag_vis2){
+//                            view.setX(X);
+//                            view.setY(Y);
+//                            view.setVisibility(View.VISIBLE);
+////                        view.animate()
+////                                .x(takenPboto.getX())
+////                                .y(takenPboto.getY())
+////                                .setDuration(700)
+////                                .start();
+//                        }
                     }
                     else if(dragEvent == R.id.trash){
-                        if (view.getId() == R.id.drag_vis1) {
-                            view.setVisibility(View.GONE);
-                        }
-                        }else if(view.getId() == R.id.drag_vis2){
+//                        if (view.getId() == R.id.drag_vis1) {
+//                            view.setVisibility(View.GONE);
+//                        }
+//                        }else if(view.getId() == R.id.drag_vis2){
                             view.setX(X);
                             view.setY(Y);
-                            view.setVisibility(View.VISIBLE);
+                            view.setVisibility(View.INVISIBLE);
                     }
 
 
