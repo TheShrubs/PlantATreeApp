@@ -141,6 +141,7 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
 
             Intent intent = new Intent(ViewItemActivity.this, AddItemToCartActivity.class);
             intent.putExtra("USER_ID", currentUser);
+            intent.putExtra("PAGE_ID","ViewItem");
             startActivity(intent);
 
         }else if (v.getId() == R.id.btnCamera){
