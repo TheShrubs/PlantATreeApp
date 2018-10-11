@@ -45,6 +45,7 @@ public class LandingPageActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         currentUser = extras.getInt("USER_ID");
+        sort = extras.getBoolean("sort");
 
         navigationView = (BottomNavigationView) findViewById(R.id.landing_Navigation);
         navigationControl = new BottomNavigationMenu();
@@ -63,12 +64,14 @@ public class LandingPageActivity extends AppCompatActivity {
             Tree model = (Tree) objectList.get(i);
             treeList.add(model);
         }
-        configureSortButton();
-        sortTrees(sort);
+
+
 
         landingAdapter = new LandingPageAdapter(this, treeList, currentUser);
         landingList.setAdapter(landingAdapter);
 
+        configureSortButton();
+        sortTrees(sort);
         searchKeyword = (EditText) findViewById(R.id.search_text);
 
 
