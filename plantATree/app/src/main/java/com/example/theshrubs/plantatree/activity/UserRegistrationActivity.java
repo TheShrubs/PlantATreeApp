@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.theshrubs.plantatree.R;
 import com.example.theshrubs.plantatree.database.DatabaseHelper;
+import com.example.theshrubs.plantatree.models.RegistrationEmail;
 import com.example.theshrubs.plantatree.models.User;
 
 public class UserRegistrationActivity extends AppCompatActivity implements View.OnClickListener {
@@ -86,6 +87,8 @@ public class UserRegistrationActivity extends AppCompatActivity implements View.
                     setToast("Registration Successful");
                     User user = new User(name, userEmail, password);
                     dbHelper.addHandle(user);
+                    RegistrationEmail reg = new RegistrationEmail(this,userEmail);
+                    reg.execute();
                     Intent intent = new Intent(UserRegistrationActivity.this, UserLoginActivity.class);
                     startActivity(intent);
                 }
