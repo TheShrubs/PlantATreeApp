@@ -7,23 +7,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 import com.example.theshrubs.plantatree.R;
 import com.example.theshrubs.plantatree.database.DatabaseHelper;
 import com.example.theshrubs.plantatree.models.Tree;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-public class LandingPageActivity extends AppCompatActivity implements View.OnClickListener{
+public class LandingPageActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ListView landingList;
     private LandingPageAdapter landingAdapter;
@@ -31,7 +28,6 @@ public class LandingPageActivity extends AppCompatActivity implements View.OnCli
     private DatabaseHelper dbHandler;
     private int currentUser;
     private EditText searchKeyword;
-    private ImageView searchButton;
     private boolean sort;
     private ImageView sortButton;
     private BottomNavigationView navigationView;
@@ -52,7 +48,6 @@ public class LandingPageActivity extends AppCompatActivity implements View.OnCli
         navigationControl.getBottomNavigation(this, navigationView, currentUser);
 
 
-
         this.dbHandler = new DatabaseHelper(this);
 //        dbHandler.populateDatabase();
 
@@ -66,23 +61,19 @@ public class LandingPageActivity extends AppCompatActivity implements View.OnCli
         }
 
         sortButton = (ImageView) findViewById(R.id.priceSortButton);
-        sortButton.setOnClickListener(this);//sortTrees();
-//        configureSortButton();
+        sortButton.setOnClickListener(this);
         sortTrees(sort);
 
         landingAdapter = new LandingPageAdapter(this, treeList, currentUser);
         landingList.setAdapter(landingAdapter);
 
-//        configureSortButton();
         sortTrees(sort);
         searchKeyword = (EditText) findViewById(R.id.search_text);
 
 
         searchKeyword.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -90,37 +81,11 @@ public class LandingPageActivity extends AppCompatActivity implements View.OnCli
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-
-            }
+            public void afterTextChanged(Editable s) { }
         });
 
     }
 
-
-
-    //toggles the price based sort of tree list and refreshes view
-//    public void configureSortButton() {
-//        sortButton = findViewById(R.id.priceSortButton);
-//        sortButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//               if(sort){
-//                   sort = false;
-//                   Intent cartIntent = new Intent(LandingPageActivity.this, LandingPageActivity.class);
-//                   cartIntent.putExtra("USER_ID", currentUser);
-//                   cartIntent.putExtra("sort", sort);
-//                   startActivity(cartIntent);
-//               } else {
-//                   sort = true;
-//                   Intent cartIntent = new Intent(LandingPageActivity.this, LandingPageActivity.class);
-//                   cartIntent.putExtra("USER_ID", currentUser);
-//                   cartIntent.putExtra("sort", sort);
-//                   startActivity(cartIntent);
-//               }
-//            }
-//        });
-//    }
 
     //sorts the list of trees by price in descending order if condition is met
     public void sortTrees(boolean sort) {
@@ -137,7 +102,7 @@ public class LandingPageActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        if(sort){
+        if (sort) {
             sort = false;
             Intent cartIntent = new Intent(LandingPageActivity.this, LandingPageActivity.class);
             cartIntent.putExtra("USER_ID", currentUser);
