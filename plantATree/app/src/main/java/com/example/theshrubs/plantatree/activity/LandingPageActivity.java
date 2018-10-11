@@ -23,7 +23,7 @@ import com.example.theshrubs.plantatree.models.Tree;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LandingPageActivity extends AppCompatActivity {
+public class LandingPageActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ListView landingList;
     private LandingPageAdapter landingAdapter;
@@ -33,7 +33,7 @@ public class LandingPageActivity extends AppCompatActivity {
     private EditText searchKeyword;
     private ImageView searchButton;
     private boolean sort;
-    private Button sortButton;
+    private ImageView sortButton;
     private BottomNavigationView navigationView;
     private BottomNavigationMenu navigationControl;
 
@@ -63,7 +63,10 @@ public class LandingPageActivity extends AppCompatActivity {
             Tree model = (Tree) objectList.get(i);
             treeList.add(model);
         }
-        configureSortButton();
+
+        sortButton = (ImageView) findViewById(R.id.priceSortButton);
+        sortButton.setOnClickListener(this);//sortTrees();
+//        configureSortButton();
         sortTrees(sort);
 
         landingAdapter = new LandingPageAdapter(this, treeList, currentUser);
@@ -94,27 +97,27 @@ public class LandingPageActivity extends AppCompatActivity {
 
 
     //toggles the price based sort of tree list and refreshes view
-    public void configureSortButton() {
-        sortButton = findViewById(R.id.priceSortButton);
-        sortButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               if(sort){
-                   sort = false;
-                   Intent cartIntent = new Intent(LandingPageActivity.this, LandingPageActivity.class);
-                   cartIntent.putExtra("USER_ID", currentUser);
-                   cartIntent.putExtra("sort", sort);
-                   startActivity(cartIntent);
-               } else {
-                   sort = true;
-                   Intent cartIntent = new Intent(LandingPageActivity.this, LandingPageActivity.class);
-                   cartIntent.putExtra("USER_ID", currentUser);
-                   cartIntent.putExtra("sort", sort);
-                   startActivity(cartIntent);
-               }
-            }
-        });
-    }
+//    public void configureSortButton() {
+//        sortButton = findViewById(R.id.priceSortButton);
+//        sortButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//               if(sort){
+//                   sort = false;
+//                   Intent cartIntent = new Intent(LandingPageActivity.this, LandingPageActivity.class);
+//                   cartIntent.putExtra("USER_ID", currentUser);
+//                   cartIntent.putExtra("sort", sort);
+//                   startActivity(cartIntent);
+//               } else {
+//                   sort = true;
+//                   Intent cartIntent = new Intent(LandingPageActivity.this, LandingPageActivity.class);
+//                   cartIntent.putExtra("USER_ID", currentUser);
+//                   cartIntent.putExtra("sort", sort);
+//                   startActivity(cartIntent);
+//               }
+//            }
+//        });
+//    }
 
     //sorts the list of trees by price in descending order if condition is met
     public void sortTrees(boolean sort) {
@@ -129,11 +132,21 @@ public class LandingPageActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public void onClick(View v) {
-//
-//        String keyword = searchKeyword.getText().toString().trim();
-//        landingAdapter.filter(keyword);
-//
-//    }
+    @Override
+    public void onClick(View v) {
+        if(sort){
+            sort = false;
+            Intent cartIntent = new Intent(LandingPageActivity.this, LandingPageActivity.class);
+            cartIntent.putExtra("USER_ID", currentUser);
+            cartIntent.putExtra("sort", sort);
+            startActivity(cartIntent);
+        } else {
+            sort = true;
+            Intent cartIntent = new Intent(LandingPageActivity.this, LandingPageActivity.class);
+            cartIntent.putExtra("USER_ID", currentUser);
+            cartIntent.putExtra("sort", sort);
+            startActivity(cartIntent);
+        }
+    }
+
 }
