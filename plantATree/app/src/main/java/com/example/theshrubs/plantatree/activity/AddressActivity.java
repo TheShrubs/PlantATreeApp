@@ -65,7 +65,7 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
 
         this.nextButton.setOnClickListener(this);
         this.backButton.setOnClickListener(this);
-        setFields();
+      //  setFields();
 
 
     }

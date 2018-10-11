@@ -25,6 +25,7 @@
         <activity android:name=".activity.ShoppingCartActivity"
             android:windowSoftInputMode="stateVisible|adjustNothing" />
         <activity android:name=".activity.LandingPageActivity"
+
             android:windowSoftInputMode="stateVisible|adjustNothing"/>
         <activity android:name=".activity.UserRegistrationActivity" />
         <activity android:name=".activity.AddressActivity" />

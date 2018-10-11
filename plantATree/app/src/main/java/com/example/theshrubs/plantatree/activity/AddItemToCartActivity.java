@@ -62,6 +62,7 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
         Bundle extras = getIntent().getExtras();
         currentUSER_ID = extras.getInt("USER_ID");
         currentViewedTree = extras.getInt("TREE_ID");
+        sourcePage = extras.getString("PAGE_ID");
 
         if(sourcePage.equals("Wishlist")){
             setInformation(WishlistAdapter.getProduct());
