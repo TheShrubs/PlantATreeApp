@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.theshrubs.plantatree.R;
@@ -16,10 +17,12 @@ import com.example.theshrubs.plantatree.models.Address;
 
 public class AddressActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private boolean delivery;
+//    private boolean delivery;
     private int USER_ID;
     private double TOTAL_COST;
 
+    private RadioButton deliveryRadioButton;
+    private RadioButton pickupRadioButton;
     private EditText streetNumber;
     private EditText streetName;
     private EditText suburb;
@@ -37,8 +40,7 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
-        delivery = false;
-
+//        delivery = false;
 
         Bundle extras = getIntent().getExtras();
         USER_ID = extras.getInt("USER_ID");
@@ -47,10 +49,10 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
         navigationView = (BottomNavigationView) findViewById(R.id.address_Navigation);
         navigationControl = new BottomNavigationMenu();
         navigationControl.getBottomNavigation(this, navigationView, USER_ID);
-
-
-
-
+        deliveryRadioButton = (RadioButton) findViewById(R.id.deliveryRadioButton);
+        pickupRadioButton = (RadioButton) findViewById(R.id.pickupRadioButton);
+        deliveryRadioButton.setChecked(true);
+        this.pickupRadioButton.setOnClickListener(this);
 
         this.dbHelper = new DatabaseHelper(this);
 
@@ -117,9 +119,15 @@ public class AddressActivity extends AppCompatActivity implements View.OnClickLi
                 intent.putExtra("TOTAL_COST", TOTAL_COST);
                 startActivity(intent);
             }
+        } else if(v.getId() == R.id.pickupRadioButton){
+            deliveryRadioButton.setChecked(false);
+            Intent intent = new Intent(AddressActivity.this, PickupActivity.class);
+            intent.putExtra("USER_ID", USER_ID);
+            intent.putExtra("TOTAL_COST", TOTAL_COST);
+            startActivity(intent);
+        }
 
-
-        } else if (v.getId() == R.id.AddressBackButton) {
+        else if (v.getId() == R.id.AddressBackButton) {
             finish();
         }
 

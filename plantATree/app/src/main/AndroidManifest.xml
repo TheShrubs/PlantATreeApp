@@ -6,6 +6,8 @@
         android:name="android.hardware.camera2"
         android:required="true" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_logo"
@@ -22,19 +24,20 @@
         </activity>
         <activity android:name=".activity.AddItemToCartActivity" />
         <activity android:name=".activity.ViewItemActivity" />
-        <activity android:name=".activity.ShoppingCartActivity"
+        <activity
+            android:name=".activity.ShoppingCartActivity"
             android:windowSoftInputMode="stateVisible|adjustNothing" />
-        <activity android:name=".activity.LandingPageActivity"
-
-            android:windowSoftInputMode="stateVisible|adjustNothing"/>
+        <activity
+            android:name=".activity.LandingPageActivity"
+            android:windowSoftInputMode="stateVisible|adjustNothing" />
         <activity android:name=".activity.UserRegistrationActivity" />
         <activity android:name=".activity.AddressActivity" />
         <activity android:name=".activity.PaymentActivity" />
         <activity android:name=".activity.OrderConfirmActivity" />
         <activity android:name=".activity.WishlistActivity" />
         <activity android:name=".activity.VisualizationActivity" />
-        <activity android:name=".activity.UserProfileActivity"/>
+        <activity android:name=".activity.UserProfileActivity" />
+        <activity android:name=".activity.PickupActivity"></activity>
     </application>
-    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>

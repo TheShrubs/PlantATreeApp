@@ -34,4 +34,10 @@
     <string name="invoiceTotal"> Invoice Total:</string>
     <string name="title_activity_add_item_to_wish">AddItemToWishActivity</string>
 
+    <string-array name="addresses">
+        <item>22 Symonds St</item>
+        <item>106 Great North Road</item>
+        <item>43 Titirangi Road</item>;
+    </string-array>
+
 </resources>
