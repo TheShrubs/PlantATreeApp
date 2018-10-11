@@ -12,6 +12,7 @@ import com.example.theshrubs.plantatree.models.Address;
 import com.example.theshrubs.plantatree.models.ShoppingCart;
 import com.example.theshrubs.plantatree.models.Tree;
 import com.example.theshrubs.plantatree.models.User;
+import com.example.theshrubs.plantatree.models.Wishlist;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +21,14 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
     //information of database
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "PLANTATREE";
+    private static final String DATABASE_NAME = "PLANTATREES";
     //table names
     private static final String TREE_TABLE = "Trees";
     private static final String USER_TABLE = "User";
     private static final String ADDRESS_TABLE = "Address";
     private static final String BILLING = "Billing";
     private static final String CART_TABLE = "ShoppingCart";
+    private static final String WISH_TABLE = "Wishlist";
 
     private static final String USER_ID = "UserID";
     private static final String USER_NAME = "UserName";
@@ -35,6 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     private TreeTable treeTable = new TreeTable();
+    private WishTable wishTable = new WishTable();
     private CartTable cartTable = new CartTable();
     private UserTable userTable = new UserTable();
     private AddressTable addressTable = new AddressTable();
@@ -50,6 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(treeTable.createTreeTable(TREE_TABLE));
+        db.execSQL(wishTable.createWishTable(WISH_TABLE));
         db.execSQL(cartTable.createCartTable(CART_TABLE));
         db.execSQL(userTable.createTreeTable(USER_TABLE));
         db.execSQL(addressTable.createAddressTable(ADDRESS_TABLE));
@@ -60,6 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS " + TREE_TABLE);
         onCreate(db);
+
     }
 
 
@@ -85,6 +90,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Address addressObject = (Address) object;
             tableName = ADDRESS_TABLE;
             values = addressTable.getAddressContents(addressObject);
+        }else if (object instanceof Wishlist) {
+            Wishlist wishlistObject = (Wishlist) object;
+            tableName = WISH_TABLE;
+            values = wishTable.getWishContents(wishlistObject);
         }
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -127,6 +136,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ShoppingCart foundCart = cartTable.findCart(cursor);
                 obj = (Object) foundCart;
                 break;
+            case "Wish":
+                query = "Select * FROM " + WISH_TABLE + " WHERE UserID" + " = " + "'" + id + "'";
+                System.out.println(query);
+                cursor = getReadableDatabase().rawQuery(query, null);
+                Wishlist wishCart = wishTable.findWish(cursor);
+                obj = (Object) wishCart;
+                break;
+
             case "User":
                 query = "Select * FROM " + USER_TABLE + " WHERE UserID = '" + id + "'";
                 System.out.println("User instance " + query);
@@ -180,12 +197,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 List<Tree> treeList = treeTable.loadTrees(cursor);
                 objectList = (List<Object>) (Object) treeList;
                 break;
-//            case "SearchTree":
-//                query = "Select * FROM " + TREE_TABLE + " WHERE TreeName LIKE '%" + keyword + "%'";
-//                cursor = getReadableDatabase().rawQuery(query, null);
-//                List<Tree> foundTrees = treeTable.loadTrees(cursor);
-//                objectList = (List<Object>) (Object) foundTrees;
-//                break;
+            case "Wishlist":
+               // db.execSQL(wishTable.createCartTable(WISH_TABLE));
+                query = "Select * FROM " + WISH_TABLE + " WHERE UserID" + " = " + "'" + id + "'";
+                cursor = getReadableDatabase().rawQuery(query, null);
+                List<Wishlist> wishList = wishTable.loadWish(cursor);
+                objectList = (List<Object>) (Object) wishList;
+                break;
+
 
         }
 
@@ -216,6 +235,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void clearCartTable(){
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + CART_TABLE);
+    }
+
+    public void clearWish(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + WISH_TABLE);
+    }
+
+    public boolean search(int id, String tableName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query ="SELECT * FROM " +tableName + " WHERE ProductID = "+ id;
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.getCount() <= 0) {
+            cursor.close();
+            db.close();
+            return false;
+        } else {
+            cursor.close();
+            db.close();
+            return true;
+        }
     }
 
     public void populateDatabase() {

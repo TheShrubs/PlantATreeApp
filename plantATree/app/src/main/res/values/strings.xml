@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">plantAtree</string>
+    <string name="app_name">Plant a Tree</string>
     <string name="username">Username:</string>
     <string name="password">Password:</string>
     <string name="login">Login</string>
@@ -32,5 +32,6 @@
     <string name="shippingTotal"> Shipping Total:</string>
     <string name="discountTotal"> Discount Applied:</string>
     <string name="invoiceTotal"> Invoice Total:</string>
+    <string name="title_activity_add_item_to_wish">AddItemToWishActivity</string>
 
 </resources>

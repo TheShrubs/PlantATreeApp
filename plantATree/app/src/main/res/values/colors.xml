@@ -5,4 +5,5 @@
     <color name="colorAccent">#303F9F</color>
     <color name="colorBackground">#ffffff</color>
     <color name="colorNavigationBottom">#009688</color>
+    <color name="Sale">#ffd000</color>
 </resources>
