@@ -34,6 +34,7 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
     private Tree tree;
     private DatabaseHelper treeDB;
     private static Bitmap photo;
+    private boolean inWishlist;
 
     private int currentViewedTree;
     private int currentUser;
@@ -145,7 +146,7 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
             dispatchTakePictureIntent();
 
         }else if(v.getId() == R.id.addToWish) {
-            Toast.makeText(ViewItemActivity.this, "Add to Wishlist", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(ViewItemActivity.this, "Add to Wishlist", Toast.LENGTH_SHORT).show();
             String message;
             int type;
             String name = itemName.getText().toString();
@@ -161,7 +162,6 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
             Object foundCart = dbHandler.findHandle(currentUser, "Wish");
             //if user is NOT found - then it creates cart for user;
             if (foundCart == null) {
-                System.out.println("cart was NULL");
                 currentCart.setCartID(currentUser);
                 currentCart.setProductID(product.getProductID());
                 currentCart.setProductName(product.getProductName());
@@ -171,12 +171,15 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
                 currentCart.setPhotoID(product.getPhotoID());
                 currentCart.setProductQuantity(product.getQuantity());
                 dbHandler.addHandle(currentCart);
-
+                showCustomDialog(product.getProductName() + " added to Wishlist");
             }
             //if cart is found - it searches the cart to see if product exists in cart.
             else {
                 currentCart = (Wishlist) foundCart;
-                if (currentCart.getProductID() != product.getProductID()) {
+                inWishlist =dbHandler.search(product.getProductID(),"Wishlist");
+                if (inWishlist) {
+                    showCustomDialog(product.getProductName() + " already added to Wishlist");
+                }else{
                     currentCart.setCartID(currentUser);
                     currentCart.setProductID(product.getProductID());
                     currentCart.setProductName(product.getProductName());
@@ -186,17 +189,42 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
                     currentCart.setPhotoID(product.getPhotoID());
                     currentCart.setProductQuantity(product.getQuantity());
                     dbHandler.addHandle(currentCart);
+                    showCustomDialog(product.getProductName() +" added to Wishlist");
 
                 }
 
             }
-            Intent intent = new Intent(ViewItemActivity.this, WishlistActivity.class);
-            intent.putExtra("USER_ID", currentUser);
-            startActivity(intent);
-
 
         }
     }
+
+    public void showCustomDialog(String message) {
+        final android.support.v7.app.AlertDialog.Builder dialog = new android.support.v7.app.AlertDialog.Builder(this);
+
+        dialog.setTitle("Add To Wishlist");
+
+        dialog.setMessage(message);
+        dialog.setNegativeButton("Continue Shopping",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+        dialog.setPositiveButton("Wishlist", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(ViewItemActivity.this, WishlistActivity.class);
+                intent.putExtra("CART_ID", currentUser);
+                startActivity(intent);
+            }
+        });
+
+
+        dialog.show();
+
+    }
+
 
     public static Bitmap getBitmap(){
         return photo;

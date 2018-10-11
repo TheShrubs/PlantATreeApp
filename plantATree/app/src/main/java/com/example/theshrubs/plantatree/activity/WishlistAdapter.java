@@ -95,7 +95,7 @@ public class WishlistAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-                int newID = cartItem.getCartID();
+                int newID = cartItem.getProductID();
                 currentProduct = new Product(cartItem.getProductID(),cartItem.getProductName(),cartItem.getProductCost(),cartItem.getDeliveryCost(),cartItem.getTotalCost(),cartItem.getPhotoID());
 
 

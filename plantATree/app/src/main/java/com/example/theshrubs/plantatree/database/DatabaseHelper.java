@@ -249,6 +249,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + WISH_TABLE);
     }
 
+    public boolean search(int id, String tableName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query ="SELECT * FROM " +tableName + " WHERE ProductID = "+ id;
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.getCount() <= 0) {
+            cursor.close();
+            db.close();
+            return false;
+        } else {
+            cursor.close();
+            db.close();
+            return true;
+        }
+    }
 
     public void populateDatabase() {
         Tree tree1 = new Tree(0, "Austrian Pine", "The austrian pine is medium to large sized everdgreen, needle-leaved conifer.", "Non-flowering", 84.0, R.drawable.austrian_pine, 3, "High", "Low", "High", "High", "Low");

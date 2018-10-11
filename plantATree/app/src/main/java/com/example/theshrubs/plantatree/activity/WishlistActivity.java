@@ -50,7 +50,6 @@ WishlistActivity extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wishlist);
         configureClearButton();
-        //configureAddButton();
 
         cartObjectList =  new ArrayList<Wishlist>();
 
@@ -104,18 +103,6 @@ WishlistActivity extends AppCompatActivity implements View.OnClickListener{
             System.out.println("savedInstance was NULL");
         }
 
-        subTotal = 0;
-        delivery = 0;
-//        discount = 0;
-        total = 0;
-        quantity = 0;
-
-    //    cartSubTotal = (TextView) findViewById(R.id.cart_subtotal);
-      //  cartDelivery = (TextView) findViewById(R.id.cart_delivery);
-      //  cartDiscount = (TextView) findViewById(R.id.cart_discount);
-    //    catTotalCost = (TextView) findViewById(R.id.cart_totalcost);
-      //  checkoutButton = (Button) findViewById(R.id.checkoutButton);
-//        checkoutButton.setOnClickListener(this);
 
         List<Object> objectList = new ArrayList<>();
         objectList = database.loadAllContents(USER_ID, "Wishlist");
@@ -129,29 +116,7 @@ WishlistActivity extends AppCompatActivity implements View.OnClickListener{
         final ListView listView = (ListView) findViewById(R.id.productListView);
         listView.setAdapter(new WishlistAdapter(this, cartObjectList, USER_ID));
 
-        double discount = 0.0;
-        if(quantity >= 10){
-            double beforeDiscount = subTotal + delivery;
-            System.out.println("Before Discount " + beforeDiscount);
-            discount = beforeDiscount * .25;
-            System.out.println("CurrentDiscount" + discount);
-        }
-        double totalDelivery = quantity * delivery;
-        total = (subTotal + delivery) - discount;
-//        cartSubTotal.setText("$" + String.format("%.2f",subTotal));
-      //  cartDelivery.setText("$" +String.format("%.2f",totalDelivery));
-     //   cartDiscount.setText("$" +String.format("%.2f", discount));
-    //    catTotalCost.setText("$" +String.format("%.2f", total));
-
-      //  wishToCart();
     }
-
-    public void setCosts(ShoppingCart cart){
-        subTotal = subTotal + cart.getTotalCost();
-        delivery = delivery + cart.getDeliveryCost();
-        quantity = quantity + cart.getProductQuantity();
-    }
-
 
     @Override
     public void onClick(View v) {
