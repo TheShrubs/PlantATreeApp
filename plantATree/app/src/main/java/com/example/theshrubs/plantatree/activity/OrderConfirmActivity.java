@@ -19,6 +19,7 @@ public class OrderConfirmActivity extends AppCompatActivity implements View.OnCl
     private DatabaseHelper database;
     private int orderNo;
     private String userEmail;
+    private int USER_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,9 @@ public class OrderConfirmActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.activity_order_confirm);
         this.database = new DatabaseHelper(this);
 
+
+        Bundle extras = getIntent().getExtras();
+        USER_ID = extras.getInt("USER_ID");
         configureBackButton();
         orderNo=createOrder();
         confirmMessage(orderNo);
@@ -44,7 +48,10 @@ public class OrderConfirmActivity extends AppCompatActivity implements View.OnCl
             @Override
             //Ends this activity and returns to total cart activity
             public void onClick(View view){
-                startActivity(new Intent(OrderConfirmActivity.this,LandingPageActivity.class));
+                Intent intent =  new Intent(OrderConfirmActivity.this,LandingPageActivity.class);
+                intent.putExtra("USER_ID", USER_ID);
+                startActivity(intent);
+
             }
         });
     }
@@ -61,8 +68,8 @@ public class OrderConfirmActivity extends AppCompatActivity implements View.OnCl
 
         TextView confirmText = (TextView) findViewById(R.id.confirmText);
         confirmText.setText("Thank You! \nYour Order #" +orderNo +" has been placed successfully.");
-        User user = new User();
-        userEmail = user.getUserEmail();
+        DatabaseHelper db = new DatabaseHelper(this);
+        this.userEmail = db.getUserEmail();
         PurchaseEmail purchaseEmail = new PurchaseEmail(this, userEmail);
         purchaseEmail.execute();
     }
