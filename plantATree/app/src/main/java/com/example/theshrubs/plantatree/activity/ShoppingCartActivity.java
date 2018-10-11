@@ -1,5 +1,6 @@
 package com.example.theshrubs.plantatree.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -64,14 +65,16 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
         List<Object> objectList = database.loadAllContents(USER_ID, "ShoppingCart");
         inflateShoppingCart(objectList);
 
-        if(objectList != null){
-            System.out.println(objectList.size() + " found in user cart");
-
-            for(int i = 0; i < objectList.size(); i++){
-                ShoppingCart cart = (ShoppingCart) objectList.get(i);
-                setCosts(cart);
-            }
+        if(objectList == null){
+            showCustomDialog("There is nothing in your cart!");
         }
+//
+//        if(objectList != null){
+//            for(int i = 0; i < objectList.size(); i++){
+//                ShoppingCart cart = (ShoppingCart) objectList.get(i);
+//                setCosts(cart);
+//            }
+//        }
 
         calculateCosts();
 
@@ -95,6 +98,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
         subTotal = subTotal + cart.getTotalCost();
         delivery = delivery + cart.getDeliveryCost();
         quantity = quantity + cart.getProductQuantity();
+
     }
 
     public void calculateCosts(){
@@ -109,7 +113,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
         }
 
         double totalDelivery = quantity * delivery;
-        total = (subTotal + delivery) - discount;
+        total = (subTotal + totalDelivery) - discount;
         cartSubTotal.setText("Sub-Total:    $ " + String.valueOf(subTotal));
         cartDelivery.setText("Delivery:       $ " + String.format("%.2f", totalDelivery));
         cartDiscount.setText("Discount:     $ " + String.format("%.2f", discount));
@@ -127,12 +131,40 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
+    public void refreshView(int id, int userID){
+        database.deleteHandle("ShoppingCart", id);
+        System.out.println("ID FOR DELECTED HANDLE IS " + id);
+        finish();
+        Intent i = new Intent(ShoppingCartActivity.this, ShoppingCartActivity.class);
+        i.putExtra("CART_ID", userID);
+        startActivity(i);
+//        inflateShoppingCart(objects);
+    }
+
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(ShoppingCartActivity.this, AddressActivity.class);
         intent.putExtra("TOTAL", total);
         intent.putExtra("USER_ID", USER_ID);
         startActivity(intent);
+
+    }
+
+    public void showCustomDialog(String message) {
+        final android.support.v7.app.AlertDialog.Builder dialog = new android.support.v7.app.AlertDialog.Builder(this);
+
+        dialog.setTitle("Cart Empty!");
+
+        dialog.setMessage(message);
+        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+
+
+        dialog.show();
 
     }
 }

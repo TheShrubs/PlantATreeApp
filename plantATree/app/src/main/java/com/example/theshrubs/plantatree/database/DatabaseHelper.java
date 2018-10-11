@@ -211,26 +211,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return objectList;
     }
 
-//    public void setKeyword(String keyword){
-//        this.keyword = keyword;
-//    }
-//
-//    public boolean checkExistingUser(String username) {
-//        String query = "SELECT * FROM " + USER_TABLE + " WHERE UserName = '" + username + "'";
-//
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        Cursor cursor = db.rawQuery(query, null);
-//
-//        if (cursor.getCount() <= 0) {
-//            cursor.close();
-//            db.close();
-//            return false;
-//        } else {
-//            cursor.close();
-//            db.close();
-//            return true;
-//        }
-//    }
+    public void deleteHandle(String tableName, int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + tableName + " WHERE ProductID = '" + id + "'";
+        db.execSQL(query);
+    }
 
     public void clearCartTable(){
         SQLiteDatabase db = this.getWritableDatabase();
