@@ -17,11 +17,18 @@ import com.example.theshrubs.plantatree.R;
 
 public class PaymentActivity extends AppCompatActivity {
 
+    private int USER_ID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
+
+
+        Bundle extras = getIntent().getExtras();
+        USER_ID = extras.getInt("USER_ID");
+
         configureBackButton();
         configureContinueButton();
         saveVisaInfo();
@@ -48,7 +55,9 @@ public class PaymentActivity extends AppCompatActivity {
 
             //start the Payment Activity and link the current activity to it
             public void onClick(View view){
-                startActivity(new Intent(PaymentActivity.this,OrderConfirmActivity.class));
+                Intent i = new Intent(PaymentActivity.this,OrderConfirmActivity.class);
+                i.putExtra("USERD_ID", USER_ID);
+                startActivity(i);
             }
         });
     }

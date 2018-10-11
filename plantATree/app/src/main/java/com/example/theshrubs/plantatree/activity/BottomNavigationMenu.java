@@ -26,7 +26,9 @@ public class BottomNavigationMenu {
                         activity.startActivity(intent);
                         break;
                     case R.id.action_wishlist:
-                        Toast.makeText(activity, "WishList Action Clicked", Toast.LENGTH_SHORT).show();
+                        intent = new Intent(activity, WishlistActivity.class);
+                        intent.putExtra("USER_ID", USER_ID);
+                        activity.startActivity(intent);
                         break;
                     case R.id.action_cart:
                         intent = new Intent(activity, ShoppingCartActivity.class);

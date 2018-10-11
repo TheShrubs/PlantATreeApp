@@ -281,12 +281,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-
-
     public void setUser(String user, String pass) {
         this.username = user;
         this.password = pass;
 
+    }
+
+    public String getUserEmail()
+    {
+        return username;
     }
 //    public boolean checkUser(String email) {
 //        String[] columns = {
