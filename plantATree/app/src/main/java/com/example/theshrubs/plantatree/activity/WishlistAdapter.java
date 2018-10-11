@@ -31,7 +31,6 @@ public class WishlistAdapter extends BaseAdapter {
     private int currentUSER_ID;
 
     private static Product currentProduct;
-//    private DatabaseHelper databaseHelper;
 
     public WishlistAdapter(Context context, List<Wishlist> products, int id){//}, DatabaseHelper databaseHelper){
         this.context = context;
@@ -49,7 +48,6 @@ public class WishlistAdapter extends BaseAdapter {
         TextView itemTotal;
         EditText itemQuantity;
         ImageView itemPhoto;
-        Button removeItem;
     }
 
     @Override
@@ -68,6 +66,7 @@ public class WishlistAdapter extends BaseAdapter {
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
+        currentProduct = null;
         ViewHolder viewHolder;
 
         if (convertView == null) {
@@ -95,23 +94,17 @@ public class WishlistAdapter extends BaseAdapter {
             int newID = productList.get(position).getProductID();
             @Override
             public void onClick(View v) {
-
+                final Wishlist cartItem = productList.get(position);
                 currentProduct = new Product(cartItem.getProductID(),cartItem.getProductName(),cartItem.getProductCost(),cartItem.getDeliveryCost(),cartItem.getTotalCost(),cartItem.getPhotoID());
 
-
                 Intent intent = new Intent(context, AddItemToCartActivity.class);
-                intent.putExtra("TREE_ID", newID);
+                intent.putExtra("TREE_ID", cartItem.getProductID());
                 intent.putExtra("USER_ID", currentUSER_ID);
 
                 context.startActivity(intent);
             }
         });
-//        viewHolder.removeItem.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//        public void onClick(View v) {
-////                Toast.makeText(this, "Clicked Laugh Vote", Toast.LENGTH_SHORT).Show();
-//        }
-//    });
+
         return convertView;
     }
 
