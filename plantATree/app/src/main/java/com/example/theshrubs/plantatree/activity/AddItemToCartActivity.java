@@ -29,6 +29,7 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
     private Product productItem;
     private ImageView productImage;
     private String sourcePage;
+    private boolean inCart;
 
     private DatabaseHelper dbHandler = new DatabaseHelper(this);
     private User currentUser = new User();
@@ -146,7 +147,8 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
         //if cart is found - it searches the cart to see if product exists in cart.
         else {
             currentCart = (ShoppingCart) foundCart;
-            if (currentCart.getProductID() != productItem.getProductID()) {
+            inCart =dbHandler.search(productItem.getProductID(),"ShoppingCart");
+            if (!inCart) {
                 currentCart.setCartID(currentUser.getUserID());
                 currentCart.setProductID(productItem.getProductID());
                 currentCart.setProductName(productItem.getProductName());
