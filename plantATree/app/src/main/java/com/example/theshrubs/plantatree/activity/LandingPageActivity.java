@@ -54,7 +54,7 @@ public class LandingPageActivity extends AppCompatActivity {
 
 
         this.dbHandler = new DatabaseHelper(this);
-//        dbHandler.populateDatabase();
+        dbHandler.populateDatabase();
 
         treeList = new ArrayList<>();
         List<Object> objectList = dbHandler.loadAllContents(1, "Landing");
