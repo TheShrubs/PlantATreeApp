@@ -1,12 +1,20 @@
 package com.example.theshrubs.plantatree.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import com.example.theshrubs.plantatree.R;
 import com.example.theshrubs.plantatree.database.DatabaseHelper;
@@ -23,6 +31,9 @@ public class LandingPageActivity extends AppCompatActivity {
     private DatabaseHelper dbHandler;
     private int currentUser;
     private EditText searchKeyword;
+    private ImageView searchButton;
+    private boolean sort;
+    private Button sortButton;
     private BottomNavigationView navigationView;
     private BottomNavigationMenu navigationControl;
 
@@ -40,6 +51,7 @@ public class LandingPageActivity extends AppCompatActivity {
         navigationControl.getBottomNavigation(this, navigationView, currentUser);
 
 
+
         this.dbHandler = new DatabaseHelper(this);
 //        dbHandler.populateDatabase();
 
@@ -51,6 +63,8 @@ public class LandingPageActivity extends AppCompatActivity {
             Tree model = (Tree) objectList.get(i);
             treeList.add(model);
         }
+        configureSortButton();
+        sortTrees(sort);
 
         landingAdapter = new LandingPageAdapter(this, treeList, currentUser);
         landingList.setAdapter(landingAdapter);
@@ -78,4 +92,48 @@ public class LandingPageActivity extends AppCompatActivity {
     }
 
 
+
+    //toggles the price based sort of tree list and refreshes view
+    public void configureSortButton() {
+        sortButton = findViewById(R.id.priceSortButton);
+        sortButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               if(sort){
+                   sort = false;
+                   Intent cartIntent = new Intent(LandingPageActivity.this, LandingPageActivity.class);
+                   cartIntent.putExtra("USER_ID", currentUser);
+                   cartIntent.putExtra("sort", sort);
+                   startActivity(cartIntent);
+               } else {
+                   sort = true;
+                   Intent cartIntent = new Intent(LandingPageActivity.this, LandingPageActivity.class);
+                   cartIntent.putExtra("USER_ID", currentUser);
+                   cartIntent.putExtra("sort", sort);
+                   startActivity(cartIntent);
+               }
+            }
+        });
+    }
+
+    //sorts the list of trees by price in descending order if condition is met
+    public void sortTrees(boolean sort) {
+        if (sort) {
+            Collections.sort(treeList, new Comparator<Tree>() {
+                @Override
+                public int compare(Tree t1, Tree t2) {
+                    return Double.compare(t1.getPrice(), t2.getPrice());
+                }
+            });
+
+        }
+    }
+
+//    @Override
+//    public void onClick(View v) {
+//
+//        String keyword = searchKeyword.getText().toString().trim();
+//        landingAdapter.filter(keyword);
+//
+//    }
 }

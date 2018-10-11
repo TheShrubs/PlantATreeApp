@@ -8,6 +8,7 @@
     tools:context=".activity.ShoppingCartActivity"
    android:background="@drawable/background2">
 
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/shopping_Navigation"
         android:layout_width="match_parent"
@@ -93,6 +94,7 @@
                 android:background="@android:color/holo_green_dark"
                 android:text="CHECK OUT"
                 android:textColor="@android:color/background_light" />
+
 
         </LinearLayout>
     </ScrollView>

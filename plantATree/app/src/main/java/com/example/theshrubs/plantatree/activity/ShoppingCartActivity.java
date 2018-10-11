@@ -16,8 +16,8 @@ import com.example.theshrubs.plantatree.models.ShoppingCart;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener{
-//    private List<ShoppingCart> cartObjectList = new ArrayList<>();
     private int USER_ID;
     private DatabaseHelper database;
     private TextView cartSubTotal;
@@ -99,12 +99,15 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
 
     public void calculateCosts(){
         double discount = 0.0;
+
         if (quantity >= 10) {
+
             double beforeDiscount = subTotal + delivery;
             System.out.println("Before Discount " + beforeDiscount);
-            discount = beforeDiscount * .25;
+            discount = delivery ;
             System.out.println("CurrentDiscount" + discount);
         }
+
         double totalDelivery = quantity * delivery;
         total = (subTotal + delivery) - discount;
         cartSubTotal.setText("Sub-Total:    $ " + String.valueOf(subTotal));

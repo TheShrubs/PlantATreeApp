@@ -13,6 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity.ShoppingCartActivity"
+            android:windowSoftInputMode="stateVisible|adjustNothing" />
+        <activity
+            android:name=".activity.LandingPageActivity"
+            android:windowSoftInputMode="stateVisible|adjustNothing"/>
         <activity android:name=".activity.UserLoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,20 +26,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".activity.AddItemToCartActivity" />
         <activity android:name=".activity.ViewItemActivity" />
-        <activity
-            android:name=".activity.ShoppingCartActivity"
-            android:windowSoftInputMode="stateVisible|adjustNothing" />
-        <activity
-            android:name=".activity.LandingPageActivity"
-            android:windowSoftInputMode="stateVisible|adjustNothing" />
+        
         <activity android:name=".activity.UserRegistrationActivity" />
         <activity android:name=".activity.AddressActivity" />
         <activity android:name=".activity.PaymentActivity" />
         <activity android:name=".activity.OrderConfirmActivity" />
+        <activity android:name=".activity.ViewingTreeActivity" />
+        <activity android:name=".activity.WishlistActivity" />
+        <activity android:name=".activity.AddItemToWishActivity"/>
         <activity android:name=".activity.VisualizationActivity" />
-        <activity android:name=".activity.UserProfileActivity"></activity>
+        <activity android:name=".activity.UserProfileActivity"/>
     </application>
 
 </manifest>

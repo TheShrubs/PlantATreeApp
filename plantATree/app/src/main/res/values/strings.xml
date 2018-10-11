@@ -32,5 +32,6 @@
     <string name="shippingTotal"> Shipping Total:</string>
     <string name="discountTotal"> Discount Applied:</string>
     <string name="invoiceTotal"> Invoice Total:</string>
+    <string name="title_activity_add_item_to_wish">AddItemToWishActivity</string>
 
 </resources>

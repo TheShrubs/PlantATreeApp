@@ -21,6 +21,7 @@ import com.example.theshrubs.plantatree.database.DatabaseHelper;
 import com.example.theshrubs.plantatree.models.Product;
 import com.example.theshrubs.plantatree.models.ShoppingCart;
 import com.example.theshrubs.plantatree.models.Tree;
+import com.example.theshrubs.plantatree.models.Wishlist;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,9 @@ public class ShoppingCartAdapter extends BaseAdapter {
         }
     }
 
+
     private class ViewHolder {
+
         TextView itemName;
         TextView itemTotal;
         EditText itemQuantity;

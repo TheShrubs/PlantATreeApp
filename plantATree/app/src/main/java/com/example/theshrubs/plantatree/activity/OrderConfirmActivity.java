@@ -34,7 +34,7 @@ public class OrderConfirmActivity extends AppCompatActivity implements View.OnCl
     }
 
     // creates a okay button that returns to Cart Total Activity
-    //TODO send user to home page/search page not cart at order completion
+
     private void configureBackButton(){
         Button nextButton = (Button) findViewById(R.id.confirmBackButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +47,7 @@ public class OrderConfirmActivity extends AppCompatActivity implements View.OnCl
     }
 
     // send users to total cart activity if they press android back button instead of payment activity
-    //TODO send user to home page/search page not cart page at order completion
+
     @Override
     public void onBackPressed() {
         startActivity(new Intent(OrderConfirmActivity.this,LandingPageActivity.class));
@@ -62,7 +62,6 @@ public class OrderConfirmActivity extends AppCompatActivity implements View.OnCl
 
     //creates an invoice number
     public int createOrder(){
-        //TODO insert order details into previous order table
         int orderNo =(int)((Math.random()*90000)+10000);
         return orderNo;
     }
