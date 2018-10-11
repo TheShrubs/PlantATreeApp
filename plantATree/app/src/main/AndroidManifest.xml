@@ -30,5 +30,6 @@
         <activity android:name=".activity.OrderConfirmActivity"/>
         <activity android:name=".activity.VisualizationActivity"/>
     </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>

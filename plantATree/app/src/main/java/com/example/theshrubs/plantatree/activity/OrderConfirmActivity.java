@@ -11,11 +11,14 @@ import android.widget.TextView;
 
 import com.example.theshrubs.plantatree.R;
 import com.example.theshrubs.plantatree.database.DatabaseHelper;
+import com.example.theshrubs.plantatree.models.PurchaseEmail;
+import com.example.theshrubs.plantatree.models.User;
 
 
 public class OrderConfirmActivity extends AppCompatActivity implements View.OnClickListener{
     private DatabaseHelper database;
     private int orderNo;
+    private String userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,10 @@ public class OrderConfirmActivity extends AppCompatActivity implements View.OnCl
 
         TextView confirmText = (TextView) findViewById(R.id.confirmText);
         confirmText.setText("Thank You! \nYour Order #" +orderNo +" has been placed successfully.");
+        User user = new User();
+        userEmail = user.getUserEmail();
+        PurchaseEmail purchaseEmail = new PurchaseEmail(this, userEmail);
+        purchaseEmail.execute();
     }
 
     //creates an invoice number
