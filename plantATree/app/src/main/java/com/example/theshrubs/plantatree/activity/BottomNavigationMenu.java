@@ -19,7 +19,6 @@ public class BottomNavigationMenu {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.action_home:
-//                        Toast.makeText(activity, "Home Action Clicked for " + USER_ID, Toast.LENGTH_SHORT).show();
                         intent = new Intent(activity, LandingPageActivity.class);
                         intent.putExtra("USER_ID", USER_ID);
                         activity.startActivity(intent);

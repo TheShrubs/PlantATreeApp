@@ -96,4 +96,13 @@
         android:layout_marginTop="254dp"
         android:src="@mipmap/ic_launcher" />
 
+    <ImageView
+        android:id="@+id/trash"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/vis_image"
+        android:layout_alignEnd="@+id/drag_vis4"
+        android:layout_marginTop="16dp"
+        app:srcCompat="@drawable/rubbish_bin" />
+
 </RelativeLayout>
