@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCartActivity extends AppCompatActivity implements View.OnClickListener{
-    private List<ShoppingCart> cartObjectList = new ArrayList<>();
+//    private List<ShoppingCart> cartObjectList = new ArrayList<>();
     private int USER_ID;
     private DatabaseHelper database;
     private TextView cartSubTotal;
@@ -41,8 +41,7 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
         this.database = new DatabaseHelper(this);
 
         Bundle extras = getIntent().getExtras();
-//        USER_ID = extras.getInt("CART_ID");
-        USER_ID = 3;
+        USER_ID = extras.getInt("CART_ID");
 
         navigationView = (BottomNavigationView) findViewById(R.id.shopping_Navigation);
         navigationControl = new BottomNavigationMenu();
@@ -53,18 +52,52 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
         total = 0;
         quantity = 0;
 
-        cartSubTotal = (TextView) findViewById(R.id.cart_subtotal);
-        cartDelivery = (TextView) findViewById(R.id.cart_delivery);
-        cartDiscount = (TextView) findViewById(R.id.cart_discount);
-        catTotalCost = (TextView) findViewById(R.id.cart_totalcost);
-        checkoutButton = (Button) findViewById(R.id.checkoutButton);
+        this.cartSubTotal = (TextView) findViewById(R.id.cart_subtotal);
+        this.cartDelivery = (TextView) findViewById(R.id.cart_delivery);
+        this.cartDiscount = (TextView) findViewById(R.id.cart_discount);
+        this.catTotalCost = (TextView) findViewById(R.id.cart_totalcost);
+        this.checkoutButton = (Button) findViewById(R.id.checkoutButton);
         this.cartListView = (LinearLayout) findViewById(R.id.cartListView);
         checkoutButton.setOnClickListener(this);
 
-        List<Object> objectList = new ArrayList<>();
-        objectList = database.loadAllContents(USER_ID, "ShoppingCart");
+        //pull all objects in user's cart from the database
+        List<Object> objectList = database.loadAllContents(USER_ID, "ShoppingCart");
         inflateShoppingCart(objectList);
 
+        if(objectList != null){
+            System.out.println(objectList.size() + " found in user cart");
+
+            for(int i = 0; i < objectList.size(); i++){
+                ShoppingCart cart = (ShoppingCart) objectList.get(i);
+                setCosts(cart);
+            }
+        }
+
+        calculateCosts();
+
+        //calculates the current totals from database data.
+
+    }
+
+    public void reCalculation(List<ShoppingCart> cartObjectList){
+        subTotal = 0;
+        delivery = 0;
+        total = 0;
+        quantity = 0;
+        for(int i = 0; i < cartObjectList.size(); i++){
+            setCosts(cartObjectList.get(i));
+        }
+
+        calculateCosts();
+    }
+
+    public void setCosts(ShoppingCart cart) {
+        subTotal = subTotal + cart.getTotalCost();
+        delivery = delivery + cart.getDeliveryCost();
+        quantity = quantity + cart.getProductQuantity();
+    }
+
+    public void calculateCosts(){
         double discount = 0.0;
         if (quantity >= 10) {
             double beforeDiscount = subTotal + delivery;
@@ -74,19 +107,14 @@ public class ShoppingCartActivity extends AppCompatActivity implements View.OnCl
         }
         double totalDelivery = quantity * delivery;
         total = (subTotal + delivery) - discount;
-        cartSubTotal.setText("Sub-Total:    $" + String.valueOf(subTotal));
-        cartDelivery.setText("Delivery:       $" + String.valueOf(totalDelivery));
-        cartDiscount.setText("Discount:     $" + String.format("%.2f", discount));
-        catTotalCost.setText("Total Cost:   $" + String.valueOf(total));
-
+        cartSubTotal.setText("Sub-Total:    $ " + String.valueOf(subTotal));
+        cartDelivery.setText("Delivery:       $ " + String.format("%.2f", totalDelivery));
+        cartDiscount.setText("Discount:     $ " + String.format("%.2f", discount));
+        catTotalCost.setText("Total Cost:   $ " + String.format("%.2f",total));
     }
 
-    public void setCosts(ShoppingCart cart) {
-        subTotal = subTotal + cart.getTotalCost();
-        delivery = delivery + cart.getDeliveryCost();
-        quantity = quantity + cart.getProductQuantity();
-    }
 
+    //sets adapter for linear layout
     public void inflateShoppingCart(List<Object> cartList) {
 
         ShoppingCartAdapter adapter = new ShoppingCartAdapter(this, cartList, USER_ID);

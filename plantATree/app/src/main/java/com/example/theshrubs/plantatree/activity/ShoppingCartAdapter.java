@@ -1,6 +1,8 @@
 package com.example.theshrubs.plantatree.activity;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,10 +28,12 @@ import java.util.List;
 public class ShoppingCartAdapter extends BaseAdapter {
     private List<ShoppingCart> cartObejctsList;
     private LayoutInflater layoutInflater;
+    private ShoppingCartActivity activity;
     private Context context;
     private int currentUSER_ID;
 
     public ShoppingCartAdapter(Context context, List<Object> objList, int id) {
+        this.activity = (ShoppingCartActivity) context;
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         this.currentUSER_ID = id;
@@ -72,28 +76,37 @@ public class ShoppingCartAdapter extends BaseAdapter {
             viewHolder.itemTotal = (TextView) convertView.findViewById(R.id.shopItemTotal);
             viewHolder.itemPhoto = (ImageView) convertView.findViewById(R.id.shopItemPhoto);
             viewHolder.itemQuantity = (EditText) convertView.findViewById(R.id.shopItemQuantity);
-//            viewHolder.itemQuantity.addTextChangedListener(new TextWatcher() {
-//                @Override
-//                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                }
-//
-//                @Override
-//                public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//                    String stringValue = viewHolder.itemQuantity.getText().toString();
-//                    if (!(stringValue.equals(""))) {
-//                        int quantity = Integer.parseInt(stringValue);
-//                        //   cartObejctsList.get(position).getProductQuantity();
-//                        //   update(viewHolder, cartObejctsList.get(position));
-//                        //   notifyDataSetInvalidated();
-////                        return;
-//                    }
-//                }
-//
-//                @Override
-//                public void afterTextChanged(Editable s) {
-//                }
-//            });
+            viewHolder.itemQuantity.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+                }
+                @Override
+                public void afterTextChanged(Editable s) {
+                    String stringValue = viewHolder.itemQuantity.getText().toString();
+                    if (!(stringValue.equals(""))) {
+
+                        int quantity = Integer.parseInt(stringValue);
+                        System.out.println("New quantity is " + quantity + " for item " + cartObejctsList.get(position).getProductName());
+                        int oldQuantity = cartObejctsList.get(position).getProductQuantity();
+                        System.out.println("Old quantity is " + oldQuantity + cartObejctsList.get(position).getProductName());
+
+                        double newTotal = cartObejctsList.get(position).getProductCost() * quantity;
+                        viewHolder.itemTotal.setText("$ " + newTotal);
+                        cartObejctsList.get(position).setProductQuantity(quantity);
+                        cartObejctsList.get(position).setTotalCost(newTotal);
+
+                        activity.reCalculation(cartObejctsList);
+                    }
+
+                }
+
+            });
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -102,28 +115,10 @@ public class ShoppingCartAdapter extends BaseAdapter {
         Object obj = cartObejctsList.get(position);
         ShoppingCart cartObject = (ShoppingCart) obj;
         viewHolder.itemName.setText(cartObject.getProductName());
-        viewHolder.itemTotal.setText("$" + cartObject.getTotalCost());
+        viewHolder.itemTotal.setText("$ " + cartObject.getTotalCost());
         viewHolder.itemQuantity.setText(String.valueOf(cartObject.getProductQuantity()));
         viewHolder.itemPhoto.setImageResource(cartObject.getPhotoID());
-        // updateDetails(viewHolder, cartObejctsList, position);
         return convertView;
-    }
-
-    public void updateDetails(ViewHolder v, List<ShoppingCart> cartList, int position) {
-
-        Object obj = cartList.get(position);
-        ShoppingCart cartObject = (ShoppingCart) obj;
-        v.itemName.setText(cartObject.getProductName());
-        v.itemTotal.setText("$" + cartObject.getTotalCost());
-        v.itemQuantity.setText(String.valueOf(cartObject.getProductQuantity()));
-        v.itemPhoto.setImageResource(cartObject.getPhotoID());
-    }
-
-    public void update(ViewHolder v, ShoppingCart cartObject){
-        v.itemName.setText(cartObject.getProductName());
-        v.itemTotal.setText("$" + cartObject.getTotalCost());
-        v.itemQuantity.setText(String.valueOf(cartObject.getProductQuantity()));
-        v.itemPhoto.setImageResource(cartObject.getPhotoID());
     }
 
 }
