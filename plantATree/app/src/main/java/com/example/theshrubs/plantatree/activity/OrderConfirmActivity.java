@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.example.theshrubs.plantatree.R;
 import com.example.theshrubs.plantatree.database.DatabaseHelper;
 import com.example.theshrubs.plantatree.models.PurchaseEmail;
-import com.example.theshrubs.plantatree.models.User;
 
 
 public class OrderConfirmActivity extends AppCompatActivity implements View.OnClickListener{
@@ -20,6 +19,8 @@ public class OrderConfirmActivity extends AppCompatActivity implements View.OnCl
     private int orderNo;
     private String userEmail;
     private int USER_ID;
+    private Button nextButton;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +29,11 @@ public class OrderConfirmActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_confirm);
         this.database = new DatabaseHelper(this);
-
+        this.nextButton = (Button) findViewById(R.id.confirmBackButton);
+        this.nextButton.setOnClickListener(this);
 
         Bundle extras = getIntent().getExtras();
         USER_ID = extras.getInt("USER_ID");
-        configureBackButton();
         orderNo=createOrder();
         confirmMessage(orderNo);
 
@@ -40,36 +41,19 @@ public class OrderConfirmActivity extends AppCompatActivity implements View.OnCl
         database.clearCartTable();
     }
 
-    // creates a okay button that returns to Cart Total Activity
-
-    private void configureBackButton(){
-        Button nextButton = (Button) findViewById(R.id.confirmBackButton);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            //Ends this activity and returns to total cart activity
-            public void onClick(View view){
-                Intent intent =  new Intent(OrderConfirmActivity.this,LandingPageActivity.class);
-                intent.putExtra("USER_ID", USER_ID);
-                startActivity(intent);
-
-            }
-        });
-    }
-
     // send users to total cart activity if they press android back button instead of payment activity
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(OrderConfirmActivity.this,LandingPageActivity.class));
+        this.intent = new Intent(OrderConfirmActivity.this,LandingPageActivity.class);
+        startActivity(intent);
     }
 
     //displays confirmation message to user with their invoice number
     private void confirmMessage(int orderNo){
-
         TextView confirmText = (TextView) findViewById(R.id.confirmText);
         confirmText.setText("Thank You! \nYour Order #" +orderNo +" has been placed successfully.");
-        DatabaseHelper db = new DatabaseHelper(this);
-        this.userEmail = db.getUserEmail();
+        this.userEmail = database.getUserEmail();
         PurchaseEmail purchaseEmail = new PurchaseEmail(this, userEmail);
         purchaseEmail.execute();
     }
@@ -84,5 +68,8 @@ public class OrderConfirmActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View v) {
 
+        this.intent =  new Intent(OrderConfirmActivity.this,LandingPageActivity.class);
+        intent.putExtra("USER_ID", USER_ID);
+        startActivity(intent);
     }
 }
