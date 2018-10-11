@@ -32,7 +32,6 @@
         <activity android:name=".activity.PaymentActivity" />
         <activity android:name=".activity.OrderConfirmActivity" />
         <activity android:name=".activity.WishlistActivity" />
-        <activity android:name=".activity.AddItemToWishActivity"/>
         <activity android:name=".activity.VisualizationActivity" />
         <activity android:name=".activity.UserProfileActivity"/>
     </application>

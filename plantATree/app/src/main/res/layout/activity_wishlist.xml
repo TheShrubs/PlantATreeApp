@@ -24,8 +24,8 @@
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_naviation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:itemBackground="@color/colorNavigationBottom"
+        android:layout_height="46dp"
+        app:itemBackground="@android:color/holo_green_dark"
         app:itemIconTint="@drawable/nav_item_color_state"
         app:itemTextColor="@drawable/nav_item_color_state"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -34,11 +34,12 @@
 
     <Button
         android:id="@+id/clearWishButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="35dp"
         android:layout_marginBottom="75dp"
         android:background="@android:color/holo_green_dark"
         android:text="Clear Wishlist"
+        android:textColor="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
