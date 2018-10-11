@@ -11,8 +11,8 @@
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/landing_Navigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:itemBackground="@color/colorNavigationBottom"
+        android:layout_height="46dp"
+        app:itemBackground="@android:color/holo_green_dark"
         app:itemIconTint="@drawable/nav_item_color_state"
         app:itemTextColor="@drawable/nav_item_color_state"
         app:layout_constraintBottom_toBottomOf="parent"
