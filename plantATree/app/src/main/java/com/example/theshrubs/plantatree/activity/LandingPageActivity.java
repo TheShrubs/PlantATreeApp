@@ -49,7 +49,7 @@ public class LandingPageActivity extends AppCompatActivity implements View.OnCli
 
 
         this.dbHandler = new DatabaseHelper(this);
-//        dbHandler.populateDatabase();
+        dbHandler.populateDatabase();
 
         treeList = new ArrayList<>();
         List<Object> objectList = dbHandler.loadAllContents(1, "Landing");
@@ -102,19 +102,20 @@ public class LandingPageActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        if (sort) {
-            sort = false;
-            Intent cartIntent = new Intent(LandingPageActivity.this, LandingPageActivity.class);
-            cartIntent.putExtra("USER_ID", currentUser);
-            cartIntent.putExtra("sort", sort);
-            startActivity(cartIntent);
-        } else {
-            sort = true;
-            Intent cartIntent = new Intent(LandingPageActivity.this, LandingPageActivity.class);
-            cartIntent.putExtra("USER_ID", currentUser);
-            cartIntent.putExtra("sort", sort);
-            startActivity(cartIntent);
+            if (sort) {
+                sort = false;
+                Intent cartIntent = new Intent(LandingPageActivity.this, LandingPageActivity.class);
+                cartIntent.putExtra("USER_ID", currentUser);
+                cartIntent.putExtra("sort", sort);
+                startActivity(cartIntent);
+            } else {
+                sort = true;
+                Intent cartIntent = new Intent(LandingPageActivity.this, LandingPageActivity.class);
+                cartIntent.putExtra("USER_ID", currentUser);
+                cartIntent.putExtra("sort", sort);
+                startActivity(cartIntent);
+            }
         }
-    }
+
 
 }

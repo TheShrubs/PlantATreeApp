@@ -69,17 +69,14 @@
     <LinearLayout
         android:layout_width="333dp"
         android:layout_height="249dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="25dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="24dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/itemDescription"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="38dp"
             android:text="Description:"
             android:textColor="@android:color/background_dark"
@@ -87,42 +84,42 @@
 
         <TextView
             android:id="@+id/itemName"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:text="Name: "
             android:textColor="@android:color/background_dark" />
 
         <TextView
             android:id="@+id/itemPrice"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:text="Price:"
-            android:textColor="@android:color/background_dark"/>
+            android:textColor="@android:color/background_dark" />
 
         <TextView
             android:id="@+id/maxHeight"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:text="Max Height"
             android:textColor="@android:color/background_dark" />
 
         <TextView
             android:id="@+id/exposure"
-            android:layout_width="wrap_content"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:text="Sun Exposure"
             android:textColor="@android:color/background_dark" />
 
         <TextView
             android:id="@+id/soilDrainage"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:text="Soil Drainage"
             android:textColor="@android:color/background_dark" />
 
         <TextView
             android:id="@+id/maintenance"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:text="Maintenance"
             android:textColor="@android:color/background_dark" />

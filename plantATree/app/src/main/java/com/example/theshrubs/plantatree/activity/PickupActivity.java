@@ -69,7 +69,13 @@ public class PickupActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.PickupContinueButton) {
-                Toast.makeText(this, "Pick up confirmed.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Pick up confirmed.", Toast.LENGTH_SHORT).show();
+            pickupRadioButton.setChecked(true);
+            Intent intent = new Intent(PickupActivity.this, PaymentActivity.class);
+            intent.putExtra("USER_ID", USER_ID);
+            intent.putExtra("TOTAL_COST", TOTAL_COST);
+            startActivity(intent);
+
         } else if(v.getId() == R.id.deliveryRadioButton){
             pickupRadioButton.setChecked(false);
             Intent intent = new Intent(PickupActivity.this, AddressActivity.class);
@@ -79,7 +85,7 @@ public class PickupActivity extends AppCompatActivity implements View.OnClickLis
         }
         else if(v.getId() == R.id.PickupBackButton){
             pickupRadioButton.setChecked(false);
-            Intent intent = new Intent(PickupActivity.this, PaymentActivity.class);
+            Intent intent = new Intent(PickupActivity.this, ShoppingCartActivity.class);
             intent.putExtra("USER_ID", USER_ID);
             intent.putExtra("TOTAL_COST", TOTAL_COST);
             startActivity(intent);
