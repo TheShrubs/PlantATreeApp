@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
@@ -21,7 +20,6 @@
         app:menu="@menu/bottom_navigation_main" />
 
 
-
     <ListView
         android:id="@+id/treeList"
         android:layout_width="330dp"
@@ -36,21 +34,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_text" />
 
-    <ImageView
-        android:id="@+id/priceSortButton"
-        android:layout_width="66dp"
-        android:layout_height="26dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/search_text"
-        app:layout_constraintEnd_toEndOf="@+id/search_text"
-        app:layout_constraintTop_toTopOf="@+id/search_text"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/sort_price" />
-
     <EditText
         android:id="@+id/search_text"
-        android:layout_width="327dp"
+        android:layout_width="262dp"
         android:layout_height="37dp"
         android:layout_marginTop="80dp"
         android:ems="10"
@@ -61,20 +47,31 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/image_textView"
+        android:id="@+id/saleBanner"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="24dp"
+        android:layout_height="20dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:background="@color/Sale"
-        android:text=" Sale! Buy 10 trees and get free shipping!"
+        android:text=" Sale! Buy 10 trees and get 10% off!"
         android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/treeList"
+        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="@+id/treeList"
         app:layout_constraintTop_toBottomOf="@+id/treeList" />
+
+    <ImageView
+        android:id="@+id/priceSortButton"
+        android:layout_width="51dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/search_text"
+        app:srcCompat="@drawable/sort_price" />
 
 </android.support.constraint.ConstraintLayout>

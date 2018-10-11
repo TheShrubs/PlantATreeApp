@@ -40,7 +40,7 @@
         android:id="@+id/confirmTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="316dp"
+        android:layout_marginTop="332dp"
         android:text="@string/orderConfirmTitle"
         android:textSize="28sp"
         android:textStyle="bold"
