@@ -92,15 +92,15 @@ public class PickupActivity extends AppCompatActivity implements View.OnClickLis
         map = (ImageView) findViewById(R.id.map);
         if(parent.getItemAtPosition(position).toString().equals("22 Symonds St")){
             map.setImageResource(R.drawable.symondsst);
-            Toast.makeText(this, "Symonds confirmed.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Symonds confirmed.", Toast.LENGTH_SHORT).show();
         }
         if(parent.getItemAtPosition(position).toString().equals("106 Great North Road")){
             map.setImageResource(R.drawable.greatnorthroad);
-            Toast.makeText(this, "Great North Rd confirmed.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Great North Rd confirmed.", Toast.LENGTH_SHORT).show();
         }
         if(parent.getItemAtPosition(position).toString().equals("43 Titirangi Road")){
             map.setImageResource(R.drawable.titirangiroad);
-            Toast.makeText(this, "Titirangi confirmed.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Titirangi confirmed.", Toast.LENGTH_SHORT).show();
         }
     }
 
