@@ -28,6 +28,7 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
     private Button addItem;
     private Product productItem;
     private ImageView productImage;
+    private String sourcePage;
 
     private DatabaseHelper dbHandler = new DatabaseHelper(this);
     private User currentUser = new User();
@@ -53,11 +54,6 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
 
         addItem.setOnClickListener(this);
 
-        if(ViewItemActivity.getProduct() == null){
-            setInformation(WishlistAdapter.getProduct());
-        }else {
-            setInformation(ViewItemActivity.getProduct());
-        }
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -68,8 +64,14 @@ public class AddItemToCartActivity extends AppCompatActivity implements View.OnC
             } else {
                 currentViewedTree = extras.getInt("TREE_ID");
                 currentUSER_ID = extras.getInt("USER_ID");
+                sourcePage = extras.getString("PAGE_ID");
             }
 
+        }
+        if(sourcePage.equals("Wishlist")){
+            setInformation(WishlistAdapter.getProduct());
+        }else if(sourcePage.equals("ViewItem")){
+            setInformation(ViewItemActivity.getProduct());
         }
 
 

@@ -72,6 +72,7 @@ public class WishlistAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.shopping_cart_item, null);
             viewHolder = new ViewHolder();
+
             viewHolder.itemName = (TextView) convertView.findViewById(R.id.shopItemName);
             viewHolder.itemTotal = (TextView) convertView.findViewById(R.id.shopItemTotal);
             viewHolder.itemQuantity = (EditText) convertView.findViewById(R.id.shopItemQuantity);
@@ -82,6 +83,7 @@ public class WishlistAdapter extends BaseAdapter {
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
+
         }
 
         final Wishlist cartItem = this.productList.get(position);
@@ -100,6 +102,7 @@ public class WishlistAdapter extends BaseAdapter {
                 Intent intent = new Intent(context, AddItemToCartActivity.class);
                 intent.putExtra("TREE_ID", cartItem.getProductID());
                 intent.putExtra("USER_ID", currentUSER_ID);
+                intent.putExtra("PAGE_ID","Wishlist");
 
                 context.startActivity(intent);
             }

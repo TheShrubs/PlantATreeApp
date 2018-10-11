@@ -216,6 +216,7 @@ public class ViewItemActivity extends AppCompatActivity implements View.OnClickL
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(ViewItemActivity.this, WishlistActivity.class);
                 intent.putExtra("CART_ID", currentUser);
+                intent.putExtra("PAGE_ID","ViewItem");
                 startActivity(intent);
             }
         });
